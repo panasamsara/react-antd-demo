@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 
 
-
 export default function RootPage() {
 
   var [count, setCount] = useState(0)
@@ -12,7 +11,7 @@ export default function RootPage() {
 
   return (
     <div>
-      <text>{count}</text>
+      <span>{count}</span>
       <button onClick={() => { setCount(count + 1) }}>add</button>
     </div>
   )
