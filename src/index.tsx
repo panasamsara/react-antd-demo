@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-
 import Router from "./Route/Router";
+import { config as AmapReactConfig } from '@amap/amap-react';
 
+AmapReactConfig.version = '2.0'; // 默认2.0，这里可以不修改
+AmapReactConfig.key = '234b1e1d2207058b4e0d15ed5f5a7154';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RootPage from '../pages/root';
 import HomePage from '../pages/home';
+import MapPage from '../pages/map';
 
 export default function Router() {
   {/* 所有的路由配置均在 BrowserRouter 内部 */}
@@ -12,6 +13,7 @@ export default function Router() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/root' element={<RootPage />} />
+        <Route path='/map' element={<MapPage />} />
       </Routes>
     </BrowserRouter>
   );
