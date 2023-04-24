@@ -10,6 +10,7 @@ import MapCarMove from '../pages/map/mapCarMove/mapCarMove';
 import SelfMarker from '../pages/map/selfMarker';
 import MapGdp from '../pages/map/mapGdp';
 import MapSearch from '../pages/map/mapSearch';
+import MapGeoLocation from '../pages/map/mapGeoLocation';
 
 export default function Router() {
   {/* 所有的路由配置均在 BrowserRouter 内部 */}
@@ -32,6 +33,8 @@ export default function Router() {
         <Route path='/mapGdp' element={<MapGdp />} />
         {/* 搜索框 */}
         <Route path='/mapSearch' element={<MapSearch />} />
+        {/* 定位 GeoLocation */}
+        <Route path='/mapGeoLocation' element={<MapGeoLocation />} />
       </Routes>
     </BrowserRouter>
   );
