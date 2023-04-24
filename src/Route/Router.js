@@ -8,6 +8,7 @@ import YuanShengGaoDe from '../pages/map/yuanShengGaoDe';
 import MapProvinceLayer from '../pages/map/mapProvinceLayer';
 import MapCarMove from '../pages/map/mapCarMove/mapCarMove';
 import SelfMarker from '../pages/map/selfMarker';
+import MapGdp from '../pages/map/mapGdp';
 
 export default function Router() {
   {/* 所有的路由配置均在 BrowserRouter 内部 */}
@@ -17,13 +18,17 @@ export default function Router() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/test' element={<TestPage />} />
-        <Route path='/mapCountry' element={<MapCountry />} />
+        {/* 原生高德地图 */}
         <Route path='/mapYuanSheng' element={<YuanShengGaoDe />} />
+
+        <Route path='/mapCountry' element={<MapCountry />} />
         <Route path='/mapProvince' element={<MapProvinceLayer />} />
         {/* 轨迹回放 */}
         <Route path='/mapCarMove' element={<MapCarMove />} />
         {/* 自定义marker */}
         <Route path='/selfMarker' element={<SelfMarker />} />
+        {/* 各省GDP增速 */}
+        <Route path='/mapGdp' element={<MapGdp />} />
       </Routes>
     </BrowserRouter>
   );
