@@ -13,7 +13,7 @@ export default function HomePage() {
           Edit <code>src/pages</code> and save to reload.
         </p>
         <Link to="/test"> to test</Link>
-        <Link to="/map"> to map</Link>
+        <Link to="/map/selfMarker"> to map</Link>
       </header>
     </div>
   );

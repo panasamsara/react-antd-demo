@@ -1,6 +1,7 @@
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-import { Link, matchRoutes, Outlet, useLocation } from 'react-router-dom';
+import { Layout, Menu, MenuProps, Breadcrumb } from 'antd';
+import { UserOutlined, LaptopOutlined, NotificationOutlined, 
+  AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { Link, matchRoutes, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { routers } from './Routers';
 
@@ -8,12 +9,14 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 export default function AppLayout() {
+  const navigate = useNavigate();
   const location = useLocation();
   const [defaultSelectedKeys, setDefaultSelectedKeys] = useState<string[]>([]);
   const [defaultOpenKeys, setDefaultOpenKeys] = useState<string[]>([]);
   const [isInit, setIsInit] = useState<Boolean>(false)
-  // console.log(111,location );
   
+  const [current, setCurrent] = useState('/');
+
   useEffect(() => {
     const routes = matchRoutes(routers, location.pathname); // 返回匹配到的路由数组对象，每一个对象都是一个路由对象
     const pathArr: string[] = [];
@@ -32,92 +35,95 @@ export default function AppLayout() {
   if(!isInit) {
     return null;
   }
+  
+  const topMenus: MenuProps['items'] = [
+    { label: '首页', key: '/', icon: <SettingOutlined />},
+    { label: '计数', key: '/test', icon: <NotificationOutlined />},
+    { label: '地图', key: '/map/selfMarker', icon: <AppstoreOutlined />},
+  ]
+  const sideMenusUser: MenuProps['items'] = [
+    { label: '用户管理', key: '/', icon: <SettingOutlined /> ,children: [
+      { label: '计数', key: '/test'},
+      { label: '用户信息', key: '/user/list'},
+    ]}
+  ]
+  const sideMenusMap: MenuProps['items'] = [
+    { label: '地图', key: '/', icon: <SettingOutlined /> ,children: [
+      { label: '自定义标记', key: '/map/selfMarker'},
+      { label: '运动路径', key: '/map/mapCarMove'},
+      { label: '搜索', key: '/map/mapSearch'},
+      { label: '定位', key: '/map/mapGeoLocation'},
+      { label: '国别', key: '/map/mapCountry'},
+      { label: '省份', key: '/map/mapProvince'},
+    ]}
+  ]
+
+  const onClick = (e:any) => {
+    setCurrent(e.key);
+    navigate(e.key)
+  }
   return (
     <>
-      <Layout>
+      <Layout style={{height: '100%'}}>
         <Header className="header">
           <div className="logo" />
-            
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-            <Menu.Item key="1">
-              <Link to='/'>首页</Link>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Link to='/test'>计数</Link>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Link to='/map/selfMarker'>地图</Link>
-            </Menu.Item>
-          </Menu>
+          {/* 顶部菜单 */}
+          <Menu theme="dark" mode="horizontal" 
+            onClick={onClick} 
+            selectedKeys={[current]}  
+            items={topMenus} 
+          />
         </Header>
-        <Layout>
+        <Layout className='body-all'>
         {
           location.pathname.includes('/test') ||  location.pathname.includes('/user') ?
             <Sider width={200} className="site-layout-background">
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={defaultSelectedKeys}   
-                defaultOpenKeys={defaultOpenKeys}
+              <Menu  mode="inline" 
+                onClick={onClick} 
+                // selectedKeys={[current]}  
+                items={sideMenusUser} 
                 style={{ height: '100%', borderRight: 0 }}
-              >
-                <SubMenu key="/user" icon={<UserOutlined />} title="用户管理">
-                  <Menu.Item key="2">
-                    <Link to='/test'>计数</Link>
-                  </Menu.Item>
-                  <Menu.Item key="/user/list">
-                    <Link to='/user/list'>用户信息</Link>
-                  </Menu.Item>
-                </SubMenu>
-              </Menu>
+              />
             </Sider>
             : null
           }
           {
           location.pathname.includes('/map') ?
             <Sider width={200} className="site-layout-background">
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={defaultSelectedKeys}   
-                defaultOpenKeys={defaultOpenKeys}
+              <Menu  mode="inline" 
+                onClick={onClick} 
+                // selectedKeys={[current]}  
+                items={sideMenusMap} 
                 style={{ height: '100%', borderRight: 0 }}
-              >
-                <SubMenu key="sub2" icon={<LaptopOutlined />} title="地图">
-                  <Menu.Item key="5">
-                    <Link to='/map/selfMarker'>自定义标记</Link>
-                  </Menu.Item>
-                  <Menu.Item key="6">
-                    <Link to='/map/mapCarMove'>运动路径</Link>
-                  </Menu.Item>
-                  <Menu.Item key="7">
-                    <Link to='/map/mapSearch'>搜索</Link>
-                  </Menu.Item>
-                  <Menu.Item key="9">
-                    <Link to='/map/mapGeoLocation'>定位</Link>
-                  </Menu.Item>
-                  <Menu.Item key="10">
-                    <Link to='/map/mapCountry'>国别</Link>
-                  </Menu.Item>
-                  <Menu.Item key="11">
-                    <Link to='/map/mapProvince'>省份</Link>
-                  </Menu.Item>
-                </SubMenu>
-              </Menu>
+              />
             </Sider>
             : null
           }
           {/* 面包屑 */}
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
+          <Layout style={{ padding: '0 24px 24px',backgroundColor: '#fff', borderLeft: '1px solid #f5f5f5' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}
+              items={[
+                {
+                  title: 'Home',
+                },
+                // {
+                //   title: <a href="">Application Center</a>,
+                // },
+                // {
+                //   title: <a href="">Application List</a>,
+                // },
+                {
+                  title: 'An Application',
+                },
+              ]}
+            />
             <Content
               className="site-layout-background"
               style={{
-                padding: 24,
+                padding: 0,
                 margin: 0,
                 minHeight: 280,
+                
               }}
             >
               <Outlet />
