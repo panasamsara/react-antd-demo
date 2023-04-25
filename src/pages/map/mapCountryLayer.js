@@ -26,7 +26,7 @@ export default function RootPage() {
 
   return (
     <div style={{ width: '100%', height: '720px',}}>
-      <Amap>
+      <Amap zoom={4}>
         <CountryLayer
           opacity={opacity}
           depth={2}

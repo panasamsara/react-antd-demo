@@ -12,7 +12,7 @@ export default function HomePage() {
         <p>
           Edit <code>src/pages</code> and save to reload.
         </p>
-        <Link to="/root"> to root</Link>
+        <Link to="/test"> to test</Link>
         <Link to="/map"> to map</Link>
       </header>
     </div>

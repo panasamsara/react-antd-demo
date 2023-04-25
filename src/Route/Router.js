@@ -6,7 +6,7 @@ import HomePage from '../pages/home';
 import MapCountry from '../pages/map/mapCountryLayer';
 import YuanShengGaoDe from '../pages/map/yuanShengGaoDe';
 import MapProvinceLayer from '../pages/map/mapProvinceLayer';
-import MapCarMove from '../pages/map/mapCarMove/mapCarMove';
+import MapCarMove from '../pages/map/mapCarMove';
 import SelfMarker from '../pages/map/selfMarker';
 import MapGdp from '../pages/map/mapGdp';
 import MapSearch from '../pages/map/mapSearch';
