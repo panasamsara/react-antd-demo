@@ -1,6 +1,6 @@
 import { Layout, Menu, MenuProps, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, 
-  AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+  AppstoreOutlined, SettingOutlined, StockOutlined } from '@ant-design/icons';
 import { Link, matchRoutes, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { routers } from './Routers';
@@ -40,6 +40,7 @@ export default function AppLayout() {
     { label: '首页', key: '/', icon: <SettingOutlined />},
     { label: '计数', key: '/test', icon: <NotificationOutlined />},
     { label: '地图', key: '/map/selfMarker', icon: <AppstoreOutlined />},
+    { label: 'echarts', key: '/echartsDemo', icon: <StockOutlined />},
   ]
   const sideMenusUser: MenuProps['items'] = [
     { label: '用户管理', key: '/', icon: <SettingOutlined /> ,children: [
