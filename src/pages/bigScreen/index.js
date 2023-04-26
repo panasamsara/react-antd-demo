@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import EchartsComponent from '@/components/EchartsComponent';
 import "./index.css";
 
+import RenderCon from "@/components/RenderCon";
+
 // ECharts的配置信息
 const EChartsConfigInfo = {
     grid: { // 控制 折线图，柱状图，散点图（气泡图）的整体样式
@@ -48,25 +50,7 @@ const EChartsConfigInfo = {
     ],
 };
 
-// function RenderCon({
-//     style,
-//     children,
-//   }) {
-//     return (
-//       <div className={styleClass.dragableContainer} style={{ ...style }}>
-//         <div className={styleClass.containerContentbox}>
-//           <div
-//             style={{
-//               width: '100%',
-//               height: '100%',
-//             }}
-//           >
-//             {children}
-//           </div>
-//         </div>
-//       </div>
-//     )
-// }
+
 
 function Temp() {
     const [chartsConfig, setChartsConfig] = useState(EChartsConfigInfo); // 错题分布数据
@@ -83,12 +67,24 @@ function Temp() {
 
     return chartsConfig 
         && (
+        <RenderCon
+            style={{
+            width: 480,
+            height: (1080 - 110) / 2,
+            left: 10,
+            top: 160,
+            zIndex: 100,
+            position: 'relative'
+            }}
+        >
             <div className="App" >
                 <EchartsComponent 
                 option={chartsConfig} 
                 customClassName='charts' 
                 />
             </div>
+        </RenderCon>
+            
     )
 }
 
