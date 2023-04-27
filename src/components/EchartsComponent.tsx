@@ -1,13 +1,17 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-
-function EchartsComponent(props) {
+type EChartsOption = echarts.EChartsOption;
+interface prop {
+    option: EChartsOption, 
+    customClassName?: string
+}
+function EchartsComponent(props: prop) {
     const { option, customClassName } = props;
 
     const chartsNode = useRef(null);
 
     useLayoutEffect(() => {
-        const mayCharts = chartsNode.current && echarts.init(chartsNode.current);
+        const mayCharts:any = chartsNode.current && echarts.init(chartsNode.current);
         mayCharts && mayCharts.setOption(option);
     }, [option]);
 
