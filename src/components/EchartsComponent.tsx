@@ -1,10 +1,12 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import * as echarts from 'echarts';
+
 type EChartsOption = echarts.EChartsOption;
 interface prop {
     option: EChartsOption, 
     customClassName?: string
 }
+// 弃用， 使用echarts-for-react 更简洁
 function EchartsComponent(props: prop) {
     const { option, customClassName } = props;
 
