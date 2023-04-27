@@ -12,7 +12,10 @@ import {
 import { getColorByGDP } from "./colors";
 // import LabelsData from "./districts";
 import MARKER_SVG from "@/assets/marker.svg";
-import PieComponent from "./components/PieComponent";
+import PieComponent from "./components/Pie1/PieComponent";
+import Pie2Component from "./components/Pie2/PieComponent";
+import Pie3Component from "./components/Pie3/PieComponent";
+import Pie4Component from "./components/Pie4/PieComponent";
 
 export default function App() {
     const path1 = [
@@ -80,8 +83,10 @@ export default function App() {
                     <Toolbar />
                 </Amap>
         
-                <PieComponent></PieComponent>
-                
+                <PieComponent />
+                <Pie2Component />
+                <Pie3Component />
+                <Pie4Component />
             </div>
         </div>
     );

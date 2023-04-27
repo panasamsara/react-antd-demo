@@ -1,5 +1,5 @@
 
-import "./styles.css";
+import "../styles.css";
 import React, { useState } from 'react'
 import RenderCompo from "@/components/RenderCompo";
 import Pie from "./Pie";
