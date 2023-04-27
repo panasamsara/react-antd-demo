@@ -1,91 +1,97 @@
-import React, { useEffect, useState } from 'react';
-import EchartsComponent from '@/components/EchartsComponent';
-import "./index.css";
 
+import "./styles.css";
+import {
+  Amap,
+  Scale,
+  Toolbar,
+  CountryLayer,
+  LabelsLayer,
+  LabelMarker,
+  Polygon,
+  Marker
+} from "@amap/amap-react";
+import { getColorByGDP } from "./colors";
+import LabelsData from "./districts";
+import MARKER_SVG from "@/assets/marker.svg";
 import RenderCon from "@/components/RenderCon";
+import Chart from "../echartsDemo";
 
-// ECharts的配置信息
-const EChartsConfigInfo = {
-    grid: { // 控制 折线图，柱状图，散点图（气泡图）的整体样式
-        top: '10%', // 控制图表距离容器的顶部的距离 可以写百分比也可以写具体的数据
-        left: '5%', // 控制图表距离容器的左边的距离 可以写百分比也可以写具体的数据
-        right: '5%', // 控制图表距离容器的右边的距离 可以写百分比也可以写具体的数据
-        bottom: '10%', // 控制图表距离容器的底部的距离 可以写百分比也可以写具体的数据
-    },
-    xAxis: { // 控制图表中X周的样式功能设置
-        type: 'category', // 坐标轴类型  文档中写的很详细 类型就不一一介绍
-        axisTick: {  // 设置坐标轴刻度的相关设置
-            show: false, 
-        },
-        axisLine: {  //坐标轴轴线相关设置
-            lineStyle: { //坐标轴轴线样式的设置
-                color: '#999',
-            },
-        },
-    },
-    yAxis: { // 控制图表中Y轴的样式功能设置
-        axisLabel: {  // 坐标轴刻度标签的相关设置。
-            show: false,
-        },
-    },
-    axisLabel: { //坐标轴刻度标签的相关设置。
-        color: '#666666',
-        fontSize: 16,
-    },
-    series: [
-        {
-            type: 'bar', // 图标的类型
-            barWidth: '40%', // 柱条的宽度
-            itemStyle: { //图形样式。
-                color: '#0c9',
-                borderRadius: [4, 4, 0, 0],
-            }, 
-            label: { //图形上的文本标签样式
-                show: true,
-                color: '#fff',
-                fontSize: 14,
-                position: 'insideTop',
-            },
-        },
-    ],
-};
+export default function App() {
+    const path1 = [
+        // 111.87,31.91  113.76,31.84  114.94,29.72  111.12,30.30
+        // 126.84,49.93  128.09,49.39 127.85,48.87 126.33,49.29
+        [126.84, 49.93],
+        [128.09, 49.39],
+        [127.85, 48.87],
+        [126.33, 49.29],
+    ];
+    const path2 = [
+        // 102.51,31.39  105.63,31.65  104.92,29.61  102.11,29.00
+        // 121.90,53.27 123.11,53.28 123.09,52.78 122.16,52.74
+        [121.90, 53.27],
+        [123.11, 53.28],
+        [123.09, 52.68],
+        [122.16, 52.64],
+    ];
+    const path3 = [
+        // 102.51,31.39  105.63,31.65  104.92,29.61  102.11,29.00
+        // 124.80,44.17 125.83,43.90 125.66,43.45 124.82,43.47
+        [124.80, 44.17],
+        [125.83, 43.90],
+        [125.66, 43.45],
+        [124.82, 43.47],
+    ];
+  return (
+    <div className="App">
+      <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
+        <Amap
+          showLabel={false}
+          zooms={[4, 10]}
+          center={[106.122082, 33.719192]}
+          zoom={4}
+          isHotspot={false}
+          defaultCursor="pointer"
+          features={[]} // 所有默认底图图层都隐藏
+          showIndoorMap={false} // 不显示室内地图
+          mapStyle='amap://styles/f74689d33353c8266c5a7d2f6a98f140'
+        >
+            <CountryLayer
+                zIndex={10}
+                SOC="CHN"
+                depth={1}
+                styles={{
+                "nation-stroke": "#ff0000",
+                "coastline-stroke": "#0088ff",
+                "province-stroke": "grey",
+                fill: (props) => {
+                    return getColorByGDP(props.adcode_pro);
+                }
+                }}
+            />
+            <Polygon
+                path={path1}
+            />
+            <Marker position={[126.84, 49.53]} offset={[0, -40]} anchor="top-center">
+                <img src={MARKER_SVG} alt="marker" />
+                <div style={{ width: 120, height: 25, display: 'flex', alignItems: 'center', fontSize: 16, background: '#fff', padding: 10, borderRadius: 4 }}>
+                    孙吴，车辆51</div>
+            </Marker>
 
-
-
-function Temp() {
-    const [chartsConfig, setChartsConfig] = useState(EChartsConfigInfo); // 错题分布数据
-
-    useEffect(() => {
-      // 这里是模拟的动态数据， 项目中可以修改为动态数据
-      chartsConfig.xAxis.data = ['单选题', '多选题', '判断题', '专项练习'];
-      chartsConfig.series[0].data = [12, 45, 56, 77];
-
-      setChartsConfig({ 
-        ...chartsConfig,
-      });
-    }, []);
-
-    return chartsConfig 
-        && (
+            <Scale />
+            <Toolbar />
+        </Amap>
+  
         <RenderCon
             style={{
-            width: 480,
-            height: (1080 - 110) / 2,
-            left: 10,
-            top: 160,
-            zIndex: 100,
-            position: 'relative'
+                width: 400,
+                height: 400,
+                position: 'absolute',
+                top: 0,
             }}
         >
-            <div className="App" >
-                <EchartsComponent 
-                option={chartsConfig} 
-                customClassName='charts' 
-                />
-            </div>
+            <Chart/>
         </RenderCon>
-            
-    )
+      </div>
+    </div>
+  );
 }
-
-export default Temp;

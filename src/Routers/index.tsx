@@ -19,8 +19,10 @@ const MapSearch = lazy(() => import('../pages/map/mapSearch'));
 const MapGeoLocation = lazy(() => import('../pages/map/mapGeoLocation'));
 const MapCountry = lazy(() => import('../pages/map/mapCountryLayer'));
 const MapProvinceLayer = lazy(() => import('../pages/map/mapProvinceLayer'));
+const MarkerCluster = lazy(() => import('../pages/map/mapCluster'));
 const EchartsDemo = lazy(() => import('../pages/echartsDemo'));
 const BigScreen = lazy(() => import('../pages/bigScreen'));
+
 
 
 // 实现懒加载的用Suspense包裹 定义函数
@@ -86,6 +88,10 @@ export const routers: RouteObject[] = [
       {
         path: '/bigScreen/page1',
         element: lazyLoad(<BigScreen />)
+      },
+      {
+        path: '/map/markerCluster',
+        element: lazyLoad(<MarkerCluster />)
       },
     ]
   },

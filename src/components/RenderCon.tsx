@@ -1,9 +1,14 @@
 import styleClass from '@/styles/renderScreen.less';
+import { CSSProperties } from 'react';
 
-export default function RenderCon({
+interface prop {
+  style: CSSProperties
+  children: any
+}
+function RenderCon({
   style,
   children,
-}) {
+}: prop) {
   return (
     <div className={styleClass.dragableContainer} style={{ ...style }}>
       <div className={styleClass.containerContentbox}>
@@ -19,3 +24,4 @@ export default function RenderCon({
     </div>
   )
 }
+export default RenderCon;

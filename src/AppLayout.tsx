@@ -5,7 +5,6 @@ import { Link, matchRoutes, Outlet, useLocation, useNavigate } from 'react-route
 import { useEffect, useState } from 'react';
 import { routers } from './Routers';
 
-const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 export default function AppLayout() {
@@ -41,6 +40,7 @@ export default function AppLayout() {
     { label: '计数', key: '/test', icon: <NotificationOutlined />},
     { label: '地图', key: '/map/selfMarker', icon: <AppstoreOutlined />},
     { label: 'echarts', key: '/echartsDemo', icon: <StockOutlined />},
+    { label: '大屏', key: '/bigScreen/page1', icon: <LaptopOutlined />},
   ]
   const sideMenusUser: MenuProps['items'] = [
     { label: '用户管理', key: '/', icon: <SettingOutlined /> ,children: [
@@ -56,6 +56,7 @@ export default function AppLayout() {
       { label: '定位', key: '/map/mapGeoLocation'},
       { label: '国别', key: '/map/mapCountry'},
       { label: '省份', key: '/map/mapProvince'},
+      { label: '聚合', key: '/map/markerCluster'},
     ]}
   ]
 
