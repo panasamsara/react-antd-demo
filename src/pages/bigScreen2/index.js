@@ -10,6 +10,7 @@ import {
   Marker
 } from "@amap/amap-react";
 import Title from "@/components/Title/Title";
+import ChoseCar from "./components/ChoseCar";
 
 const colors = {};
 const GDPSpeed = {};
@@ -83,6 +84,8 @@ export default function App() {
                 <Scale />
                 <Toolbar />
               </Amap>
+
+              <ChoseCar />
           </div>
       </div>
     </div>

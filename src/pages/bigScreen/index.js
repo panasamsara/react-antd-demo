@@ -18,6 +18,7 @@ import Pie2Component from "./components/Pie2/PieComponent";
 import Pie3Component from "./components/Pie3/PieComponent";
 import Pie4Component from "./components/Pie4/PieComponent";
 import TopCompo from "./components/TopCompo";
+import getImgUrl from "@/assets/images/getImgUrl";
 
 export default function App() {
     const path1 = [
@@ -49,6 +50,7 @@ export default function App() {
       <div style={{
         overflow: 'hidden',
         height: '100%',
+        background: `url(${getImgUrl('BG1')}) 100% 100% no-repeat`,
       }}>
         <div style={{
               width: '100%',
@@ -70,8 +72,8 @@ export default function App() {
                 <Amap
                 showLabel={false}
                 zooms={[4, 10]}
-                center={[106.122082, 33.719192]}
-                zoom={4}
+                center={[110.122082, 37.719192]}
+                zoom={5}
                 isHotspot={false}
                 defaultCursor="pointer"
                 features={[]} // 所有默认底图图层都隐藏
