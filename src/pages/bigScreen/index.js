@@ -12,6 +12,7 @@ import {
 import { getColorByGDP } from "./colors";
 // import LabelsData from "./districts";
 import MARKER_SVG from "@/assets/marker.svg";
+import Title from "@/components/Title/Title";
 import PieComponent from "./components/Pie1/PieComponent";
 import Pie2Component from "./components/Pie2/PieComponent";
 import Pie3Component from "./components/Pie3/PieComponent";
@@ -44,8 +45,27 @@ export default function App() {
     ];
 
     return (
+      <div style={{
+        overflow: 'hidden',
+        height: '100%',
+      }}>
+        <div style={{
+              width: '100%',
+              height: 70,
+            }}>
+             <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <Title />
+              </div>
+        </div>
         <div className="App">
+            
             <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
+                
                 <Amap
                 showLabel={false}
                 zooms={[4, 10]}
@@ -89,5 +109,6 @@ export default function App() {
                 <Pie4Component />
             </div>
         </div>
+      </div>
     );
 }

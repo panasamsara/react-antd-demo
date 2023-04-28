@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.less';
+import './app.less';
 import reportWebVitals from './reportWebVitals';
 // import Router from "./Route/Router";
 import {BrowserRouter as Router} from "react-router-dom"

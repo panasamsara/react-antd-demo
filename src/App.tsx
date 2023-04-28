@@ -1,5 +1,5 @@
 import { useRoutes } from 'react-router-dom';
-import './index.less';
+import './app.less';
 import { routers } from './Routers'
 function App() {
   return useRoutes(routers);
