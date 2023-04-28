@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { BarsOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import CardVideo from './CardVideo'
 
 function EchartsComponent(props: any) {
@@ -57,7 +57,7 @@ function EchartsComponent(props: any) {
                   <div
                     style={{ position: 'absolute', top: '4px', left: '175px' }}
                   >
-                    <BarsOutlined
+                    <CloseOutlined
                       type="close"
                       onClick={() => setVisible(false)}
                       style={{

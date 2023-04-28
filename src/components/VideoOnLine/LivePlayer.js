@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import { BarsOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 
 // eslint-disable-next-line react/require-optimization
 // import React from 'react'
@@ -38,7 +38,7 @@ export default function LivePlayer(props) {
               left: ' 180px',
             }}
           >
-            <BarsOutlined
+            <CloseOutlined
               type="close"
               onClick={() => {
                 setVisible(false)
