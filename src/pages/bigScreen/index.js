@@ -17,6 +17,7 @@ import PieComponent from "./components/Pie1/PieComponent";
 import Pie2Component from "./components/Pie2/PieComponent";
 import Pie3Component from "./components/Pie3/PieComponent";
 import Pie4Component from "./components/Pie4/PieComponent";
+import TopCompo from "./components/TopCompo";
 
 export default function App() {
     const path1 = [
@@ -107,6 +108,7 @@ export default function App() {
                 <Pie2Component />
                 <Pie3Component />
                 <Pie4Component />
+                <TopCompo />
             </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ const MapProvinceLayer = lazy(() => import('../pages/map/mapProvinceLayer'));
 const MarkerCluster = lazy(() => import('../pages/map/mapCluster'));
 const EchartsDemo = lazy(() => import('../pages/echartsDemo'));
 const BigScreen = lazy(() => import('../pages/bigScreen'));
-
+const BigScreen2 = lazy(() => import('../pages/bigScreen2'));
 
 
 // 实现懒加载的用Suspense包裹 定义函数
@@ -95,7 +95,7 @@ export const routers: RouteObject[] = [
       },
       {
         path: '/bigScreen/page2',
-        element: lazyLoad(<BigScreen />)
+        element: lazyLoad(<BigScreen2 />)
       },
     ]
   },
