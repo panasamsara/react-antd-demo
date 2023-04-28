@@ -46,7 +46,7 @@ function EchartsComponent(props: any) {
                   display: 'flex',
                   alignItems: 'center',
                   color: 'white',
-                  // backgroundColor: visible == true ? '#010e22' : null,
+                  backgroundColor: visible == true ? '#010e22' : '',
                   justifyContent: 'center',
                   fontSize: 14,
                   position: 'relative',
