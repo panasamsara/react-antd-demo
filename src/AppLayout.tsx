@@ -43,13 +43,13 @@ export default function AppLayout() {
     { label: '大屏', key: '/bigScreen/page1', icon: <LaptopOutlined />},
   ]
   const sideMenusUser: MenuProps['items'] = [
-    { label: '用户管理', key: '/', icon: <SettingOutlined /> ,children: [
+    { label: '用户管理', key: '/user', icon: <SettingOutlined /> ,children: [
       { label: '计数', key: '/test'},
       { label: '用户信息', key: '/user/list'},
     ]}
   ]
   const sideMenusMap: MenuProps['items'] = [
-    { label: '地图', key: '/', icon: <SettingOutlined /> ,children: [
+    { label: '地图', key: '/map', icon: <SettingOutlined /> ,children: [
       { label: '自定义标记', key: '/map/selfMarker'},
       { label: '运动路径', key: '/map/mapCarMove'},
       { label: '搜索', key: '/map/mapSearch'},
@@ -85,6 +85,7 @@ export default function AppLayout() {
                 // selectedKeys={[current]}  
                 items={sideMenusUser} 
                 style={{ height: '100%', borderRight: 0 }}
+                defaultOpenKeys={['/user']}
               />
             </Sider>
             : null
@@ -97,6 +98,7 @@ export default function AppLayout() {
                 // selectedKeys={[current]}  
                 items={sideMenusMap} 
                 style={{ height: '100%', borderRight: 0 }}
+                defaultOpenKeys={['/map']}
               />
             </Sider>
             : null

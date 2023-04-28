@@ -12,7 +12,7 @@ const Pie = () => {
     //   left: 'center',
     // },
     title: {
-      text: '95',//主标题文本
+      text: '189',//主标题文本
       left: 'center',
       top: '45%',
       textStyle: {
