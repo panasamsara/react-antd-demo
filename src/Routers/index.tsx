@@ -82,6 +82,10 @@ export const routers: RouteObject[] = [
         element: lazyLoad(<MapProvinceLayer />)
       },
       {
+        path: '/map/markerCluster',
+        element: lazyLoad(<MarkerCluster />)
+      },
+      {
         path: '/echartsDemo',
         element: lazyLoad(<EchartsDemo />)
       },
@@ -90,8 +94,8 @@ export const routers: RouteObject[] = [
         element: lazyLoad(<BigScreen />)
       },
       {
-        path: '/map/markerCluster',
-        element: lazyLoad(<MarkerCluster />)
+        path: '/bigScreen/page2',
+        element: lazyLoad(<BigScreen />)
       },
     ]
   },

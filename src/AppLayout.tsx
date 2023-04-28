@@ -27,8 +27,10 @@ export default function AppLayout() {
         }
       })
     }
+    
+    setCurrent(location.pathname); // 设置路由高亮
     setDefaultSelectedKeys(pathArr);
-    setDefaultOpenKeys(pathArr);
+    setDefaultOpenKeys(pathArr); // 设置路由展开
     setIsInit(true);
   }, [location.pathname]);
   if(!isInit) {
@@ -41,6 +43,7 @@ export default function AppLayout() {
     { label: '地图', key: '/map/selfMarker', icon: <AppstoreOutlined />},
     { label: 'echarts', key: '/echartsDemo', icon: <StockOutlined />},
     { label: '大屏', key: '/bigScreen/page1', icon: <LaptopOutlined />},
+    { label: '大屏2', key: '/bigScreen/page2', icon: <LaptopOutlined />},
   ]
   const sideMenusUser: MenuProps['items'] = [
     { label: '用户管理', key: '/user', icon: <SettingOutlined /> ,children: [
