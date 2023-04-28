@@ -11,6 +11,7 @@ import {
 } from "@amap/amap-react";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
+import VideoCompo from "./components/VideoCompo";
 
 const colors = {};
 const GDPSpeed = {};
@@ -86,6 +87,7 @@ export default function App() {
               </Amap>
 
               <ChoseCar />
+              <VideoCompo />
           </div>
       </div>
     </div>

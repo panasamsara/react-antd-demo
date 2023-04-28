@@ -28,7 +28,7 @@ export default function App() {
     <div>
       <RenderCompo
         style={{
-            width: 400,
+            width: 100,
             height: 300,
             position: 'absolute',
             top: 20,
@@ -51,6 +51,7 @@ export default function App() {
         title="Title"
         onOk={handleOk}
         onCancel={handleCancel}
+        style= {{opacity: 0.8}}
         footer={[
           <Button key="back" onClick={handleCancel}>
             取消
