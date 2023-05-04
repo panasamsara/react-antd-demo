@@ -10,11 +10,11 @@ export default function App() {
     <div>
       <RenderCompo
         style={{
-            width: 400,
+            width: 240,
             height: 300,
             position: 'absolute',
             top: 20,
-            left: 520
+            right: 120
         }}
       > 
         

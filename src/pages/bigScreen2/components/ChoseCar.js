@@ -49,13 +49,13 @@ export default function App() {
             height: 300,
             position: 'absolute',
             top: 20,
-            left: 420
+            left: 100
         }}
       > 
         <div style={{ width: 100, 
           height: 141, 
           fontSize: 40,
-          color: '#fff' }}
+          color: '#1677ff' }}
           onClick={showModal}
         >
           <BarsOutlined />

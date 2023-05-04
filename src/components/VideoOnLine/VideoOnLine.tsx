@@ -55,7 +55,7 @@ function EchartsComponent(props: any) {
               >
                 {visible == true ? (
                   <div
-                    style={{ position: 'absolute', top: '4px', left: '175px' }}
+                    style={{ position: 'absolute', top: '4px', left: '200px' }}
                   >
                     <CloseOutlined
                       type="close"

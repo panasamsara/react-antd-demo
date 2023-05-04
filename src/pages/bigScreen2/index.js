@@ -12,6 +12,7 @@ import {
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
 import VideoCompo from "./components/VideoCompo";
+import getImgUrl from "@/assets/images/getImgUrl";
 
 const colors = {};
 const GDPSpeed = {};
@@ -39,6 +40,7 @@ export default function App() {
     <div style={{
       overflow: 'hidden',
       height: '100%',
+      background: `url(${getImgUrl('BG1')}) 100% 100% no-repeat`,
     }}>
       <div style={{
         width: '100%',

@@ -1,5 +1,5 @@
 
-import "./styles.css";
+import "@/styles/mapStyle.css";
 import React, { useState } from 'react'
 import {
   Amap,

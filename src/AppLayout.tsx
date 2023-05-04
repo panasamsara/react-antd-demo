@@ -107,7 +107,7 @@ export default function AppLayout() {
             : null
           }
           {/* 面包屑 */}
-          <Layout style={{ padding: '0 24px 24px',backgroundColor: '#fff', borderLeft: '1px solid #f5f5f5' }}>
+          <Layout style={{ backgroundColor: '#fff', borderLeft: '1px solid #f5f5f5' }}>
             <Breadcrumb style={{ margin: '16px 0' }}
               items={[
                 {
