@@ -6,8 +6,8 @@ import {
   Scale,
   Toolbar,
   CountryLayer,
-  Polygon,
-  Marker
+  TrafficLayer, RoadNetLayer , SatelliteLayer
+  
 } from "@amap/amap-react";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
@@ -59,29 +59,31 @@ export default function App() {
               showLabel={false}
               zooms={[4, 10]}
               center={[106.122082, 33.719192]}
-              zoom={4}
+              zoom={5}
               isHotspot={false}
               defaultCursor="pointer"
               features={[]} // 所有默认底图图层都隐藏
               showIndoorMap={false} // 不显示室内地图
-              mapStyle='amap://styles/f74689d33353c8266c5a7d2f6a98f140'
+              mapStyle='amap://styles/whitesmoke'
               >
+                
                 <CountryLayer
                   opacity={opacity}
                   depth={2}
                   soc={soc}
-                  styles={{
-                    'nation-stroke': '#22ffff',
-                    'coastline-stroke': [0.85, 0.63, 0.94, 1],
-                    'province-stroke': 'white',
-                    'city-stroke': 'rgba(255,255,255,0.5)', //中国特有字段
-                    fill: (props) => {
-                      //中国特有字段
-                      return getColor(props.adcode_pro || props.NAME_CHN, 'country');
-                    },
-                  }}
+                  // styles={{
+                  //   'nation-stroke': '#22ffff',
+                  //   'coastline-stroke': [0.85, 0.63, 0.94, 1],
+                  //   'province-stroke': 'white',
+                  //   'city-stroke': 'rgba(255,255,255,0.5)', //中国特有字段
+                  //   fill: (props) => {
+                  //     //中国特有字段
+                  //     return getColor(props.adcode_pro || props.NAME_CHN, 'country');
+                  //   },
+                  // }}
                 />
-
+                <TrafficLayer />
+                <RoadNetLayer />
                 <Scale />
                 <Toolbar />
               </Amap>
