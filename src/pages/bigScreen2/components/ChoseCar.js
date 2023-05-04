@@ -1,14 +1,16 @@
 
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 import { BarsOutlined } from '@ant-design/icons';
 import { Button, Modal } from 'antd';
+import { get, post } from '@/utils/requests'
 
 export default function App() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [rank, setRank] = useState([])
   const showModal = () => {
     setOpen(true);
   };
@@ -24,6 +26,21 @@ export default function App() {
   const handleCancel = () => {
     setOpen(false);
   };
+
+  async function getDataRank() {
+    const res2 = await get('/screen/vehicleareaAll', {})
+    res2.data.forEach((res) => {
+      if (res.projectName == null || res.projectName == '' || !res.projectName) {
+        res.projectName = 'M18-2'
+      }
+    })
+    setRank(res2.data.filter((res) => res.gpsSpeed > 0))
+  }
+  useEffect(() => {
+    getDataRank()
+    // setRank(testdata.data)
+  }, [])
+
   return (
     <div>
       <RenderCompo
@@ -51,7 +68,7 @@ export default function App() {
         title="Title"
         onOk={handleOk}
         onCancel={handleCancel}
-        style= {{opacity: 0.8}}
+        style= {{opacity: 1}}
         footer={[
           <Button key="back" onClick={handleCancel}>
             取消
