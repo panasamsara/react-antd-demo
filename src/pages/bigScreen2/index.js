@@ -52,7 +52,7 @@ export default function App() {
             height: '100%',
           }}
         >
-          <Title />
+          <Title page={'bigScreen2'}/>
         </div>
       </div>
       <div className="App">
