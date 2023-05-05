@@ -58,21 +58,21 @@ const handleClick = (e,record)=>{
 const data = [
   {
     key: '1',
-    name: 'John Brown',
+    name: '张三',
     age: 32,
     address: 'New York No. 1 Lake Park',
     tags: ['nice', 'developer'],
   },
   {
     key: '2',
-    name: 'Jim Green',
+    name: '李四',
     age: 42,
     address: 'London No. 1 Lake Park',
     tags: ['loser'],
   },
   {
     key: '3',
-    name: 'Joe Black',
+    name: '王五',
     age: 32,
     address: 'Sydney No. 1 Lake Park',
     tags: ['cool', 'teacher'],

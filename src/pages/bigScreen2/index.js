@@ -1,6 +1,7 @@
 
 import "@/styles/mapStyle.css";
 import React, { useState, useRef, useEffect } from 'react'
+import { message } from 'antd';
 import {
   Amap,
   Scale,
@@ -34,7 +35,10 @@ function getColor(key, type) {
 
 export default function App() {
   // 全局事件监听
-  bus.on('tableClick', e => console.log('tableclick', e) )
+  bus.on('tableClick', e => {
+    console.log('tableclick', e) 
+    message.success(`点击了${e.RowData.name}`)
+  })
   // 全屏展示
   const container_ref = useRef();
   useEffect(()=>{
