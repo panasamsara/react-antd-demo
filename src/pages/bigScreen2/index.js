@@ -4,16 +4,19 @@ import React, { useState, useRef, useEffect } from 'react'
 import { message } from 'antd';
 import {
   Amap,
+  Marker,
   Scale,
   Toolbar,
   CountryLayer,
   TrafficLayer, RoadNetLayer , SatelliteLayer
 } from "@amap/amap-react";
+import MARKER_SVG from "@/assets/marker.svg";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
 import VideoCompo from "./components/VideoCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
+import DetailModal from "./components/DetailModal";
 
 const colors = {};
 const GDPSpeed = {};
@@ -34,10 +37,34 @@ function getColor(key, type) {
 }
 
 export default function App() {
+  const [modalShow, setModalShow] = useState(false);
   // 全局事件监听
-  bus.on('tableClick', e => {
-    console.log('tableclick', e) 
-    message.success(`点击了${e.RowData.name}`)
+  
+  useEffect(() => {
+    const tableclickCallback = (e) => {
+      console.log('tableclick', e) 
+      message.success(`点击了${e.RowData.name}`)
+    }
+    const closeModalCallback = (e) => {
+      setModalShow(false)
+    }
+    bus.on(`tableClick`, tableclickCallback)
+    bus.on(`closeModal`, closeModalCallback)
+    return () => {
+      bus.off(`tableClick`, tableclickCallback)
+      bus.off(`closeModal`, closeModalCallback)
+    }
+  }, [])
+
+
+
+  // bus.on('tableClick', e => {
+  //   console.log('tableclick', e) 
+  //   message.success(`点击了${e.RowData.name}`)
+  // })
+  bus.on('closeModal', e=>{
+    console.log(111111);
+    setModalShow(false)
   })
   // 全屏展示
   const container_ref = useRef();
@@ -64,6 +91,7 @@ export default function App() {
       width: 1920,
       height: 1080,
       background: `url(${getImgUrl('BG1')}) 100% 100% no-repeat`,
+      position: 'relative'
     }}>
       <div style={{
         width: '100%',
@@ -91,7 +119,16 @@ export default function App() {
               showIndoorMap={false} // 不显示室内地图
               mapStyle='amap://styles/whitesmoke'
               >
-                
+                <Marker position={[110.84, 32.53]} offset={[0, -40]} anchor="top-center">
+                    <img src={MARKER_SVG} alt="marker" />
+                    <div style={{ minWidth: 180, minHeight: 100, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
+                      onClick={()=> setModalShow(true)}
+                    >
+                      <p style={{margin: 0}}>LGAG3DV22MD100037</p>
+                      <p style={{margin: 0}}>0.2km/h</p>
+                      <p style={{margin: 0}}>无视频</p>
+                    </div>
+                </Marker>
                 <CountryLayer
                   opacity={opacity}
                   depth={2}
@@ -116,6 +153,7 @@ export default function App() {
               <ChoseCar />
               <VideoCompo />
           </div>
+          {modalShow ? <DetailModal /> : null}
       </div>
     </div>
   );
