@@ -1,6 +1,6 @@
 
 import "@/styles/mapStyle.css";
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   Amap,
   Scale,
@@ -33,13 +33,30 @@ function getColor(key, type) {
 }
 
 export default function App() {
+  // 全屏展示
+  const container_ref = useRef();
+  useEffect(()=>{
+    if (container_ref.current.requestFullscreen) {
+      container_ref.current.requestFullscreen();
+    } else if (container_ref.current.webkitRequestFullScreen) {
+      container_ref.current.webkitRequestFullScreen();
+    } else if (container_ref.current.mozRequestFullScreen) {
+      container_ref.current.mozRequestFullScreen();
+    } else if (container_ref.current.msRequestFullscreen) {
+      container_ref.current.msRequestFullscreen();
+    }
+  },[container_ref]);
+
   const [soc, setSoc] = useState('CHN');
   const [opacity, setOpacity] = useState(0.8);
-
+  
   return (
-    <div style={{
+    <div 
+      ref={container_ref}
+      style={{
       overflow: 'hidden',
-      height: '100%',
+      width: 1920,
+      height: 1080,
       background: `url(${getImgUrl('BG1')}) 100% 100% no-repeat`,
     }}>
       <div style={{

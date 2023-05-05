@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
-import getImgUrl from "@/assets/images/getImgUrl";
 import { BarsOutlined } from '@ant-design/icons';
 import { Button, Modal } from 'antd';
-import { get, post } from '@/utils/requests'
+import { get, post } from '@/utils/requests';
+import TableData from "./tableData";
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -78,11 +78,7 @@ export default function App() {
           </Button>
         ]}
       >
-        <p>List...</p>
-        <p>List...</p>
-        <p>List...</p>
-        <p>List...</p>
-        <p>List...</p>
+        <TableData />
       </Modal>
     </div>
   );
