@@ -1,5 +1,7 @@
-import { Space, Table, Tag } from 'antd';
+import { Space, Table, Tag, Button } from 'antd';
 import { useState, useEffect } from 'react';
+import { bus } from '@/utils';
+
 const columns = [
   {
     title: 'Name',
@@ -43,11 +45,16 @@ const columns = [
     render: (_, record) => (
       <Space size="middle">
         <a>Invite {record.name}</a>
-        <a>Delete</a>
+        <Button onClick={ (e)=> handleClick(e,record) }>操作</Button>
       </Space>
     ),
   },
 ];
+const handleClick = (e,record)=>{
+  console.log(11, record);
+  e.stopPropagation();
+  bus.emit('tableClick', {RowData: record})
+}
 const data = [
   {
     key: '1',

@@ -7,12 +7,12 @@ import {
   Toolbar,
   CountryLayer,
   TrafficLayer, RoadNetLayer , SatelliteLayer
-  
 } from "@amap/amap-react";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
 import VideoCompo from "./components/VideoCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
+import { bus } from '@/utils';
 
 const colors = {};
 const GDPSpeed = {};
@@ -33,6 +33,8 @@ function getColor(key, type) {
 }
 
 export default function App() {
+  // 全局事件监听
+  bus.on('tableClick', e => console.log('tableclick', e) )
   // 全屏展示
   const container_ref = useRef();
   useEffect(()=>{
