@@ -11,11 +11,8 @@ import { config as AmapReactConfig } from '@amap/amap-react';
 AmapReactConfig.version = '2.0'; // 默认2.0，这里可以不修改
 // AmapReactConfig.key = '234b1e1d2207058b4e0d15ed5f5a7154';
 AmapReactConfig.key = '7929e756475e21165771e02882453d20';
-// AmapReactConfig.plugins = [
-//   'AMap.ToolBar',
-//   'AMap.MoveAnimation',
-//   // 在此配置你需要预加载的插件，如果不配置，在使用到的时候会自动异步加载
-// ];
+
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -3,7 +3,7 @@ import "@/styles/mapStyle.css";
 import React, { useState } from 'react'
 import {
   Amap,
-  CountryLayer,
+  usePlugins,
   Polygon,
   Marker
 } from "@amap/amap-react";
@@ -22,6 +22,7 @@ import getImgUrl from "@/assets/images/getImgUrl";
 // const { AMap } = window
 // console.log('AMap-', AMap)
 export default function App() {
+    usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
     const path1 = [
         // 111.87,31.91  113.76,31.84  114.94,29.72  111.12,30.30
         // 126.84,49.93  128.09,49.39 127.85,48.87 126.33,49.29

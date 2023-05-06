@@ -5,7 +5,9 @@ import { message } from 'antd';
 import {
   Amap,
   Marker,
+  usePlugins
 } from "@amap/amap-react";
+
 import MARKER_SVG from "@/assets/marker.svg";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
@@ -34,6 +36,7 @@ function getColor(key, type) {
 
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
+  usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
   // 全局事件监听
   useEffect(() => {
     const tableclickCallback = (e) => {
