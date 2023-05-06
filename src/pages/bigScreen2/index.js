@@ -5,9 +5,6 @@ import { message } from 'antd';
 import {
   Amap,
   Marker,
-  Scale,
-  CountryLayer,
-  TrafficLayer, RoadNetLayer , SatelliteLayer
 } from "@amap/amap-react";
 import MARKER_SVG from "@/assets/marker.svg";
 import Title from "@/components/Title/Title";
@@ -97,15 +94,10 @@ export default function App() {
       <div className="App">
           <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
             <Amap
-              showLabel={false}
-              zooms={[4, 10]}
+              zooms={[2, 12]}
               center={[106.122082, 33.719192]}
               zoom={5}
-              isHotspot={false}
-              defaultCursor="pointer"
-              features={[]} // 所有默认底图图层都隐藏
-              showIndoorMap={false} // 不显示室内地图
-              mapStyle='amap://styles/whitesmoke'
+              // mapStyle='amap://styles/whitesmoke'
               >
                 <Marker position={[110.84, 32.53]} offset={[0, -40]} anchor="top-center">
                     <img src={MARKER_SVG} alt="marker" />
@@ -117,24 +109,6 @@ export default function App() {
                       <p style={{margin: 0}}>无视频</p>
                     </div>
                 </Marker>
-                <CountryLayer
-                  opacity={opacity}
-                  depth={2}
-                  soc={soc}
-                  // styles={{
-                  //   'nation-stroke': '#22ffff',
-                  //   'coastline-stroke': [0.85, 0.63, 0.94, 1],
-                  //   'province-stroke': 'white',
-                  //   'city-stroke': 'rgba(255,255,255,0.5)', //中国特有字段
-                  //   fill: (props) => {
-                  //     //中国特有字段
-                  //     return getColor(props.adcode_pro || props.NAME_CHN, 'country');
-                  //   },
-                  // }}
-                />
-                <TrafficLayer />
-                <RoadNetLayer />
-                <Scale />
               </Amap>
 
               <ChoseCar />
