@@ -6,6 +6,8 @@ function EchartsComponent(props: any) {
   const [url, setUrl] = useState()
   const [url2, setUrl2] = useState()
   const [visible, setVisible] = useState(true)
+
+  // test_url = 'http://2008101_v.vd.rdas.dfmc.com.cn:9502/hlsram/chn0/index.m3u8'
   let args = {
     cars: []
   }
@@ -35,7 +37,7 @@ function EchartsComponent(props: any) {
           </span>
           <div className="test" style={{ flexGrow: 1 }}>
             {args.cars[0] ? (
-              <CardVideo url={url} url2={url2} style={{ height: '100%' }} />
+              <CardVideo url={''} url2={url2} style={{ height: '100%' }} />
             ) : (
               <div
                 style={{
