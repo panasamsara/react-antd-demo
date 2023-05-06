@@ -1,0 +1,34 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 0;
+
+  .logo {
+    padding-left: 2%;
+    z-index: 1;
+  }
+
+  .title {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 30px;
+    z-index: 0;
+  }
+  .rightInfo {
+    padding-right: 2%;
+    z-index: 1;
+  }
+}
+
+.focusNoStyle:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}

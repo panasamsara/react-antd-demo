@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+    <script src="%PUBLIC_URL%/liveplayer-element.min.js"></script>
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+    <script src="//webapi.amap.com/maps?v=1.4.15&key=f97efc35164149d0c0f299e7a8adb3d2&plugin=AMap.Geocoder,AMap.GraspRoad,AMap.MarkerClusterer,AMap.Autocomplete,AMap.RangingTool"></script>
+    <!-- <script type="text/javascript">
+      window._AMapSecurityConfig = {
+        securityJsCode:"ad3404d57c80c6fe9c78891d30228a86",
+      }
+    </script>
+    <script src="https://webapi.amap.com/loader.js"></script>
+    <script type="text/javascript" >
+      AMapLoader.load({
+        key: "234b1e1d2207058b4e0d15ed5f5a7154",       // 申请好的Web端开发者Key，首次调用 load 时必填
+        version: "2.0",                 // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+      })
+    </script>  -->
+
+    <!-- 原生地图用到 -->
+    <!-- <script src="https://webapi.amap.com/maps?v=2.0&key=234b1e1d2207058b4e0d15ed5f5a7154&plugin=Map3D,AMap.DistrictLayer,AMap.Scale,AMap.ToolBar,AMap.MarkerClusterer"></script>
+    <script src="https://a.amap.com/Loca/static/mock/adcodes.js"></script> -->
+    
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

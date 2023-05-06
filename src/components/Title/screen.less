@@ -1,0 +1,52 @@
+.setting {
+  position: absolute;
+  // right: 2px;
+  // top: 2px;
+  // width: 86px;
+  // height: 100px;
+  z-index: 999;
+  &:hover .items {
+    display: block;
+  }
+}
+.items {
+  display: none;
+  user-select: none;
+  position: absolute;
+  top: -1px;
+  right: -33px;
+  width: 86px;
+  height: 45px;
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(222, 222, 222, 1);
+  opacity: 1;
+  border-radius: 5px;
+  text-align: center;
+  color: #333;
+  z-index: 999;
+  cursor: pointer;
+  > div:hover {
+    color: rgb(46, 154, 255) !important;
+  }
+  .caret {
+    color: rgb(138, 138, 138) !important;
+  }
+  .caret:hover {
+    color: rgb(0, 145, 253) !important;
+  }
+}
+@font-face {
+  font-family: 'webfont';
+  font-display: swap;
+  src: url('//at.alicdn.com/t/webfont_2j20ryfalx1.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/webfont_2j20ryfalx1.eot?#iefix')
+      format('embedded-opentype'),
+    /* IE6-IE8 */ url('//at.alicdn.com/t/webfont_2j20ryfalx1.woff2')
+      format('woff2'),
+    url('//at.alicdn.com/t/webfont_2j20ryfalx1.woff') format('woff'),
+    /* chrome、firefox */ url('//at.alicdn.com/t/webfont_2j20ryfalx1.ttf')
+      format('truetype'),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url('//at.alicdn.com/t/webfont_2j20ryfalx1.svg#庞门正道标题体2')
+      format('svg'); /* iOS 4.1- */
+}
