@@ -6,6 +6,7 @@ import { BarsOutlined } from '@ant-design/icons';
 import { Button, Modal } from 'antd';
 import { get, post } from '@/utils/requests';
 import TableData from "./tableData";
+import TreeData from "./TreeData";
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,7 @@ export default function App() {
     setOpen(false);
   };
 
+  // 调接口
   async function getDataRank() {
     const res2 = await get('/screen/vehicleareaAll', {})
     res2.data.forEach((res) => {
@@ -79,6 +81,8 @@ export default function App() {
         ]}
       >
         <TableData />
+
+        <TreeData />
       </Modal>
     </div>
   );

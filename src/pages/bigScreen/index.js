@@ -1,13 +1,13 @@
 
 import "@/styles/mapStyle.css";
 import React, { useState } from 'react'
-// import {
-//   Amap,
-//   CountryLayer,
-//   Polygon,
-//   Marker
-// } from "@amap/amap-react";
-import { Map, Marker, Polygon } from 'react-amap'
+import {
+  Amap,
+  CountryLayer,
+  Polygon,
+  Marker
+} from "@amap/amap-react";
+// import { Map, Marker, Polygon } from 'react-amap'
 
 import { getColorByGDP } from "./colors";
 import MARKER_SVG from "@/assets/marker.svg";
@@ -19,8 +19,8 @@ import Pie4Component from "./components/Pie4/PieComponent";
 import TopCompo from "./components/TopCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 
-const { AMap } = window
-console.log('AMap-', AMap)
+// const { AMap } = window
+// console.log('AMap-', AMap)
 export default function App() {
     const path1 = [
         // 111.87,31.91  113.76,31.84  114.94,29.72  111.12,30.30
@@ -70,18 +70,17 @@ export default function App() {
             
             <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
                 
-                {/* <Amap
+                <Amap
                 showLabel={false}
                 zooms={[4, 10]}
                 center={[110.122082, 37.719192]}
                 zoom={5}
                 isHotspot={false}
                 defaultCursor="pointer"
-                features={[]} // 所有默认底图图层都隐藏
                 showIndoorMap={false} // 不显示室内地图
                 mapStyle='amap://styles/f74689d33353c8266c5a7d2f6a98f140'
                 >
-                    <CountryLayer
+                    {/* <CountryLayer
                         zIndex={10}
                         SOC="CHN"
                         depth={1}
@@ -93,7 +92,7 @@ export default function App() {
                             return getColorByGDP(props.adcode_pro);
                         }
                         }}
-                    />
+                    /> */}
                     <Polygon
                         path={path1}
                     />
@@ -102,29 +101,15 @@ export default function App() {
                         <div style={{ width: 120, height: 25, display: 'flex', alignItems: 'center', fontSize: 16, background: '#fff', padding: 10, borderRadius: 4 }}>
                             孙吴，车辆51</div>
                     </Marker>
-                </Amap> */}
+                </Amap>
 
-                <Map
-                    // center={mapCenter}
+                {/* <Map
                     zoom={5}
                     center={[108.55, 43.86]}
-                    // zoom={14} 
-                    // center={[116.397637, 39.900001]}
-                    // zoom={14}
-                    // center={[116.400274, 39.905812]}
-
                     useAMapUI
                     mapStyle='amap://styles/f74689d33353c8266c5a7d2f6a98f140'
-                    // plugins={this.mapPlugins}
                     amapkey={'7929e756475e21165771e02882453d20'}
                 >
-                    {/* <Circle
-                        visiable={true}
-                        radius={100000}
-                        style={{ fillColor: 'rgb(71,196,237)', strokeColor: "#fff" }}
-                        strokeWeight={2}
-                        center={new AMap.LngLat(113.73, 30.65)}
-                    /> */}
                     <Polygon
                         visiable={true}
                         path={path1}
@@ -132,37 +117,19 @@ export default function App() {
                             strokeColor: "rgb(206,58,142)",
                             fillColor: "rgb(202,108,230)",
                             zIndex: 50,
-                            // strokeOpacity: 0.2,
-                            // fillOpacity: 0.4,
-
                         }}
                     />
                     <Marker visiable={true} position={new AMap.LngLat(126.84, 49.53)} />
                     <Marker
                         visiable={true}
-                        // label={{
-                        //     // 设置文本标注内容
-                        //     content: info,
-                        //     // 设置文本标注方位
-                        //     direction: 'left',
-                        // }}
                         style={{ fontSize: 18 }}
                         icon=''
                         draggable={false}
                         bubble={true}
-                        // content="<div>我是 marker 的 label 标签</div>"
                         position={AMap && new AMap.LngLat(121.57, 49.36)}
                     >
                         <div style={{ width: 120, height: 25, display: 'flex', alignItems: 'center', fontSize: 16, background: '#fff', padding: 10, borderRadius: 4 }}>孙吴，车辆51</div>
                     </Marker>
-
-                    {/* <Circle
-                        visiable={true}
-                        radius={100000}
-                        style={{ fillColor: 'rgb(6,232,215)', strokeColor: "#fff" }}
-                        strokeWeight={2}
-                        center={new AMap.LngLat(103.47, 30.45)}
-                    /> */}
                     <Polygon
                         visiable={true}
                         path={path2}
@@ -170,7 +137,6 @@ export default function App() {
                             strokeColor: "#fff",
                             fillColor: "rgb(6,232,215)",
                             zIndex: 50
-
                         }}
                     />
                     <Marker visiable={true} position={new AMap.LngLat(122.50, 53.00)} />
@@ -190,7 +156,6 @@ export default function App() {
                             strokeColor: "#fff",
                             fillColor: "rgb(255,206,55)",
                             zIndex: 50
-
                         }}
                     />
                     <Marker visiable={true} position={new AMap.LngLat(124.90, 43.57)} />
@@ -203,7 +168,7 @@ export default function App() {
                     >
                         <div style={{ width: 120, height: 25, display: 'flex', alignItems: 'center', fontSize: 16, background: '#fff', padding: 10, borderRadius: 4 }}>长春，车辆5</div>
                     </Marker>
-                </Map>
+                </Map> */}
         
                 <PieComponent />
                 <Pie2Component />

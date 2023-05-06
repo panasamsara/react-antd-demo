@@ -20,7 +20,7 @@ const Detail = () => {
           display: 'flex', justifyContent: 'space-between'
         }}>
           <div>车辆信号详情</div>
-          <div style={{ width: 24, height: 40, }} onClick={()=> bus.emit('closeModal',{})}><CloseOutlined /></div>
+          <div style={{ width: 24, height: 40, cursor: 'pointer' }} onClick={()=> bus.emit('closeModal',{})}><CloseOutlined /></div>
         </div>
         <div style={{ padding: 10, }}>
           <div style={{ margin: '5px 0' }}>

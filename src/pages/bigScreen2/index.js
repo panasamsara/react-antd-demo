@@ -6,7 +6,6 @@ import {
   Amap,
   Marker,
   Scale,
-  Toolbar,
   CountryLayer,
   TrafficLayer, RoadNetLayer , SatelliteLayer
 } from "@amap/amap-react";
@@ -39,7 +38,6 @@ function getColor(key, type) {
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
   // 全局事件监听
-  
   useEffect(() => {
     const tableclickCallback = (e) => {
       console.log('tableclick', e) 
@@ -56,16 +54,6 @@ export default function App() {
     }
   }, [])
 
-
-
-  // bus.on('tableClick', e => {
-  //   console.log('tableclick', e) 
-  //   message.success(`点击了${e.RowData.name}`)
-  // })
-  bus.on('closeModal', e=>{
-    console.log(111111);
-    setModalShow(false)
-  })
   // 全屏展示
   const container_ref = useRef();
   useEffect(()=>{
@@ -147,7 +135,6 @@ export default function App() {
                 <TrafficLayer />
                 <RoadNetLayer />
                 <Scale />
-                <Toolbar />
               </Amap>
 
               <ChoseCar />
