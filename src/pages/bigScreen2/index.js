@@ -153,7 +153,9 @@ export default function App() {
               <ChoseCar />
               <VideoCompo />
           </div>
-          {modalShow ? <DetailModal /> : null}
+          {modalShow 
+          ? <DetailModal /> 
+          : null}
       </div>
     </div>
   );
