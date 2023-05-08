@@ -20,6 +20,8 @@ const MapGeoLocation = lazy(() => import('../pages/map/mapGeoLocation'));
 const MapCountry = lazy(() => import('../pages/map/mapCountryLayer'));
 const MapProvinceLayer = lazy(() => import('../pages/map/mapProvinceLayer'));
 const MarkerCluster = lazy(() => import('../pages/map/mapCluster'));
+const L7 = lazy(() => import('../pages/map/L7'));
+
 const EchartsDemo = lazy(() => import('../pages/echartsDemo'));
 const BigScreen = lazy(() => import('../pages/bigScreen'));
 const BigScreen2 = lazy(() => import('../pages/bigScreen2'));
@@ -85,6 +87,11 @@ export const routers: RouteObject[] = [
         path: '/map/markerCluster',
         element: lazyLoad(<MarkerCluster />)
       },
+      {
+        path: '/map/L7',
+        element: lazyLoad(<L7 />)
+      },
+
       {
         path: '/echartsDemo',
         element: lazyLoad(<EchartsDemo />)

@@ -10,7 +10,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className="map-container" style={{width: 720, height: 720}}>
+      <div className="map-container" style={{width: 1440, height: 720}}>
         <Amap zoom={15} center={center}>
           <Marker position={position} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />

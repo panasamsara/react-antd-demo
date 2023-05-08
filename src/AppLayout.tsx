@@ -60,6 +60,7 @@ export default function AppLayout() {
       { label: '国别', key: '/map/mapCountry'},
       { label: '省份', key: '/map/mapProvince'},
       { label: '聚合', key: '/map/markerCluster'},
+      { label: '飞线', key: '/map/l7'},
     ]}
   ]
 
