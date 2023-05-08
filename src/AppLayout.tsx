@@ -14,7 +14,7 @@ export default function AppLayout() {
   const [defaultOpenKeys, setDefaultOpenKeys] = useState<string[]>([]);
   const [isInit, setIsInit] = useState<Boolean>(false)
   
-  const [current, setCurrent] = useState('/');
+  const [current, setCurrent] = useState('/bigScreen/page1');
 
   useEffect(() => {
     const routes = matchRoutes(routers, location.pathname); // 返回匹配到的路由数组对象，每一个对象都是一个路由对象
@@ -39,9 +39,7 @@ export default function AppLayout() {
   
   const topMenus: MenuProps['items'] = [
     { label: '首页', key: '/', icon: <SettingOutlined />},
-    { label: '计数', key: '/test', icon: <NotificationOutlined />},
     { label: '地图', key: '/map/selfMarker', icon: <AppstoreOutlined />},
-    { label: 'echarts', key: '/echartsDemo', icon: <StockOutlined />},
     { label: '大屏', key: '/bigScreen/page1', icon: <LaptopOutlined />},
     { label: '大屏2', key: '/bigScreen/page2', icon: <LaptopOutlined />},
   ]

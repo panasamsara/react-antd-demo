@@ -12,8 +12,7 @@ export default function HomePage() {
         <p>
           Edit <code>src/pages</code> and save to reload.
         </p>
-        <Link to="/test"> to test</Link>
-        <Link to="/map/selfMarker"> to map</Link>
+        <Link to="/bigScreen/page1"> to map</Link>
       </header>
     </div>
   );
