@@ -68,7 +68,7 @@ export default function App(props:{page: string}) {
             color: 'transparent',
           }}
         >
-          东风技术中心寒区试验数字化看板
+          东风技术中心道路试验数字化看板
         </span>
       </div>
       <div className={style.logo} />
