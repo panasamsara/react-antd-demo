@@ -15,9 +15,9 @@ export default function App() {
       id: 'map',
       map: new GaodeMap({
         pitch: 40,
-        center: [ 100, 40.16797 ],
+        center: [ 106, 33.16797 ],
         style: 'dark',
-        zoom: 3.5,
+        zoom: 4,
         minZoom: 3,
         maxZoom: 10
       })

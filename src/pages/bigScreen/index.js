@@ -1,10 +1,6 @@
 
 import "@/styles/mapStyle.css";
-import React, { useState } from 'react'
-
-
-import { getColorByGDP } from "./colors";
-
+import getImgUrl from "@/assets/images/getImgUrl";
 import Title from "@/components/Title/Title";
 import PieComponent from "./components/Pie1/PieComponent";
 import Pie2Component from "./components/Pie2/PieComponent";
@@ -12,11 +8,9 @@ import Pie3Component from "./components/Pie3/PieComponent";
 import Pie4Component from "./components/Pie4/PieComponent";
 import TopCompo from "./components/TopCompo";
 import ScreenMap from "./components/ScreenMap";
-import getImgUrl from "@/assets/images/getImgUrl";
-
+import L7Map from "../map/L7";
 
 export default function App() {
-    
     return (
       <div style={{
         overflow: 'hidden',
@@ -39,8 +33,8 @@ export default function App() {
         <div className="App">
             
             <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
-                <ScreenMap /> 
-                
+                {/* <ScreenMap />  */}
+                <L7Map></L7Map>
 
                 <PieComponent />
                 <Pie2Component />
