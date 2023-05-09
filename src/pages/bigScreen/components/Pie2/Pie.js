@@ -15,7 +15,6 @@ const Pie = () => {
   const option = {
   tooltip: {
     formatter: function (params) {
-      console.log(111,params );
       let result = `气温 <br/> <div style="text-align: left">
       时间：${hours[params.value[0]]} <br/> 
       星期：${days[params.value[1]]} <br/> 
