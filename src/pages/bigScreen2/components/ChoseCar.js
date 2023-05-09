@@ -8,7 +8,7 @@ import { get, post } from '@/utils/requests';
 import TableData from "./tableData";
 import TreeData from "./TreeData";
 
-export default function App() {
+export default function App(props) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [rank, setRank] = useState([])
@@ -63,7 +63,8 @@ export default function App() {
           <BarsOutlined />
         </div>
       </RenderCompo>
-
+      
+      {/* getContainer 绑定全屏dom元素，避免弹框无法显示  */}
       <Modal
         open={open}
         width={800}
@@ -71,6 +72,7 @@ export default function App() {
         onOk={handleOk}
         onCancel={handleCancel}
         style= {{opacity: 1}}
+        getContainer={props.screenRef.current}
         footer={[
           <Button key="back" onClick={handleCancel}>
             取消

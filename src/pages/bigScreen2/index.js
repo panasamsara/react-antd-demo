@@ -114,7 +114,7 @@ export default function App() {
                 </Marker>
               </Amap>
 
-              <ChoseCar />
+              <ChoseCar screenRef={container_ref}/>
               <VideoCompo />
           </div>
           {modalShow 
