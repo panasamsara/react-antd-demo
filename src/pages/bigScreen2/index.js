@@ -91,7 +91,7 @@ export default function App() {
             height: '100%',
           }}
         >
-          <Title page={'bigScreen2'}/>
+          <Title page={'bigScreen2'} title={'东风技术中心远程数据采集系统'}/>
         </div>
       </div>
       <div className="App">

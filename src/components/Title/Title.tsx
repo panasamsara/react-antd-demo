@@ -12,11 +12,11 @@ import getImgUrl from "@/assets/images/getImgUrl";
 import Icon, { SwapOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 
-export default function App(props:{page: string}) {
+export default function App(props:{page: string, title: string}) {
   const navigate = useNavigate();
+  const {page, title} = props;
   // 点击顶部按钮跳转页面
   function changeRoute(){
-    const {page} = props;
     if(page == 'bigScreen1'){
       navigate('/bigScreen/page2')
     }else{
@@ -68,7 +68,7 @@ export default function App(props:{page: string}) {
             color: 'transparent',
           }}
         >
-          东风技术中心道路试验数字化看板
+          {title}
         </span>
       </div>
       <div className={style.logo} />
