@@ -11,7 +11,7 @@ export default function App() {
       <div>
         <RenderCompo
           style={{
-              width: 400,
+              width: 900,
               height: 300,
               position: 'absolute',
               top: 20,
