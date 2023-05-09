@@ -36,7 +36,9 @@ const Pie = () => {
     ],
     legend: {
       data: ['M18', '风神'],
-      textStyle: '#FFF',
+      textStyle: {
+        color: '#fff'
+      },
     },
     radar: {
       // shape: 'circle',

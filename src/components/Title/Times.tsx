@@ -118,6 +118,8 @@ export default function Times() {
           display: 'inline-block',
           verticalAlign: 'text-bottom',
           fontStyle: 'italic',
+          position: 'relative',
+          top: -5
         }}
       >
         :
@@ -141,6 +143,8 @@ export default function Times() {
           display: 'inline-block',
           verticalAlign: 'text-bottom',
           fontStyle: 'italic',
+          position: 'relative',
+          top: -5
         }}
       >
         :

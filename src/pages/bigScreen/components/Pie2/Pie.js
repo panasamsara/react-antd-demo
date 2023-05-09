@@ -43,15 +43,35 @@ const Pie = () => {
   xAxis3D: {
     type: 'category',
     data: hours,
-    name: ''
+    name: '时间',
+    nameTextStyle: {
+      color: '#fff'
+    },
+    axisLine:{
+      lineStyle: {
+        color: '#fff'
+      }
+    }
   },
   yAxis3D: {
     type: 'category',
-    data: days
+    data: days,
+    name: ' ',
+    nameTextStyle: {
+      color: '#fff'
+    },
+    axisLine:{
+      lineStyle: {
+        color: '#fff'
+      }
+    }
   },
   zAxis3D: {
     name: '温度',
-    type: 'value'
+    type: 'value',
+    nameTextStyle: {
+      color: '#fff'
+    },
   },
   grid3D: {
     boxWidth: 200,
