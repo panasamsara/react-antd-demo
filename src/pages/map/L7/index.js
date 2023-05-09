@@ -7,6 +7,7 @@ import { GaodeMap } from '@antv/l7-maps';
 // import { world } from './world';
 import { flypath, dot } from './flyLine';
 import PLANE_SVG from "@/assets/plane.svg";
+// import CAR from "@/assets/imagesMap/car.png";
 
 export default function App() {
   useEffect(()=>{
@@ -22,10 +23,8 @@ export default function App() {
         maxZoom: 10
       })
     });
-    scene.addImage(
-      'plane',
-      PLANE_SVG
-    );
+    scene.addImage( 'plane', PLANE_SVG);
+
     scene.on('loaded', () => {
       const dotData =  dot ;
         // @ts-ignore
