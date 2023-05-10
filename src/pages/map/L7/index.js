@@ -2,7 +2,7 @@
 import "@/styles/mapStyle.css";
 import "./style.css";
 import { useEffect } from 'react';
-import { Scene, LineLayer, PointLayer } from '@antv/l7';
+import { Scene, LineLayer, PointLayer, MapTheme } from '@antv/l7';
 import { GaodeMap } from '@antv/l7-maps';
 // import { world } from './world';
 import { flypath, dot } from './flyLine';
@@ -26,6 +26,17 @@ export default function App() {
     scene.addImage( 'plane', PLANE_SVG);
 
     scene.on('loaded', () => {
+      // 添加地图主题选择
+      const mapTheme = new MapTheme({
+        position: "topleft",
+        options: [
+          {text: '月光银', value: 'amap://styles/c422f5c0cfced5be9fe3a83f05f28a68?isPublic=true', img: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*d-vcRLzu8WIAAAAAAAAAAAAADmJ7AQ/original', key: 'light'},
+          {text: '幻影黑', value: 'amap://styles/c9f1d10cae34f8ab05e425462c5a58d7?isPublic=true', img: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*HMbRTI3XnpIAAAAAAAAAAAAADmJ7AQ/original', key: 'dark'},
+          {text: '酱籽', value: 'amap://styles/wine', img: 'https://mdn.alipayobjects.com/huamei_qa8qxu/afts/img/A*orY0T7QL-lwAAAAAAAAAAAAADmJ7AQ/original', key: 'wine'}
+        ]
+      });
+      scene.addControl(mapTheme);
+      // console.log(111,mapTheme.getOptions() );
       const dotData =  dot ;
         // @ts-ignore
       const flydata = flypath.map(item => {
