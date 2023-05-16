@@ -17,6 +17,7 @@ import { bus } from '@/utils';
 import DetailModal from "./components/DetailModal";
 
 export default function App() {
+  
   const [modalShow, setModalShow] = useState(false);
   usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
   // 全局事件监听
@@ -50,16 +51,15 @@ export default function App() {
     }
   },[container_ref]);
 
-  const [rank, setRank] = useState([])
+  const [chosenVin, setChosenVin] = useState('');
+  const [cars, setCars] = useState([]);
   // 调接口
   async function getDataRank() {
-    const res2 = await get('/api/getAllVehicles', {})
-    res2.data.forEach((res) => {
-      if (res.projectName == null || res.projectName == '' || !res.projectName) {
-        res.projectName = 'M18-2'
-      }
-    })
-    setRank(res2.data.filter((res) => res.gpsSpeed > 0))
+    const {code,data} = await get('/api/getAllVehicles', {})
+    if(code==0){
+      // console.log(111, Object.keys(data) );
+      setCars(Object.values(data))
+    }
   }
   useEffect(() => {
     getDataRank()
@@ -93,20 +93,35 @@ export default function App() {
           <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
             <Amap
               zooms={[2, 12]}
-              center={[106.122082, 33.719192]}
+              // center={[106.122082, 33.719192]}
               zoom={5}
               // mapStyle='amap://styles/whitesmoke'
             >
-              <Marker position={[110.84, 32.53]} offset={[0, -40]} anchor="top-center">
-                  <img src={MARKER_SVG} alt="marker" />
-                  <div style={{ minWidth: 180, minHeight: 100, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
-                    onClick={()=> setModalShow(true)}
-                  >
-                    <p style={{margin: 0}}>LGAG3DV22MD100037</p>
-                    <p style={{margin: 0}}>0.2km/h</p>
-                    <p style={{margin: 0}}>无视频</p>
+              {
+                cars.map(item=>{
+                  return <div key={item.vin}>
+                    <Marker position={[item.longitude, item.latitude]} offset={[0, -40]} anchor="top-center">
+                      <img src={MARKER_SVG} alt="marker" onClick={(e)=> {
+                        e.stopPropagation()
+                        setChosenVin(item.vin)
+                        setModalShow(false)
+                      }}/>
+                      {
+                        
+                        <div style={{ width: 180, height: 100, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
+                          onClick={()=> setModalShow(true)}
+                        >
+                          <p style={{margin: 0}}>{item.vin}</p>
+                          <p style={{margin: 0}}>速度：{item.speed}</p>
+                          <p style={{margin: 0}}>无视频</p>
+                        </div> 
+                      }
+                      
+                  </Marker>
                   </div>
-              </Marker>
+                })
+              }
+              
             </Amap>
 
             <ChoseCar screenRef={container_ref}/>
