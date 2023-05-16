@@ -30,4 +30,16 @@ module.exports = {
       }
     }
   ],
+  //配置代理解决跨域
+  devServer: {
+    proxy: {
+      "/api": {
+        target: 'http://10.91.101.35:30010/',
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "/api"
+        }
+      }
+    }
+  }
 }

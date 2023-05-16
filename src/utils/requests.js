@@ -118,15 +118,15 @@ export function checkres0(res) {
 }
 
 function fetchjson(url, opt = {}) {
-  const userBean = sessionStorage.getItem('userBean')
+  // const userBean = sessionStorage.getItem('userBean')
 
-  if (userBean) {
-    if (!opt.headers) opt.headers = {}
-    // opt.headers.token = JSON.parse(userBean).token
-  }
+  // if (userBean) {
+  //   if (!opt.headers) opt.headers = {}
+  //   // opt.headers.token = JSON.parse(userBean).token
+  // }
   const fullUrl = url.indexOf('http://') != -1 || url.indexOf('https://') != -1
   // console.log('opt: ', opt)
-  return fetch(fullUrl ? url : `${SERVER}${url}`, {
+  return fetch(fullUrl ? url : `${url}`, {
     credentials: 'include',
     ...opt,
   })
