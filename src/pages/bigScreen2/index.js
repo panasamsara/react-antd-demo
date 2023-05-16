@@ -92,7 +92,7 @@ export default function App() {
       <div className="App">
           <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
             <Amap
-              zooms={[2, 12]}
+              // zooms={[2, 12]}
               // center={[106.122082, 33.719192]}
               zoom={5}
               // mapStyle='amap://styles/whitesmoke'
@@ -124,7 +124,7 @@ export default function App() {
               
             </Amap>
 
-            <ChoseCar screenRef={container_ref}/>
+            <ChoseCar screenRef={container_ref} cars={cars}/>
             <VideoCompo />
           </div>
           {modalShow 

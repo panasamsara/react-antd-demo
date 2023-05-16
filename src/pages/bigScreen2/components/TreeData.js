@@ -42,7 +42,13 @@ const treeData = [
     ],
   },
 ];
-const App = () => {
+const TreeData = (props) => {
+  const {cars} = props;
+  let treeData = cars.map(item=>{
+    item.title = item.vin;
+    item.key = item.vin;
+    return item
+  })
   const onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
   };
@@ -51,7 +57,6 @@ const App = () => {
   };
   return (
     <>
-      <div>树形结构</div>
       <Tree
         checkable
         defaultExpandedKeys={['0-0-0', '0-0-1']}
@@ -64,4 +69,4 @@ const App = () => {
     </>
   );
 };
-export default App;
+export default TreeData;

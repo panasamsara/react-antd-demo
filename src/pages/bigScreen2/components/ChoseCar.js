@@ -9,6 +9,7 @@ import TableData from "./tableData";
 import TreeData from "./TreeData";
 
 export default function App(props) {
+  const {cars} = props;
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   
@@ -69,7 +70,7 @@ export default function App(props) {
       >
         {/* <TableData /> */}
 
-        <TreeData />
+        <TreeData cars={cars}/>
       </Modal>
     </div>
   );
