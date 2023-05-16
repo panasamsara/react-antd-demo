@@ -36,7 +36,7 @@ export default function App(props) {
             width: 100,
             height: 300,
             position: 'absolute',
-            top: 20,
+            top: 120,
             left: 100
         }}
       > 

@@ -13,8 +13,8 @@ export default function App() {
             width: 240,
             height: 300,
             position: 'absolute',
-            top: 20,
-            right: 120
+            top: 120,
+            right: 220
         }}
       > 
         

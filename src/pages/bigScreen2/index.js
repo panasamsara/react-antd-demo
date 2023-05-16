@@ -39,7 +39,74 @@ export default function App() {
 
   // 全屏展示
   const container_ref = useRef();
+  let map
   useEffect(()=>{
+    map = new window.AMap.Map('map-container', {
+      viewMode: '2D',  // 默认使用 2D 模式
+      zoom:5,  //初始化地图层级
+    });
+    map.on('complete', function () {
+      get('/api/getAllVehicles', {}).then(res=>{
+        console.log(111, res);
+        // 创建 AMap.LabelsLayer 图层
+      var layer = new window.AMap.LabelsLayer({
+        zooms: [3, 20],
+        zIndex: 1000,
+        collision: false
+      });
+      // 将图层添加到地图
+      map.add(layer);
+
+      let markers = [];
+      let positions = Object.values(res.data);
+
+      let icon = {
+          type: 'image',
+          image: MARKER_SVG,
+          anchor: 'bottom-center',
+      };
+
+      for (let i = 0; i < positions.length; i++) {
+          let curPosition = [positions[i].longitude, positions[i].latitude];
+          let curData = {
+              position: curPosition,
+              icon
+          };
+
+          let labelMarker = new window.AMap.LabelMarker(curData);
+
+          markers.push(labelMarker);
+
+          // 给marker绑定事件
+          labelMarker.on('mouseover', function(e){
+              var position = e.data.data && e.data.data.position;
+
+              if(position){
+                  normalMarker.setContent(
+                      '<div class="amap-info-window">'
+                          + position +
+                          '<div class="amap-info-sharp"></div>' +
+                      '</div>');
+                  normalMarker.setPosition(position);
+                  map.add(normalMarker);
+              }
+          });
+          labelMarker.on('mouseout', function(){
+              map.remove(normalMarker);
+          });
+        }
+        // 一次性将海量点添加到图层
+        layer.add(markers);
+      })
+      
+      // 普通点
+      var normalMarker = new window.AMap.Marker({
+          anchor: 'bottom-center',
+          offset: [0, -15],
+      });
+    });
+
+
     if (container_ref.current.requestFullscreen) {
       container_ref.current.requestFullscreen();
     } else if (container_ref.current.webkitRequestFullScreen) {
@@ -63,8 +130,10 @@ export default function App() {
   }
   useEffect(() => {
     getDataRank()
-    // setRank(testdata.data)
   }, [])
+
+  
+
   
   return (
     <div 
@@ -90,12 +159,9 @@ export default function App() {
         </div>
       </div>
       <div className="App">
-          <div className="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
-            <Amap
-              // zooms={[2, 12]}
-              // center={[106.122082, 33.719192]}
+          <div className="map-container" id="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
+            {/* <Amap
               zoom={5}
-              // mapStyle='amap://styles/whitesmoke'
             >
               {
                 cars.map(item=>{
@@ -122,11 +188,14 @@ export default function App() {
                 })
               }
               
-            </Amap>
+            </Amap> */}
 
-            <ChoseCar screenRef={container_ref} cars={cars}/>
-            <VideoCompo />
+            
           </div>
+
+          <ChoseCar screenRef={container_ref} cars={cars}/>
+          <VideoCompo />
+
           {modalShow 
           ? <DetailModal /> 
           : null}
