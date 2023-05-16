@@ -16,8 +16,14 @@ import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
 import DetailModal from "./components/DetailModal";
 
+let stringToHTML = function (str) {
+	var dom = document.createElement('div');
+	dom.innerHTML = str;
+	return dom;
+};
+
 export default function App() {
-  
+  const [chosenVin, setChosenVin] = useState('');
   const [modalShow, setModalShow] = useState(false);
   usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
   // 全局事件监听
@@ -47,56 +53,102 @@ export default function App() {
     });
     map.on('complete', function () {
       get('/api/getAllVehicles', {}).then(res=>{
-        console.log(111, res);
-        // 创建 AMap.LabelsLayer 图层
-      var layer = new window.AMap.LabelsLayer({
-        zooms: [3, 20],
-        zIndex: 1000,
-        collision: false
-      });
-      // 将图层添加到地图
-      map.add(layer);
-
-      let markers = [];
-      let positions = Object.values(res.data);
-
-      let icon = {
-          type: 'image',
-          image: MARKER_SVG,
-          anchor: 'bottom-center',
-      };
-
-      for (let i = 0; i < positions.length; i++) {
+        let positions = Object.values(res.data);
+        
+        for (let i = 0; i < positions.length; i++) {
           let curPosition = [positions[i].longitude, positions[i].latitude];
-          let curData = {
-              position: curPosition,
-              icon
-          };
-
-          let labelMarker = new window.AMap.LabelMarker(curData);
-
-          markers.push(labelMarker);
-
+          const marker = new window.AMap.Marker({
+            position: curPosition,
+            offset: new window.AMap.Pixel(-10, -34),
+            content: `<div class="marker-route marker-marker-bus-from" id="${positions[i].vin}">
+              <img src=${MARKER_SVG} alt="marker" />
+              <input type='hidden' value='${positions[i].vin}'/>
+            </div>`
+              
+          })
           // 给marker绑定事件
-          labelMarker.on('mouseover', function(e){
-              var position = e.data.data && e.data.data.position;
+          marker.on('mouseover', function(e){
+            let vin = stringToHTML( e.target._opts.content).childNodes[0].childNodes[3].value
+            let pDiv = document.getElementById(vin);
+ 
+            let div = document.createElement("div");
+            div.setAttribute("id", "newDiv"); 
+            div.setAttribute("class", "amap-info-window"); 
+            div.innerHTML = "js 动态添加li";
+            pDiv.appendChild(div);
 
-              if(position){
-                  normalMarker.setContent(
-                      '<div class="amap-info-window">'
-                          + position +
-                          '<div class="amap-info-sharp"></div>' +
-                      '</div>');
-                  normalMarker.setPosition(position);
-                  map.add(normalMarker);
-              }
+            console.log(111, 
+              stringToHTML( e.target._opts.content).childNodes[0].childNodes[3].value,
+            );
+              // var position = e.data.data && e.data.data.position;
+              // if(position){
+              //     normalMarker.setContent(
+              //         `<div class="amap-info-window">
+              //             车辆位置: [${e.data.vin}]
+              //             <div>${position}</div>
+              //         </div>`);
+              //     normalMarker.setPosition(position);
+              //     map.add(normalMarker);
+              // }
           });
-          labelMarker.on('mouseout', function(){
+          marker.on('mouseout', function(){
               map.remove(normalMarker);
+              document.getElementById('newDiv').remove();
           });
+          marker.on('click', (e) => {
+            // clickData_ref.current = e.target.getExtData()
+            // onMarkerClick(e.target.getExtData())
+          })
+          map.add(marker) 
         }
-        // 一次性将海量点添加到图层
-        layer.add(markers);
+        // 创建 AMap.LabelsLayer 图层
+      // var layer = new window.AMap.LabelsLayer({
+      //   zooms: [3, 20],
+      //   zIndex: 1000,
+      //   collision: false
+      // });
+      // // 将图层添加到地图
+      // map.add(layer);
+
+      // let markers = [];
+      // let positions = Object.values(res.data);
+
+      // let icon = {
+      //     type: 'image',
+      //     image: MARKER_SVG,
+      //     anchor: 'bottom-center',
+      // };
+
+      // for (let i = 0; i < positions.length; i++) {
+      //     let curPosition = [positions[i].longitude, positions[i].latitude];
+      //     let curData = {
+      //         position: curPosition,
+      //         icon
+      //     };
+
+      //     let labelMarker = new window.AMap.LabelMarker(curData);
+
+      //     markers.push(labelMarker);
+
+      //     // 给marker绑定事件
+      //     labelMarker.on('mouseover', function(e){
+      //         var position = e.data.data && e.data.data.position;
+      //         if(position){
+      //             normalMarker.setContent(
+      //                 `<div class="amap-info-window">
+      //                     车辆VIN: ${e.data.vin}
+      //                     <div>${position}</div>
+      //                 </div>`);
+      //             normalMarker.setPosition(position);
+      //             map.add(normalMarker);
+      //         }
+      //     });
+      //     labelMarker.on('mouseout', function(){
+      //         map.remove(normalMarker);
+      //     });
+      //   }
+      //   // 一次性将海量点添加到图层
+      //   layer.add(markers);
       })
       
       // 普通点
@@ -118,7 +170,7 @@ export default function App() {
     }
   },[container_ref]);
 
-  const [chosenVin, setChosenVin] = useState('');
+  
   const [cars, setCars] = useState([]);
   // 调接口
   async function getDataRank() {
