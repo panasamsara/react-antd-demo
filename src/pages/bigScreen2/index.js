@@ -7,7 +7,7 @@ import {
   Marker,
   usePlugins
 } from "@amap/amap-react";
-
+import { get, post } from '@/utils/requests';
 import MARKER_SVG from "@/assets/marker.svg";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
@@ -15,24 +15,6 @@ import VideoCompo from "./components/VideoCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
 import DetailModal from "./components/DetailModal";
-
-const colors = {};
-const GDPSpeed = {};
-function getColor(key, type) {
-  if (!key) return 'rgb(200, 200, 240)';
-  if (!colors[key]) {
-    const gdp = GDPSpeed[key];
-    if (!gdp) {
-      // 没有GDP数据
-      const rg = Math.random() * 155 + 50;
-      colors[key] = `rgb(${rg}, ${rg}, 255)`;
-    } else {
-      const rg = 255 - Math.floor(((gdp - 5) / 5) * 255);
-      colors[key] = 'rgb(' + rg + ',' + rg + ',255)';
-    }
-  }
-  return colors[key];
-}
 
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
@@ -68,8 +50,21 @@ export default function App() {
     }
   },[container_ref]);
 
-  const [soc, setSoc] = useState('CHN');
-  const [opacity, setOpacity] = useState(0.8);
+  const [rank, setRank] = useState([])
+  // 调接口
+  async function getDataRank() {
+    const res2 = await get('/api/getAllVehicles', {})
+    res2.data.forEach((res) => {
+      if (res.projectName == null || res.projectName == '' || !res.projectName) {
+        res.projectName = 'M18-2'
+      }
+    })
+    setRank(res2.data.filter((res) => res.gpsSpeed > 0))
+  }
+  useEffect(() => {
+    getDataRank()
+    // setRank(testdata.data)
+  }, [])
   
   return (
     <div 
@@ -101,21 +96,21 @@ export default function App() {
               center={[106.122082, 33.719192]}
               zoom={5}
               // mapStyle='amap://styles/whitesmoke'
-              >
-                <Marker position={[110.84, 32.53]} offset={[0, -40]} anchor="top-center">
-                    <img src={MARKER_SVG} alt="marker" />
-                    <div style={{ minWidth: 180, minHeight: 100, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
-                      onClick={()=> setModalShow(true)}
-                    >
-                      <p style={{margin: 0}}>LGAG3DV22MD100037</p>
-                      <p style={{margin: 0}}>0.2km/h</p>
-                      <p style={{margin: 0}}>无视频</p>
-                    </div>
-                </Marker>
-              </Amap>
+            >
+              <Marker position={[110.84, 32.53]} offset={[0, -40]} anchor="top-center">
+                  <img src={MARKER_SVG} alt="marker" />
+                  <div style={{ minWidth: 180, minHeight: 100, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
+                    onClick={()=> setModalShow(true)}
+                  >
+                    <p style={{margin: 0}}>LGAG3DV22MD100037</p>
+                    <p style={{margin: 0}}>0.2km/h</p>
+                    <p style={{margin: 0}}>无视频</p>
+                  </div>
+              </Marker>
+            </Amap>
 
-              <ChoseCar screenRef={container_ref}/>
-              <VideoCompo />
+            <ChoseCar screenRef={container_ref}/>
+            <VideoCompo />
           </div>
           {modalShow 
           ? <DetailModal /> 

@@ -11,6 +11,7 @@
 # production
 /build
 /react_web
+/flutter_view
 
 # misc
 .DS_Store

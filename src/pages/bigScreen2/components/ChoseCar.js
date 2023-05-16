@@ -4,14 +4,14 @@ import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
 import { BarsOutlined } from '@ant-design/icons';
 import { Button, Modal } from 'antd';
-import { get, post } from '@/utils/requests';
+
 import TableData from "./tableData";
 import TreeData from "./TreeData";
 
 export default function App(props) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [rank, setRank] = useState([])
+  
   const showModal = () => {
     setOpen(true);
   };
@@ -27,21 +27,6 @@ export default function App(props) {
   const handleCancel = () => {
     setOpen(false);
   };
-
-  // 调接口
-  async function getDataRank() {
-    const res2 = await get('/screen/vehicleareaAll', {})
-    res2.data.forEach((res) => {
-      if (res.projectName == null || res.projectName == '' || !res.projectName) {
-        res.projectName = 'M18-2'
-      }
-    })
-    setRank(res2.data.filter((res) => res.gpsSpeed > 0))
-  }
-  useEffect(() => {
-    getDataRank()
-    // setRank(testdata.data)
-  }, [])
 
   return (
     <div>
@@ -82,7 +67,7 @@ export default function App(props) {
           </Button>
         ]}
       >
-        <TableData />
+        {/* <TableData /> */}
 
         <TreeData />
       </Modal>
