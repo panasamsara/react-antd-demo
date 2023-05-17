@@ -12,6 +12,8 @@
 /build
 /react_web
 /flutter_view
+/react_web.zip
+/flutter_view.zip
 
 # misc
 .DS_Store
