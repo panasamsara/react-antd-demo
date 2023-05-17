@@ -15,6 +15,7 @@ import VideoCompo from "./components/VideoCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
 import DetailModal from "./components/DetailModal";
+import cookie from 'react-cookies'
 
 let stringToHTML = function (str) {
 	var dom = document.createElement('div');
@@ -171,16 +172,48 @@ export default function App() {
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
   const [cars, setCars] = useState([]);
-  // 调接口
-  async function getDataRank() {
+  // 获取所有车辆
+  async function getCars() {
     const {code,data} = await get('/api/getAllVehicles', {})
     if(code==0){
       // console.log(111, Object.keys(data) );
       setCars(Object.values(data))
     }
   }
+  //登陆南斗
+  async function loginSsi() {
+    const {code,data} = await get('http://10.92.101.63:8085/dfcv/sys/login?loginName=admin&pwd=YWRtaW4xMjM%3D&requestX=117&roleType=1&loginType=1', {})
+    if(code==1){
+      
+      const expires = new Date()
+      expires.setDate(Date.now() + 1000 * 60 * 60 * 24 * 14)
+      cookie.save(
+        'ssi_cookie',
+        data,
+        {
+          domain: '10.92.101.63'
+        }
+      )
+      
+      // const {code1,data1} =  await post('http://10.92.101.63:8085/dfcv//vehicle/queryPageByBanded', {
+        
+      //     "vin": "LDP31B96XNG113685",
+      //     "pageIdx": 1,
+      //     "pageSize": 10,
+      //     "sortFlag": 1
+      // })
+      // console.log(22, code1);
+      const {code1,data1} =  await post('http://10.92.101.63:8085/dfcv/setupBinding/dpVideoChannel', {
+        
+          terminalNo: '2008114',
+      })
+      console.log(22, code1);
+    }
+  }
+
   useEffect(() => {
-    getDataRank()
+    getCars()
+    loginSsi()
   }, [])
 
   return (

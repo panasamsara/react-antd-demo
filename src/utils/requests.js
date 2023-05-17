@@ -7,6 +7,7 @@ import _ from 'lodash'
 // import router from 'umi/router'
 import { SERVER_URL as SERVER } from '@/config/config'
 import { cache, mem } from '@/utils/system'
+import cookie from 'react-cookies'
 
 message.config({
   maxCount: 1,
@@ -186,13 +187,18 @@ export function get(url, payload) {
 }
 export function post(url, payload) {
   const tokenId = sessionStorage.getItem('tokenId')
-  let headers = { 'Content-Type': 'application/json' }
-  if (tokenId) {
+  
+  let headers = { 
+    'Content-Type': 'application/json',
+    Cookie: `JSESSIONID=${cookie.load('ssi_cookie')}`
+  }
+  // if (tokenId) {
     headers = {
       Access_token: tokenId,
+      shiro_token: cookie.load('ssi_cookie'),
       ...headers,
     }
-  }
+  // }
   return fetchjson(`${url}`, {
     method: 'POST',
     body: JSON.stringify(payload),
