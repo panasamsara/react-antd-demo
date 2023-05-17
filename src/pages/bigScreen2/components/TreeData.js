@@ -65,6 +65,8 @@ const TreeData = (props) => {
         onSelect={onSelect}
         onCheck={onCheck}
         treeData={treeData}
+        height={700}
+        multiple={false}
       />
     </>
   );

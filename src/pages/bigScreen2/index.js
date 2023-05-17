@@ -29,13 +29,14 @@ export default function App() {
   // 全局事件监听
   useEffect(() => {
     const tableclickCallback = (e) => {
-      console.log('tableclick', e) 
-      message.success(`点击了${e.RowData.name}`)
+      console.log('tableclick2', e) 
+      setMapCenter([e.RowData.longitude, e.RowData.latitude])
+      setMapZoom(17)
     }
     const closeModalCallback = (e) => {
       setModalShow(false)
     }
-    bus.on(`tableClick`, tableclickCallback)
+    bus.on(`tableClick2`, tableclickCallback)
     bus.on(`closeModal`, closeModalCallback)
     return () => {
       bus.off(`tableClick`, tableclickCallback)
@@ -167,7 +168,8 @@ export default function App() {
     }
   },[container_ref]);
 
-  
+  const [mapZoom, setMapZoom] = useState(5);
+  const [mapCenter, setMapCenter] = useState();
   const [cars, setCars] = useState([]);
   // 调接口
   async function getDataRank() {
@@ -181,9 +183,6 @@ export default function App() {
     getDataRank()
   }, [])
 
-  
-
-  
   return (
     <div 
       ref={container_ref}
@@ -210,7 +209,8 @@ export default function App() {
       <div className="App">
           <div className="map-container" id="map-container" style={{width: "100%", height: "100%", position: 'fixed'}}>
             <Amap
-              zoom={5}
+              zoom={mapZoom}
+              center={mapCenter}
             >
               {
                 cars.map(item=>{

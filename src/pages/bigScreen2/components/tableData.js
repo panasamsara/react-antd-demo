@@ -4,48 +4,18 @@ import { bus } from '@/utils';
 
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: '车辆VIN',
+    dataIndex: 'vin',
+    key: 'vin',
     render: (text) => <a>{text}</a>,
   },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
+ 
   {
     title: 'Action',
     key: 'action',
     render: (_, record) => (
       <Space size="middle">
-        <a>Invite {record.name}</a>
-        <Button onClick={ (e)=> handleClick(e,record) }>操作</Button>
+        <Button onClick={ (e)=> handleClick(e,record) }>查看</Button>
       </Space>
     ),
   },
@@ -53,7 +23,8 @@ const columns = [
 const handleClick = (e,record)=>{
   console.log(11, record);
   e.stopPropagation();
-  bus.emit('tableClick', {RowData: record})
+  bus.emit('tableClick1', {RowData: record})
+  bus.emit('tableClick2', {RowData: record})
 }
 const data = [
   {
@@ -80,7 +51,13 @@ const data = [
 ];
 
 
-const App = () => {
+const App = (props) => {
+  const {cars} = props;
+  
+  let tableData = cars.map(item=>{
+    item.key = item.vin;
+    return item
+  })
   const onShowSizeChange = (current, pageSize) => {
     console.log(current, pageSize);
   };
@@ -98,17 +75,19 @@ const App = () => {
   const paginationProps = {
     current: pageNum, //当前页码
     pageSize, // 每页数据条数
-    // showTotal: () => (
-    //   <span>总共{total}项</span>
-    // ),
     total, // 总条数
     onChange: page => handlePageChange(page), //改变页码的函数
     hideOnSinglePage: false,
     showSizeChanger: false,
   };
   
-  return <>
-    <Table columns={columns} dataSource={data} pagination={paginationProps}/>
-  </>
+  return <div style={{height: 700, overflow: 'hidden'}}>
+    <Table 
+      columns={columns} 
+      dataSource={tableData} 
+      pagination={false}
+      scroll={{y: 700}}
+    />
+  </div>
 };
 export default App;

@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
 import { BarsOutlined } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
-
+import { Button, Modal, message } from 'antd';
+import { bus } from '@/utils';
 import TableData from "./tableData";
 import TreeData from "./TreeData";
 
@@ -13,6 +13,16 @@ export default function App(props) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   
+  useEffect(() => {
+    const tableclickCallback = (e) => {
+      setOpen(false);
+    }
+    bus.on(`tableClick1`, tableclickCallback)
+    return () => {
+      bus.off(`tableClick1`, tableclickCallback)
+    }
+  }, [])
+
   const showModal = () => {
     setOpen(true);
   };
@@ -22,7 +32,7 @@ export default function App(props) {
     setTimeout(() => {
       setLoading(false);
       setOpen(false);
-    }, 3000);
+    }, 1000);
   };
 
   const handleCancel = () => {
@@ -68,9 +78,9 @@ export default function App(props) {
           </Button>
         ]}
       >
-        {/* <TableData /> */}
+        <TableData cars={cars}/>
 
-        <TreeData cars={cars}/>
+        {/* <TreeData cars={cars}/> */}
       </Modal>
     </div>
   );
