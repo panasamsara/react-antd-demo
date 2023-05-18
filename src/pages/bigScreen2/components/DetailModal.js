@@ -1,15 +1,33 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { bus } from '@/utils';
 import Draggable from 'react-draggable';
+import { Checkbox } from 'antd';
+import '@/styles/mapStyle.less';
 
-const Detail = () => {
+const Detail = (props) => {
+  const {vin, channelInfo} = props;
+  let options = [];
+  options = channelInfo && channelInfo.channels
+    ? Object.keys(channelInfo.channels).map(item=>{
+      let obj = {
+        label: item,
+        value: item,
+        disabled: channelInfo.channels[item] =='0'
+      }
+      return obj
+    })
+    : [];
+    
+  const onChange = (checkedValues) => {
+    console.log('checked = ', checkedValues);
+  };
 
   return <>
     <Draggable>
       <div style={{ width: 400, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
         position: 'absolute', cursor: 'move',
-        left: '50%', transform: 'translateX(-50%)',
-        top: '50%', transform: 'translateY(-50%)',
+        left: '45%', transform: 'translateX(-50%)',
+        top: '40%', transform: 'translateY(-50%)',
         color: '#fff',
         display: 'flex', flexDirection: 'column',
         textAlign: 'left', fontSize: 16, borderRadius: 4
@@ -25,11 +43,18 @@ const Detail = () => {
         <div style={{ padding: 10, }}>
           <div style={{ margin: '5px 0' }}>
             <span>VIN码：</span>
-            <span>LGAG4DY30M9047195</span>
+            <span>{vin}</span>
           </div>
           <div style={{ margin: '5px 0' }}>
-            <span>当前位置：</span>
-            <span>湖北省十堰市丹江口市丁家营镇G70福银高速</span>
+          <span>频道：</span>
+          <div className='map-channel'>
+            <Checkbox.Group 
+              options={options} 
+              defaultValue={['Apple']} 
+              onChange={onChange} 
+            />
+          </div>
+
           </div>
         </div>
           

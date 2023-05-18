@@ -1,5 +1,5 @@
 
-import "@/styles/mapStyle.css";
+import "@/styles/mapStyle.less";
 import React, { useState, useRef, useEffect } from 'react'
 import { message } from 'antd';
 import {

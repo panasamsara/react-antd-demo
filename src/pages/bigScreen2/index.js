@@ -1,5 +1,5 @@
 
-import "@/styles/mapStyle.css";
+import "@/styles/mapStyle.less";
 import React, { useState, useRef, useEffect } from 'react'
 import { message } from 'antd';
 import {
@@ -180,40 +180,22 @@ export default function App() {
       setCars(Object.values(data))
     }
   }
-  //登陆南斗
-  async function loginSsi() {
-    const {code,data} = await get('http://10.92.101.63:8085/dfcv/sys/login?loginName=admin&pwd=YWRtaW4xMjM%3D&requestX=117&roleType=1&loginType=1', {})
-    if(code==1){
-      
-      const expires = new Date()
-      expires.setDate(Date.now() + 1000 * 60 * 60 * 24 * 14)
-      cookie.save(
-        'ssi_cookie',
-        data,
-        {
-          domain: '10.92.101.63'
-        }
-      )
-      
-      // const {code1,data1} =  await post('http://10.92.101.63:8085/dfcv//vehicle/queryPageByBanded', {
-        
-      //     "vin": "LDP31B96XNG113685",
-      //     "pageIdx": 1,
-      //     "pageSize": 10,
-      //     "sortFlag": 1
-      // })
-      // console.log(22, code1);
-      const {code1,data1} =  await post('http://10.92.101.63:8085/dfcv/setupBinding/dpVideoChannel', {
-        
-          terminalNo: '2008114',
-      })
-      console.log(22, code1);
+  const [choseVin, setChoseVin] = useState(''); // 点击车辆
+  const [channelInfo, setChannelInfo] = useState({});
+  // 根据vin获取Channel
+  async function getChannels(vin) {
+    setChoseVin(vin);
+    setModalShow(true);
+    const {code,data} = await get('/api/getChannels', {
+      vin: vin
+    })
+    if(code==0){
+      setChannelInfo(data);
     }
   }
 
   useEffect(() => {
     getCars()
-    loginSsi()
   }, [])
 
   return (
@@ -256,12 +238,11 @@ export default function App() {
                       }}/>
                       {
                         chosenVin == item.vin ?
-                        <div style={{ position: 'absolute',width: 180, height: 100, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
-                          onClick={()=> setModalShow(true)}
+                        <div style={{ position: 'absolute',width: 180, height: 60, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
+                          onClick={()=> getChannels(item.vin)}
                         >
                           <p style={{margin: 0}}>{item.vin}</p>
                           <p style={{margin: 0}}>速度：{item.speed}</p>
-                          <p style={{margin: 0}}>无视频</p>
                         </div> : null
                       }
                       
@@ -279,7 +260,7 @@ export default function App() {
           <VideoCompo />
 
           {modalShow 
-          ? <DetailModal /> 
+          ? <DetailModal vin={choseVin} channelInfo={channelInfo}/> 
           : null}
       </div>
     </div>

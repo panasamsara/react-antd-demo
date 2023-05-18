@@ -53,3 +53,22 @@ body,
   border-right: 8px solid transparent;
   border-top: 8px solid #fff;
 }
+
+:global{
+  .map-channel{
+    .ant-checkbox-group{
+      display: flex;
+      flex-wrap: wrap;
+      width: 280px;
+      height: 50px;
+      .ant-checkbox-group-item{
+        width: 56px;
+        margin-left: 12px;
+        color: #fff;
+      }
+      .ant-checkbox-disabled +span{
+        color: #fff;
+      }
+    }
+  }
+}

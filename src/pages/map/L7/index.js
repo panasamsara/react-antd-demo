@@ -1,5 +1,5 @@
 
-import "@/styles/mapStyle.css";
+import "@/styles/mapStyle.less";
 import "./style.css";
 import { useEffect } from 'react';
 import { Scene, LineLayer, PointLayer, MapTheme } from '@antv/l7';

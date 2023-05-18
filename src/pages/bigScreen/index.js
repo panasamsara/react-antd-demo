@@ -1,5 +1,5 @@
 
-import "@/styles/mapStyle.css";
+import "@/styles/mapStyle.less";
 import getImgUrl from "@/assets/images/getImgUrl";
 import Title from "@/components/Title/Title";
 import PieComponent from "./components/Pie1/PieComponent";
