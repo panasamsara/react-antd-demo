@@ -35,7 +35,7 @@ export default function LivePlayer(props) {
               position: 'absolute',
               zIndex: '100000',
               top: '-30px',
-              left: ' 180px',
+              left: ' 200px',
             }}
           >
             <CloseOutlined

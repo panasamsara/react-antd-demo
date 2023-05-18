@@ -1,11 +1,13 @@
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, StepForwardOutlined } from '@ant-design/icons';
 import { bus } from '@/utils';
 import Draggable from 'react-draggable';
 import { Checkbox } from 'antd';
 import '@/styles/mapStyle.less';
+import { useState } from 'react';
 
 const Detail = (props) => {
   const {vin, channelInfo} = props;
+  const [checkeChannels, setCheckeChannels] = useState([]);
   let options = [];
   options = channelInfo && channelInfo.channels
     ? Object.keys(channelInfo.channels).map(item=>{
@@ -19,6 +21,7 @@ const Detail = (props) => {
     : [];
     
   const onChange = (checkedValues) => {
+    setCheckeChannels(checkedValues)
     console.log('checked = ', checkedValues);
   };
 
@@ -38,7 +41,17 @@ const Detail = (props) => {
           display: 'flex', justifyContent: 'space-between'
         }}>
           <div>车辆信号详情</div>
-          <div style={{ width: 24, height: 40, cursor: 'pointer' }} onClick={()=> bus.emit('closeModal',{})}><CloseOutlined /></div>
+          
+          <div style={{ display: 'flex', width: 48, height: 40, cursor: 'pointer' }} >
+            <div style={{ width: 48, height: 40, }} onClick={()=> bus.emit('showVideo',
+              {checkeChannels:checkeChannels, terminalNo: channelInfo.terminalNo})}>
+              <StepForwardOutlined />
+            </div>
+            <div style={{ width: 48, height: 40, }} onClick={()=> bus.emit('closeModal',{})}>
+              <CloseOutlined />
+            </div>
+            
+          </div>
         </div>
         <div style={{ padding: 10, }}>
           <div style={{ margin: '5px 0' }}>

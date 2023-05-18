@@ -2,11 +2,10 @@ import React, { useState} from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import CardVideo from './CardVideo'
 
-function EchartsComponent(props: any) {
-  const [url, setUrl] = useState()
+function VideoComponent(props: any) {
   const [url2, setUrl2] = useState()
   const [visible, setVisible] = useState(true)
-
+  const {url} = props;
   // test_url = 'http://2008101_v.vd.rdas.dfmc.com.cn:9502/hlsram/chn0/index.m3u8'
   let args = {
     cars: []
@@ -35,9 +34,9 @@ function EchartsComponent(props: any) {
           >
             {/* {args.cars[0] && args.cars[0].terminalNo} */}
           </span>
-          <div className="test" style={{ flexGrow: 1 }}>
-            {args.cars[0] ? (
-              <CardVideo url={''} url2={url2} style={{ height: '100%' }} />
+          <div className="test" style={{ flexGrow: 1, marginBottom: 5 }}>
+            {url&& url!='' ? (
+              <CardVideo url={url} url2={url2} style={{ height: '100%' }} />
             ) : (
               <div
                 style={{
@@ -78,4 +77,4 @@ function EchartsComponent(props: any) {
         </div>
     </div>;
 }
-export default EchartsComponent;
+export default VideoComponent;

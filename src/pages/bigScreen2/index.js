@@ -26,6 +26,7 @@ let stringToHTML = function (str) {
 export default function App() {
   const [chosenVin, setChosenVin] = useState('');
   const [modalShow, setModalShow] = useState(false);
+  
   usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
   // 全局事件监听
   useEffect(() => {
@@ -176,7 +177,6 @@ export default function App() {
   async function getCars() {
     const {code,data} = await get('/api/getAllVehicles', {})
     if(code==0){
-      // console.log(111, Object.keys(data) );
       setCars(Object.values(data))
     }
   }
@@ -257,6 +257,7 @@ export default function App() {
           </div>
 
           <ChoseCar screenRef={container_ref} cars={cars}/>
+          
           <VideoCompo />
 
           {modalShow 
