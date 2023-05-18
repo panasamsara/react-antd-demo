@@ -11,9 +11,10 @@ const Detail = (props) => {
   let options = [];
   options = channelInfo && channelInfo.channels
     ? Object.keys(channelInfo.channels).map(item=>{
+      let i = parseInt(item.slice(2)) -1
       let obj = {
         label: item,
-        value: item,
+        value: item.slice(0,2)+ 'n' +  i,
         disabled: channelInfo.channels[item] =='0'
       }
       return obj
@@ -22,7 +23,6 @@ const Detail = (props) => {
     
   const onChange = (checkedValues) => {
     setCheckeChannels(checkedValues)
-    console.log('checked = ', checkedValues);
   };
 
   return <>
