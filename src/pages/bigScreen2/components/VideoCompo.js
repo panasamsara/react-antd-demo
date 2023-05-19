@@ -6,7 +6,7 @@ import VideoOnLine from "@/components/VideoOnLine/VideoOnLine";
 import { bus } from '@/utils';
 import Draggable from 'react-draggable';
 import { Checkbox } from 'antd';
-import { CloseOutlined, StepForwardOutlined } from '@ant-design/icons';
+import { CloseOutlined, StepForwardOutlined , NodeIndexOutlined} from '@ant-design/icons';
 
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
@@ -116,7 +116,10 @@ export default function App() {
             }}>
               <div>车辆信号详情</div>
               
-              <div style={{ display: 'flex', width: 48, height: 40, cursor: 'pointer' }} >
+              <div style={{ display: 'flex', width: 100, height: 40, cursor: 'pointer' }} >
+                <div style={{ width: 48, height: 40, }} >
+                  <NodeIndexOutlined/>
+                </div>
                 <div style={{ width: 48, height: 40, }} onClick={()=> openAllVideo()}>
                   <StepForwardOutlined />
                 </div>
