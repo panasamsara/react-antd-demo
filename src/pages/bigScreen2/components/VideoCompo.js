@@ -43,9 +43,11 @@ export default function App() {
     }
     bus.on(`closeVideo`, closeVideoCallback); // 监听关闭事件
     bus.on(`showDetailModal`, showModalCallback) //监听关闭详情弹框
+    bus.on(`changeDetailModal`, closeDetailModal) //切换详情
     return () => {
       bus.off(`closeVideo`, closeVideoCallback)
       bus.off(`showDetailModal`, showModalCallback)
+      bus.off(`changeDetailModal`, closeDetailModal)
     }
   }, [checkedValues])
 

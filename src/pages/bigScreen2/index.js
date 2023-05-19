@@ -23,7 +23,6 @@ let stringToHTML = function (str) {
 
 export default function App() {
   const [chosenVin, setChosenVin] = useState('');
-  const [modalShow, setModalShow] = useState(false);
   
   usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
   // 全局事件监听
@@ -32,9 +31,6 @@ export default function App() {
       console.log('tableclick2', e) 
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
-    }
-    const closeModalCallback = (e) => {
-      setModalShow(false)
     }
     bus.on(`tableClick2`, tableclickCallback)
     return () => {
@@ -227,7 +223,7 @@ export default function App() {
                       <img src={MARKER_SVG} alt="marker" onClick={(e)=> {
                         e.stopPropagation()
                         setChosenVin(item.vin)
-                        setModalShow(false)
+                        bus.emit('changeDetailModal',{})
                       }}/>
                       {
                         chosenVin == item.vin ?
