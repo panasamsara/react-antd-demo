@@ -48,7 +48,7 @@ const Detail = (props) => {
     return () => {
       bus.off(`closeVideo`, closeVideoCallback)
     }
-  }, [])
+  }, [checkeChannels])
   // 关闭详情框
   const closeDetailModal = () => {
     setCheckeChannels([]);
