@@ -41,8 +41,8 @@ const Detail = (props) => {
   // 监听视频的关闭按钮，将checkbox 取消勾选
   useEffect(() => {
     const closeVideoCallback = (e) => {
-      let arr = channelOptions.filter(item => item.label!=e.channelLabel)
-      setChannelOptions(arr)
+      let arr = checkeChannels.splice(checkeChannels.indexOf(e.channelLabel), 1);
+      setCheckeChannels(arr)
     }
     bus.on(`closeVideo`, closeVideoCallback)
     return () => {
@@ -51,6 +51,7 @@ const Detail = (props) => {
   }, [])
   // 关闭详情框
   const closeDetailModal = () => {
+    setCheckeChannels([]);
     bus.emit('closeDetailModal',{})
   };
 
@@ -93,6 +94,7 @@ const Detail = (props) => {
             <Checkbox.Group 
               options={channelOptions} 
               defaultValue={['ch1']} 
+              value={checkeChannels} 
               onChange={onChange} 
             />
           </div>

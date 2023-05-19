@@ -15,7 +15,8 @@ export default function App() {
       setCheckedValues(e.checkedValues)
     }
     const closeVideoCallback = (e) => {
-      let arr = checkedValues.filter(item => item!=e.channelLabel)
+      console.log(111, checkedValues);
+      let arr = checkedValues.splice(checkedValues.indexOf(e.channelLabel), 1);
       setCheckedValues(arr)
     }
     const closeModalCallback = (e) => {
@@ -44,7 +45,7 @@ export default function App() {
       {
         checkedValues.map(item=>{
           let i = parseInt(item.slice(2)) -1
-          return <VideoOnLine channelLabel={item}
+          return <VideoOnLine channelLabel={item} key={item}
             url={`http://${terminalNo
             }_v.vd.rdas.dfmc.com.cn:9502/hlsram/${item.slice(0,2)+ 'n' +  i}/index.m3u8`}
           />
