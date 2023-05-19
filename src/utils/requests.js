@@ -127,7 +127,8 @@ function fetchjson(url, opt = {}) {
   // }
   const fullUrl = url.indexOf('http://') != -1 || url.indexOf('https://') != -1
   // console.log('opt: ', opt)
-  return fetch(fullUrl ? url : `${url}`, {
+  let reg = /develop/
+  return fetch(fullUrl || reg.test(process.env.NODE_ENV)? url : `${SERVER}${url}`, {
     credentials: 'include',
     ...opt,
   })
