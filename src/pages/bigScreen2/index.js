@@ -14,8 +14,6 @@ import ChoseCar from "./components/ChoseCar";
 import VideoCompo from "./components/VideoCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
-import DetailModal from "./components/DetailModal";
-import cookie from 'react-cookies'
 
 let stringToHTML = function (str) {
 	var dom = document.createElement('div');
@@ -39,10 +37,8 @@ export default function App() {
       setModalShow(false)
     }
     bus.on(`tableClick2`, tableclickCallback)
-    bus.on(`closeDetailModal`, closeModalCallback)
     return () => {
       bus.off(`tableClick`, tableclickCallback)
-      bus.off(`closeDetailModal`, closeModalCallback)
     }
   }, [])
 
@@ -180,17 +176,14 @@ export default function App() {
       setCars(Object.values(data))
     }
   }
-  const [choseVin, setChoseVin] = useState(''); // 点击车辆
-  const [channelInfo, setChannelInfo] = useState({});
+  
   // 根据vin获取Channel
   async function getChannels(vin) {
-    setChoseVin(vin);
-    setModalShow(true);
     const {code,data} = await get('/api/getChannels', {
       vin: vin
     })
     if(code==0){
-      setChannelInfo(data);
+      bus.emit('showDetailModal',{channelInfo: data, vin: vin})
     }
   }
 
@@ -258,11 +251,9 @@ export default function App() {
 
           <ChoseCar screenRef={container_ref} cars={cars}/>
           
+          {/* 视频播放组件 */}
           <VideoCompo />
 
-          {modalShow 
-          ? <DetailModal vin={choseVin} channelInfo={channelInfo}/> 
-          : null}
       </div>
     </div>
   );
