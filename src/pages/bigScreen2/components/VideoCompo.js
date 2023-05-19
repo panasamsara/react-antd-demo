@@ -18,11 +18,16 @@ export default function App() {
       let arr = checkedValues.filter(item => item!=e.channelLabel)
       setCheckedValues(arr)
     }
+    const closeModalCallback = (e) => {
+      setCheckedValues([])
+    }
     bus.on(`showVideo`, showVideoCallback); // 监听复选框勾选事件
     bus.on(`closeVideo`, closeVideoCallback); // 监听关闭事件
+    bus.on(`closeDetailModal`, closeModalCallback) //监听关闭详情弹框
     return () => {
       bus.off(`showVideo`, showVideoCallback)
       bus.off(`closeVideo`, closeVideoCallback)
+      bus.off(`closeDetailModal`, closeModalCallback)
     }
   }, [])
   return (

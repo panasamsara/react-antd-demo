@@ -21,7 +21,6 @@ const columns = [
   },
 ];
 const handleClick = (e,record)=>{
-  console.log(11, record);
   e.stopPropagation();
   bus.emit('tableClick1', {RowData: record})
   bus.emit('tableClick2', {RowData: record})

@@ -39,10 +39,10 @@ export default function App() {
       setModalShow(false)
     }
     bus.on(`tableClick2`, tableclickCallback)
-    bus.on(`closeModal`, closeModalCallback)
+    bus.on(`closeDetailModal`, closeModalCallback)
     return () => {
       bus.off(`tableClick`, tableclickCallback)
-      bus.off(`closeModal`, closeModalCallback)
+      bus.off(`closeDetailModal`, closeModalCallback)
     }
   }, [])
 

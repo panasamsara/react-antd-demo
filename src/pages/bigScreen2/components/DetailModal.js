@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 const Detail = (props) => {
   const {vin, channelInfo} = props;
   const [checkeChannels, setCheckeChannels] = useState([]); // 存放已勾选的数组
+  const [deafultChannels, setDeafultChannels] = useState([]); // 默认勾选项
   const [channelOptions, setChannelOptions] = useState([]); // 展示频道选项 供勾选（已过滤 ==0不展示）
   // 处理频道数据
   let options = [];
@@ -21,10 +22,15 @@ const Detail = (props) => {
       return obj
     })
     : [];
-  // 设置频道初始化数据 只展示 ==1的频道
+  // 设置频道初始化数据 （只展示 ==1的频道），默认打开第一个视频
   useEffect(()=>{
     let arr = options.filter(item=> !item.disabled)
     setChannelOptions(arr)
+    if(arr&&arr.length>0){
+      setCheckeChannels(['ch1']);
+      setDeafultChannels(['ch1']);
+      bus.emit('showVideo', {checkedValues:checkeChannels, terminalNo: channelInfo.terminalNo})
+    }
   },[channelInfo.channels]);
   
   // 复选框勾选事件，打开视频弹框
@@ -43,6 +49,10 @@ const Detail = (props) => {
       bus.off(`closeVideo`, closeVideoCallback)
     }
   }, [])
+  // 关闭详情框
+  const closeDetailModal = () => {
+    bus.emit('closeDetailModal',{})
+  };
 
   return <>
     <Draggable>
@@ -66,7 +76,7 @@ const Detail = (props) => {
               {checkeChannels:checkeChannels, terminalNo: channelInfo.terminalNo})}>
               <StepForwardOutlined />
             </div>
-            <div style={{ width: 48, height: 40, }} onClick={()=> bus.emit('closeModal',{})}>
+            <div style={{ width: 48, height: 40, }} onClick={()=>closeDetailModal()}>
               <CloseOutlined />
             </div>
             
@@ -82,7 +92,7 @@ const Detail = (props) => {
           <div className='map-channel'>
             <Checkbox.Group 
               options={channelOptions} 
-              defaultValue={['Apple']} 
+              defaultValue={['ch1']} 
               onChange={onChange} 
             />
           </div>
