@@ -3,27 +3,46 @@ import { bus } from '@/utils';
 import Draggable from 'react-draggable';
 import { Checkbox } from 'antd';
 import '@/styles/mapStyle.less';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Detail = (props) => {
   const {vin, channelInfo} = props;
-  const [checkeChannels, setCheckeChannels] = useState([]);
+  const [checkeChannels, setCheckeChannels] = useState([]); // 存放已勾选的数组
+  const [channelOptions, setChannelOptions] = useState([]); // 展示频道选项 供勾选（已过滤 ==0不展示）
+  // 处理频道数据
   let options = [];
   options = channelInfo && channelInfo.channels
     ? Object.keys(channelInfo.channels).map(item=>{
-      let i = parseInt(item.slice(2)) -1
       let obj = {
         label: item,
-        value: item.slice(0,2)+ 'n' +  i,
+        value: item,
         disabled: channelInfo.channels[item] =='0'
       }
       return obj
     })
     : [];
-    
+  // 设置频道初始化数据 只展示 ==1的频道
+  useEffect(()=>{
+    let arr = options.filter(item=> !item.disabled)
+    setChannelOptions(arr)
+  },[channelInfo.channels]);
+  
+  // 复选框勾选事件，打开视频弹框
   const onChange = (checkedValues) => {
-    setCheckeChannels(checkedValues)
+    setCheckeChannels(checkedValues);
+    bus.emit('showVideo', {checkedValues:checkedValues, terminalNo: channelInfo.terminalNo})
   };
+  // 监听视频的关闭按钮，将checkbox 取消勾选
+  useEffect(() => {
+    const closeVideoCallback = (e) => {
+      let arr = channelOptions.filter(item => item.label!=e.channelLabel)
+      setChannelOptions(arr)
+    }
+    bus.on(`closeVideo`, closeVideoCallback)
+    return () => {
+      bus.off(`closeVideo`, closeVideoCallback)
+    }
+  }, [])
 
   return <>
     <Draggable>
@@ -62,7 +81,7 @@ const Detail = (props) => {
           <span>频道：</span>
           <div className='map-channel'>
             <Checkbox.Group 
-              options={options} 
+              options={channelOptions} 
               defaultValue={['Apple']} 
               onChange={onChange} 
             />

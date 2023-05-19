@@ -9,6 +9,7 @@ export default function CardVideo(props:any) {
     height,
     width,
     style,
+    channelLabel
   } = props
 
   const [isVideo, setIsVideo] = React.useState(false)
@@ -32,7 +33,7 @@ export default function CardVideo(props:any) {
       }}
     >
       {isVideo ? (
-        <LivePlayer style={{ height }} url={url} url2={url2} />
+        <LivePlayer style={{ height }} url={url} url2={url2} channelLabel={channelLabel}/>
       ) : (
         <div
           style={{
