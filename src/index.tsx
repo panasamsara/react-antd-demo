@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 // import Router from "./Route/Router";
 import {BrowserRouter as Router} from "react-router-dom"
 import App from './App'
+import { ConfigProvider } from 'antd';
+import locale from 'antd/locale/zh_CN';
 
 // 高德地图相关
 import { config as AmapReactConfig } from '@amap/amap-react';
@@ -18,12 +20,16 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <Router>
-    <App />
-  </Router>
-  // <React.StrictMode>
-  //   <Router />
-  // </React.StrictMode>
+  // <Router>
+  //   <App />
+  // </Router>
+  <ConfigProvider locale={locale}>
+    <React.StrictMode>
+    <Router>
+      <App />
+    </Router>
+    </React.StrictMode>
+  </ConfigProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
