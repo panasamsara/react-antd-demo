@@ -5,9 +5,10 @@ import RenderCompo from "@/components/RenderCompo";
 import VideoOnLine from "@/components/VideoOnLine/VideoOnLine";
 import { bus } from '@/utils';
 import Draggable from 'react-draggable';
-import { Checkbox, Modal, Button, DatePicker } from 'antd';
+import { Checkbox, Modal, Button, DatePicker, InputNumber, Form } from 'antd';
 import { CloseOutlined, StepForwardOutlined , NodeIndexOutlined} from '@ant-design/icons';
 import dayjs from 'dayjs';
+import { get, post } from '@/utils/requests';
 
 const { RangePicker } = DatePicker;
 
@@ -83,11 +84,30 @@ export default function App() {
 
   const handleOk = () => {
     setLoading(true);
-    setTimeout(() => {
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   setOpen(false);
+    // }, 1000);
+    form.validateFields().then(values=>{
+     
+      getTrack(values)
       setLoading(false);
       setOpen(false);
-    }, 1000);
+    }).catch(e=>{
+      setLoading(false);
+    })
   };
+  const getTrack = async (params)=>{
+    const {code,data} = await get('/api/getTrack', {
+      vins: vin,
+      start: dayjs(params.times[0]).unix() ,
+      end: dayjs(params.times[1]).unix() ,
+      step: params.step+ 's'
+    })
+    if(code==0){
+      bus.emit('getTrack', data[vin])
+    }
+  }
 
   const handleCancel = () => {
     setOpen(false);
@@ -110,6 +130,34 @@ export default function App() {
       value: [dayjs().add(-7, 'd'), dayjs()],
     },
   ];
+
+  const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
+  const tailLayout = {
+    wrapperCol: {
+      offset: 8,
+      span: 16,
+    },
+  };
+  const [form] = Form.useForm();
+  const onFinish = (values) => {
+    console.log(values);
+  };
+  const onReset = () => {
+    form.resetFields();
+  };
+  const onFill = () => {
+    form.setFieldsValue({
+      note: 'Hello world!',
+      gender: 'male',
+    });
+  };
 
   return (
     <div>
@@ -190,10 +238,9 @@ export default function App() {
       <Modal
         open={open}
         width={800}
-        title="Title"
-        onOk={handleOk}
-        onCancel={handleCancel}
+        title="车辆行驶轨迹"
         style= {{opacity: 1}}
+        onCancel={handleCancel}
         // getContainer={props.screenRef.current}
         footer={[
           <Button key="back" onClick={handleCancel}>
@@ -205,8 +252,40 @@ export default function App() {
         ]}
       >
         <div>
-          <RangePicker presets={rangePresets} onChange={onRangeChange} />
 
+          <Form
+            {...layout}
+            form={form}
+            name="control-hooks"
+            onFinish={onFinish}
+            style={{
+              maxWidth: 600,
+            }}
+          >
+            <Form.Item
+              name="times"
+              label="时间段"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <RangePicker presets={rangePresets} onChange={onRangeChange} />
+            </Form.Item>
+            
+            <Form.Item
+              name="step"
+              label="间隔"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <InputNumber addonAfter="秒" defaultValue={3} />
+            </Form.Item>
+          </Form>
         </div>
       </Modal>
       

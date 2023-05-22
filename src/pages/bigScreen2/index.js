@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { message } from 'antd';
 import {
   Amap,
-  Marker,
+  Marker, Polyline,
   usePlugins
 } from "@amap/amap-react";
 import { get, post } from '@/utils/requests';
@@ -23,6 +23,7 @@ let stringToHTML = function (str) {
 
 export default function App() {
   const [chosenVin, setChosenVin] = useState('');
+  const [pathLine, setPathLine] = useState([]);
   
   usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
   // 全局事件监听
@@ -32,9 +33,16 @@ export default function App() {
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
     }
+    const getTrackCallback = (e) => {
+      console.log('getTrack', e) 
+      let arr = e.map(item => [item.longitude, item.latitude])
+      setPathLine(arr)
+    }
     bus.on(`tableClick2`, tableclickCallback)
+    bus.on(`getTrack`, getTrackCallback)
     return () => {
       bus.off(`tableClick`, tableclickCallback)
+      bus.off(`getTrack`, getTrackCallback)
     }
   }, [])
 
@@ -239,7 +247,14 @@ export default function App() {
                   </div>
                 })
               }
-              
+              { pathLine.length>0
+                ? <Polyline
+                  path={pathLine}
+                  showDir
+                  strokeColor="#28F" //线颜色
+                  strokeWeight={8} //线宽
+                /> : null
+              }
             </Amap>
 
             
