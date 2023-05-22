@@ -5,8 +5,11 @@ import RenderCompo from "@/components/RenderCompo";
 import VideoOnLine from "@/components/VideoOnLine/VideoOnLine";
 import { bus } from '@/utils';
 import Draggable from 'react-draggable';
-import { Checkbox } from 'antd';
+import { Checkbox, Modal, Button, DatePicker } from 'antd';
 import { CloseOutlined, StepForwardOutlined , NodeIndexOutlined} from '@ant-design/icons';
+import dayjs from 'dayjs';
+
+const { RangePicker } = DatePicker;
 
 export default function App() {
   const [modalShow, setModalShow] = useState(false);
@@ -15,6 +18,8 @@ export default function App() {
   const [initChannels, setInitChannels] = useState([]); // 暂存 初始channel
   const [checkedValues, setCheckedValues] = useState([]); // 勾选的channel，勾选几个展示几个视频弹框
   const [channelOptions, setChannelOptions] = useState([]); // 展示频道选项 供勾选（已过滤 ==0不展示）
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // 视频关闭按钮事件
@@ -76,6 +81,36 @@ export default function App() {
     setCheckedValues(arr)
   };
 
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setOpen(false);
+    }, 1000);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+  const onRangeChange = (dates, dateStrings) => {
+    if (dates) {
+      console.log('From: ', dates[0], ', to: ', dates[1]);
+      console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    } else {
+      console.log('Clear');
+    }
+  };
+  const rangePresets = [
+    {
+      label: 'Last 3 Days',
+      value: [dayjs().add(-3, 'd'), dayjs()],
+    },
+    {
+      label: 'Last 7 Days',
+      value: [dayjs().add(-7, 'd'), dayjs()],
+    },
+  ];
+
   return (
     <div>
       <RenderCompo
@@ -117,7 +152,7 @@ export default function App() {
               <div>车辆信号详情</div>
               
               <div style={{ display: 'flex', width: 100, height: 40, cursor: 'pointer' }} >
-                <div style={{ width: 48, height: 40, }} >
+                <div style={{ width: 48, height: 40, }} onClick={()=> setOpen(true)}>
                   <NodeIndexOutlined/>
                 </div>
                 <div style={{ width: 48, height: 40, }} onClick={()=> openAllVideo()}>
@@ -151,6 +186,29 @@ export default function App() {
           </div>
         </Draggable> : null
       }
+
+      <Modal
+        open={open}
+        width={800}
+        title="Title"
+        onOk={handleOk}
+        onCancel={handleCancel}
+        style= {{opacity: 1}}
+        // getContainer={props.screenRef.current}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            取消
+          </Button>,
+          <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+            确认
+          </Button>
+        ]}
+      >
+        <div>
+          <RangePicker presets={rangePresets} onChange={onRangeChange} />
+
+        </div>
+      </Modal>
       
     </div>
   );
