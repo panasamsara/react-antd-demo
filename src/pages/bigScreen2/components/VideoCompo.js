@@ -108,10 +108,14 @@ export default function App(props) {
   */
   const getTrack = async (params)=>{
     const {code,data} = await get('/api/getTrack', {
-      vins: vin,
-      start: dayjs(params.times[0]).unix() ,
-      end: dayjs(params.times[1]).unix() ,
-      step: params.step+ 's'
+      // vins: vin,
+      // start: dayjs(params.times[0]).unix() ,
+      // end: dayjs(params.times[1]).unix() ,
+      // step: params.step+ 's'
+      vins: 'LDP29C929NG000057', //以下4个参数 为测试轨迹用
+      start: 1684820041 ,
+      end: 1684821041 ,
+      step: '4s'
     })
     setLoading(false);
     setOpen(false);

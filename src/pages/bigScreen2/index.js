@@ -54,6 +54,7 @@ export default function App() {
     }
     const getTrackCallback = (e) => {
       console.log('getTrack', e) 
+      setMapCenter([e[0].longitude, e[0].latitude])
       let arr = e.map(item => [item.longitude, item.latitude])
       setPathLine(arr)
     }
@@ -94,6 +95,7 @@ export default function App() {
   // 关闭详情弹框 展示所有车辆marker
   const closeDetail = ()=>{
     setChosenVin('')
+    setPathLine([])
     setCars(Object.values(allVehicles))
   }
 
