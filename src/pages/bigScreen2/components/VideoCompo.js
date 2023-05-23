@@ -120,7 +120,7 @@ export default function App(props) {
       step: '4s'
     })
     setLoading(false);
-    setTrackFormVisible(false);
+    setModalShow(false);
     if(code==0){
       bus.emit('getTrack', data[vin])
     }
