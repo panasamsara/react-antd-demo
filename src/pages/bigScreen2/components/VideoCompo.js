@@ -5,8 +5,10 @@ import RenderCompo from "@/components/RenderCompo";
 import VideoOnLine from "@/components/VideoOnLine/VideoOnLine";
 import { bus } from '@/utils';
 import Draggable from 'react-draggable';
-import { Checkbox, Modal, Button, DatePicker, InputNumber, Form } from 'antd';
-import { CloseOutlined, StepForwardOutlined , NodeIndexOutlined} from '@ant-design/icons';
+import { message, Checkbox, Modal, Button, DatePicker, InputNumber, Form } from 'antd';
+import { CloseOutlined, StepForwardOutlined , NodeIndexOutlined,
+  ExclamationCircleOutlined
+} from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { get, post } from '@/utils/requests';
 
@@ -85,8 +87,14 @@ export default function App(props) {
   const handleOk = () => {
     setLoading(true);
     form.validateFields().then(values=>{
-      getTrack(values)
-      
+      let duration = dayjs(values.times[1]).unix() - dayjs(values.times[0]).unix();
+      let number = duration/values.step;
+      if(number>=10000){
+        setLoading(false);
+        message.error(`筛选条件不合理，请缩小时间范围或增加时间间隔！`);
+      }else{
+        getTrack(values)
+      }
     }).catch(e=>{
       setLoading(false);
     })
@@ -113,6 +121,7 @@ export default function App(props) {
   }
 
   const handleCancel = () => {
+    setLoading(false);
     setOpen(false);
   };
   const onRangeChange = (dates, dateStrings) => {
@@ -259,7 +268,10 @@ export default function App(props) {
         ]}
       >
         <div>
-
+          <div style={{marginLeft: 100, marginBottom: 20, color: '#ff4d4f'}}>
+            <ExclamationCircleOutlined />
+            每次最多获取10000条轨迹数据，请合理选择时间范围、时间间隔
+          </div>
           <Form
             {...layout}
             form={form}
@@ -271,7 +283,7 @@ export default function App(props) {
           >
             <Form.Item
               name="times"
-              label="时间段"
+              label="时间范围"
               rules={[
                 {
                   required: true,
@@ -283,7 +295,7 @@ export default function App(props) {
                 onChange={onRangeChange} 
                 showTime={{
                   hideDisabledOptions: true,
-                  defaultValue: [dayjs('00:00:00', 'HH:mm:ss'), dayjs('11:59:59', 'HH:mm:ss')],
+                  defaultValue: [dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')],
                 }}
                 format="YYYY-MM-DD HH:mm:ss"
               />
@@ -291,7 +303,7 @@ export default function App(props) {
             
             <Form.Item
               name="step"
-              label="间隔"
+              label="时间间隔"
               rules={[
                 {
                   required: true,

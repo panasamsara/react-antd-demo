@@ -48,7 +48,7 @@ export default function App() {
     const tableclickCallback = (e) => {
       console.log('tableclick', e) 
       setChosenVin(e.RowData.vin)
-      setCars([e.RowData])
+      setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
     }
@@ -91,6 +91,7 @@ export default function App() {
       message.error(`服务错误：${msg}`)
     }
   }
+  // 关闭详情弹框 展示所有车辆marker
   const closeDetail = ()=>{
     setChosenVin('')
     setCars(Object.values(allVehicles))
