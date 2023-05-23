@@ -2,6 +2,7 @@
 import "@/styles/mapStyle.less";
 import React, { useState, useRef, useEffect } from 'react'
 import { message } from 'antd';
+import { CloseOutlined, } from '@ant-design/icons';
 import {
   Amap,
   Marker, Polyline,
@@ -22,153 +23,10 @@ let stringToHTML = function (str) {
 };
 
 export default function App() {
+  usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
+
   const [chosenVin, setChosenVin] = useState('');
   const [pathLine, setPathLine] = useState([]);
-  
-  usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
-  // 全局事件监听
-  useEffect(() => {
-    const tableclickCallback = (e) => {
-      console.log('tableclick2', e) 
-      setMapCenter([e.RowData.longitude, e.RowData.latitude])
-      setMapZoom(17)
-    }
-    const getTrackCallback = (e) => {
-      console.log('getTrack', e) 
-      let arr = e.map(item => [item.longitude, item.latitude])
-      setPathLine(arr)
-    }
-    bus.on(`tableClick2`, tableclickCallback)
-    bus.on(`getTrack`, getTrackCallback)
-    return () => {
-      bus.off(`tableClick2`, tableclickCallback)
-      bus.off(`getTrack`, getTrackCallback)
-    }
-  }, [])
-
-  // 全屏展示
-  const container_ref = useRef();
-  let map
-  useEffect(()=>{
-    // map = new window.AMap.Map('map-container', {
-    //   viewMode: '2D',  // 默认使用 2D 模式
-    //   zoom:5,  //初始化地图层级
-    // });
-    // map.on('complete', function () {
-    //   get('/api/getAllVehicles', {}).then(res=>{
-    //     let positions = Object.values(res.data);
-        
-    //     for (let i = 0; i < positions.length; i++) {
-    //       let curPosition = [positions[i].longitude, positions[i].latitude];
-    //       const marker = new window.AMap.Marker({
-    //         position: curPosition,
-    //         offset: new window.AMap.Pixel(-10, -34),
-    //         content: `<div class="marker-route marker-marker-bus-from" id="${positions[i].vin}">
-    //           <img src=${MARKER_SVG} alt="marker" />
-    //           <input type='hidden' value='${positions[i].vin}'/>
-    //         </div>`
-              
-    //       })
-    //       // 给marker绑定事件
-    //       marker.on('mouseover', function(e){
-    //         let vin = stringToHTML( e.target._opts.content).childNodes[0].childNodes[3].value
-    //         let pDiv = document.getElementById(vin);
- 
-    //         let div = document.createElement("div");
-    //         div.setAttribute("id", "newDiv"); 
-    //         div.setAttribute("class", "amap-info-window"); 
-    //         div.innerHTML = `车辆VIN: ${vin}`;
-    //         pDiv.appendChild(div);
-
-    //         // var position = e.data.data && e.data.data.position;
-    //         // if(position){
-    //         //     normalMarker.setContent(
-    //         //         `<div class="amap-info-window">
-    //         //             车辆位置: [${e.data.vin}]
-    //         //             <div>${position}</div>
-    //         //         </div>`);
-    //         //     normalMarker.setPosition(position);
-    //         //     map.add(normalMarker);
-    //         // }
-    //       });
-    //       marker.on('mouseout', function(){
-    //           map.remove(normalMarker);
-    //           document.getElementById('newDiv').remove();
-    //       });
-    //       marker.on('click', (e) => {
-    //         // clickData_ref.current = e.target.getExtData()
-    //         // onMarkerClick(e.target.getExtData())
-    //       })
-    //       map.add(marker) 
-    //     }
-    //     // 创建 AMap.LabelsLayer 图层
-    //   // var layer = new window.AMap.LabelsLayer({
-    //   //   zooms: [3, 20],
-    //   //   zIndex: 1000,
-    //   //   collision: false
-    //   // });
-    //   // // 将图层添加到地图
-    //   // map.add(layer);
-
-    //   // let markers = [];
-    //   // let positions = Object.values(res.data);
-
-    //   // let icon = {
-    //   //     type: 'image',
-    //   //     image: MARKER_SVG,
-    //   //     anchor: 'bottom-center',
-    //   // };
-
-    //   // for (let i = 0; i < positions.length; i++) {
-    //   //     let curPosition = [positions[i].longitude, positions[i].latitude];
-    //   //     let curData = {
-    //   //         position: curPosition,
-    //   //         icon
-    //   //     };
-
-    //   //     let labelMarker = new window.AMap.LabelMarker(curData);
-
-    //   //     markers.push(labelMarker);
-
-    //   //     // 给marker绑定事件
-    //   //     labelMarker.on('mouseover', function(e){
-    //   //         var position = e.data.data && e.data.data.position;
-    //   //         if(position){
-    //   //             normalMarker.setContent(
-    //   //                 `<div class="amap-info-window">
-    //   //                     车辆VIN: ${e.data.vin}
-    //   //                     <div>${position}</div>
-    //   //                 </div>`);
-    //   //             normalMarker.setPosition(position);
-    //   //             map.add(normalMarker);
-    //   //         }
-    //   //     });
-    //   //     labelMarker.on('mouseout', function(){
-    //   //         map.remove(normalMarker);
-    //   //     });
-    //   //   }
-    //   //   // 一次性将海量点添加到图层
-    //   //   layer.add(markers);
-    //   })
-      
-    //   // 普通点
-    //   var normalMarker = new window.AMap.Marker({
-    //       anchor: 'bottom-center',
-    //       offset: [0, -15],
-    //   });
-    // });
-
-
-    if (container_ref.current.requestFullscreen) {
-      container_ref.current.requestFullscreen();
-    } else if (container_ref.current.webkitRequestFullScreen) {
-      container_ref.current.webkitRequestFullScreen();
-    } else if (container_ref.current.mozRequestFullScreen) {
-      container_ref.current.mozRequestFullScreen();
-    } else if (container_ref.current.msRequestFullscreen) {
-      container_ref.current.msRequestFullscreen();
-    }
-  },[container_ref]);
   const [allVehicles, setAllVehicles] = useState({}); // 接口数据备份
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
@@ -184,15 +42,58 @@ export default function App() {
   useEffect(() => {
     getCars()
   }, [])
+
+  // 全局事件监听
+  useEffect(() => {
+    const tableclickCallback = (e) => {
+      console.log('tableclick', e) 
+      setChosenVin(e.RowData.vin)
+      setCars([e.RowData])
+      setMapCenter([e.RowData.longitude, e.RowData.latitude])
+      setMapZoom(17)
+    }
+    const getTrackCallback = (e) => {
+      console.log('getTrack', e) 
+      let arr = e.map(item => [item.longitude, item.latitude])
+      setPathLine(arr)
+    }
+    bus.on(`tableClick`, tableclickCallback)
+    bus.on(`getTrack`, getTrackCallback)
+    return () => {
+      bus.off(`tableClick`, tableclickCallback)
+      bus.off(`getTrack`, getTrackCallback)
+    }
+  }, [])
+
+  // 全屏展示
+  const container_ref = useRef();
+
+  useEffect(()=>{
+    if (container_ref.current.requestFullscreen) {
+      container_ref.current.requestFullscreen();
+    } else if (container_ref.current.webkitRequestFullScreen) {
+      container_ref.current.webkitRequestFullScreen();
+    } else if (container_ref.current.mozRequestFullScreen) {
+      container_ref.current.mozRequestFullScreen();
+    } else if (container_ref.current.msRequestFullscreen) {
+      container_ref.current.msRequestFullscreen();
+    }
+  },[container_ref]);
   
   // 根据vin获取Channel 用于展示视频,默认展示第一个channel的视频
   async function getChannels(vin) {
-    const {code,data} = await get('/api/getChannels', {
+    const {code,data, msg} = await get('/api/getChannels', {
       vin: vin
     })
     if(code==0){
       bus.emit('showDetailModal',{channelInfo: data, vin: vin})
+    }else{
+      message.error(`服务错误：${msg}`)
     }
+  }
+  const closeDetail = ()=>{
+    setChosenVin('')
+    setCars(Object.values(allVehicles))
   }
 
   return (
@@ -235,12 +136,20 @@ export default function App() {
                       }}/>
                       {
                         chosenVin == item.vin ?
-                        <div style={{ position: 'absolute',width: 180, height: 60, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
-                          onClick={()=> getChannels(item.vin)}
-                        >
-                          <p style={{margin: 0}}>{item.vin}</p>
-                          <p style={{margin: 0}}>速度：{item.speed}</p>
-                        </div> : null
+                        <div style={{position: 'absolute',}}>
+                          <div style={{ width: 180, height: 60, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
+                            onClick={()=> getChannels(item.vin)}
+                          >
+                            <p style={{margin: 0}}>{item.vin}</p>
+                            <p style={{margin: 0}}>速度：{item.speed}</p>
+                          </div>
+                          <div style={{ width: 20, height: 20, borderRadius: 10,backgroundColor: '#fff', position: 'absolute', top: -5, right: -10, paddingLeft: 3,cursor: 'pointer' }}
+                            onClick={closeDetail}
+                          >
+                            <CloseOutlined />
+                          </div>
+                        </div>
+                         : null
                       }
                       
                   </Marker>

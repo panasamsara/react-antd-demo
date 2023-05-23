@@ -17,9 +17,9 @@ export default function App(props) {
     const tableclickCallback = (e) => {
       setOpen(false);
     }
-    bus.on(`tableClick1`, tableclickCallback)
+    bus.on(`tableClick`, tableclickCallback)
     return () => {
-      bus.off(`tableClick1`, tableclickCallback)
+      bus.off(`tableClick`, tableclickCallback)
     }
   }, [])
 
