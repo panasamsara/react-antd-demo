@@ -263,7 +263,7 @@ export default function App() {
           <ChoseCar screenRef={container_ref} cars={cars}/>
           
           {/* 视频播放组件 */}
-          <VideoCompo />
+          <VideoCompo screenRef={container_ref}/>
 
       </div>
     </div>

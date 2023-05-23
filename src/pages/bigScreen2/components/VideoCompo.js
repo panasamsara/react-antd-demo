@@ -12,7 +12,7 @@ import { get, post } from '@/utils/requests';
 
 const { RangePicker } = DatePicker;
 
-export default function App() {
+export default function App(props) {
   const [modalShow, setModalShow] = useState(false);
   const [terminalNo, setTerminalNo] = useState(''); 
   const [vin, setVin] = useState(''); 
@@ -241,7 +241,7 @@ export default function App() {
         title="车辆行驶轨迹"
         style= {{opacity: 1}}
         onCancel={handleCancel}
-        // getContainer={props.screenRef.current}
+        getContainer={props.screenRef.current}
         footer={[
           <Button key="back" onClick={handleCancel}>
             取消
@@ -283,7 +283,7 @@ export default function App() {
                 },
               ]}
             >
-              <InputNumber addonAfter="秒" defaultValue={3} />
+              <InputNumber addonAfter="秒" />
             </Form.Item>
           </Form>
         </div>
