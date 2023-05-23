@@ -30,6 +30,7 @@ export default function App() {
   const [angle, setAngle] = useState(0);
   const [pathLine, setPathLine] = useState([]);
   const [passedPath, setPassedPath] = useState([]);
+  const [chosenCar, setChosenCar] = useState({});
   const [chosenVin, setChosenVin] = useState('');
   const [allVehicles, setAllVehicles] = useState({}); // 接口数据备份
   const [mapZoom, setMapZoom] = useState(5);
@@ -92,7 +93,11 @@ export default function App() {
       vin: vin
     })
     if(code==0){
-      bus.emit('showDetailModal',{channelInfo: data, vin: vin})
+      bus.emit('showDetailModal',{
+        channelInfo: data, 
+        vin: vin,
+        chosenCar: chosenCar
+      })
     }else{
       message.error(`服务错误：${msg}`)
     }
@@ -168,10 +173,12 @@ export default function App() {
                     <Marker position={[item.longitude, item.latitude]} offset={[0, -40]} anchor="top-center">
                       <img src={MARKER_SVG} alt="marker" onClick={(e)=> {
                         e.stopPropagation()
+                        getChannels(item.vin)
+                        setChosenCar(item)
                         setChosenVin(item.vin)
                         bus.emit('changeDetailModal',{})
                       }}/>
-                      {
+                      {/* {
                         chosenVin == item.vin ?
                         <div style={{position: 'absolute',}}>
                           <div style={{ width: 180, height: 60, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
@@ -187,7 +194,7 @@ export default function App() {
                           </div>
                         </div>
                          : null
-                      }
+                      } */}
                       
                   </Marker>
                   </div>

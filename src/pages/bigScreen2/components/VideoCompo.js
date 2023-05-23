@@ -18,10 +18,11 @@ export default function App(props) {
   const [modalShow, setModalShow] = useState(false);
   const [terminalNo, setTerminalNo] = useState(''); 
   const [vin, setVin] = useState(''); 
+  const [chosenCar, setChosenCar] = useState({});
   const [initChannels, setInitChannels] = useState([]); // 暂存 初始channel
   const [checkedValues, setCheckedValues] = useState([]); // 勾选的channel，勾选几个展示几个视频弹框
   const [channelOptions, setChannelOptions] = useState([]); // 展示频道选项 供勾选（已过滤 ==0不展示）
-  const [open, setOpen] = useState(false);
+  const [trackFormVisible, setTrackFormVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function App(props) {
     // 详情打开弹框
     const showModalCallback = (e) => {
       setModalShow(true)
+      setChosenCar(e.chosenCar)
       setTerminalNo(e.channelInfo.terminalNo)
       setInitChannels(e.channelInfo.channels)
       setVin(e.vin)
@@ -47,7 +49,7 @@ export default function App(props) {
       })
       let arr = options.filter(item=> !item.disabled)
       setChannelOptions(arr)
-      setCheckedValues(['ch1'])
+      // setCheckedValues(['ch1']) // 默认选中播放ch1的视频
     }
     bus.on(`closeVideo`, closeVideoCallback); // 监听关闭事件
     bus.on(`showDetailModal`, showModalCallback) //监听关闭详情弹框
@@ -118,7 +120,7 @@ export default function App(props) {
       step: '4s'
     })
     setLoading(false);
-    setOpen(false);
+    setTrackFormVisible(false);
     if(code==0){
       bus.emit('getTrack', data[vin])
     }
@@ -126,7 +128,7 @@ export default function App(props) {
 
   const handleCancel = () => {
     setLoading(false);
-    setOpen(false);
+    setTrackFormVisible(false);
   };
   const onRangeChange = (dates, dateStrings) => {
     if (dates) {
@@ -153,7 +155,8 @@ export default function App(props) {
 
   const layout = {
     labelCol: {
-      span: 8,
+      span: 6,
+      style: { color: '#fff' }
     },
     wrapperCol: {
       span: 16,
@@ -165,6 +168,7 @@ export default function App(props) {
       span: 16,
     },
   };
+  
   const [form] = Form.useForm();
   const onFinish = (values) => {
     console.log(values);
@@ -204,59 +208,126 @@ export default function App(props) {
       {
         modalShow ?
         <Draggable>
-          <div style={{ width: 400, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
-            position: 'absolute', cursor: 'move',
+          <div style={{width: 800, height: 400, position: 'absolute', cursor: 'move',
             left: '45%', transform: 'translateX(-50%)',
             top: '40%', transform: 'translateY(-50%)',
-            color: '#fff',
-            display: 'flex', flexDirection: 'column',
-            textAlign: 'left', fontSize: 16, borderRadius: 4
-          }}
-            
-          >
-            <div style={{ height: 40, lineHeight : '40px', borderBottom: '1px solid #fff', paddingLeft: 10, 
-              display: 'flex', justifyContent: 'space-between'
-            }}>
-              <div>车辆信号详情</div>
-              
-              <div style={{ display: 'flex', width: 100, height: 40, cursor: 'pointer' }} >
-                <div style={{ width: 48, height: 40, }} onClick={()=> setOpen(true)}>
-                  <NodeIndexOutlined/>
+            color: '#fff', display: 'flex',}}>
+              <div style={{ width: 400, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
+                display: 'flex', flexDirection: 'column',
+                textAlign: 'left', fontSize: 16, borderRadius: 4
+              }}
+              >
+                <div style={{ height: 40, lineHeight : '40px', borderBottom: '1px solid #fff', paddingLeft: 10, 
+                  display: 'flex', justifyContent: 'space-between'
+                }}>
+                  <div>车辆信号详情</div>
+                  
+                  <div style={{ display: 'flex', width: 100, height: 40, cursor: 'pointer' }} >
+                    <div style={{ width: 48, height: 40, }} onClick={()=> setTrackFormVisible(true)}>
+                      <NodeIndexOutlined/>
+                    </div>
+                    <div style={{ width: 48, height: 40, }} onClick={()=> openAllVideo()}>
+                      <StepForwardOutlined />
+                    </div>
+                    <div style={{ width: 48, height: 40, }} onClick={()=>closeDetailModal()}>
+                      <CloseOutlined />
+                    </div>
+                    
+                  </div>
                 </div>
-                <div style={{ width: 48, height: 40, }} onClick={()=> openAllVideo()}>
-                  <StepForwardOutlined />
-                </div>
-                <div style={{ width: 48, height: 40, }} onClick={()=>closeDetailModal()}>
-                  <CloseOutlined />
-                </div>
-                
-              </div>
-            </div>
-            <div style={{ padding: 10, }}>
-              <div style={{ margin: '5px 0' }}>
-                <span>VIN码：</span>
-                <span>{vin}</span>
-              </div>
-              <div style={{ margin: '5px 0' }}>
-              <span>频道：</span>
-              <div className='map-channel'>
-                <Checkbox.Group 
-                  options={channelOptions} 
-                  defaultValue={['ch1']} 
-                  value={checkedValues}
-                  onChange={onChange} 
-                />
-              </div>
+                <div style={{ padding: 10, }}>
+                  <div style={{ margin: '5px 0' }}>
+                    <span>VIN码：</span>
+                    <span>{vin}</span>
+                  </div>
+                  <div style={{ margin: '5px 0' }}>
+                    <span>速度：</span>
+                    <span>{chosenCar.speed}</span>
+                  </div>
+                  <div style={{ margin: '5px 0' }}>
+                  <span>频道：</span>
+                  <div className='map-channel'>
+                    <Checkbox.Group 
+                      options={channelOptions} 
+                      defaultValue={['ch1']} 
+                      value={checkedValues}
+                      onChange={onChange} 
+                    />
+                  </div>
 
+                  </div>
+                </div>
               </div>
-            </div>
               
+              { trackFormVisible ?
+              <div style={{ width: 450, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
+                textAlign: 'left', fontSize: 16, borderRadius: 4
+              }}>
+                <div>
+                  <div style={{margin: 20, color: '#fff'}}>
+                    <ExclamationCircleOutlined />
+                    每次最多获取10000条轨迹数据，请合理选择时间范围、时间间隔
+                  </div>
+                  <Form
+                    {...layout}
+                    form={form}
+                    name="control-hooks"
+                    onFinish={onFinish}
+                    style={{
+                      maxWidth: 600,
+                    }}
+                  >
+                    <Form.Item
+                      name="times"
+                      label="时间范围"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <RangePicker presets={rangePresets} 
+                        disabledDate={disabledDate}
+                        onChange={onRangeChange} 
+                        showTime={{
+                          hideDisabledOptions: true,
+                          defaultValue: [dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')],
+                        }}
+                        format="YYYY-MM-DD HH:mm:ss"
+                      />
+                    </Form.Item>
+                    
+                    <Form.Item
+                      name="step"
+                      label="时间间隔"
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <InputNumber addonAfter="秒" />
+                    </Form.Item>
+
+                    <Form.Item {...tailLayout}>
+                      <Button htmlType="button" onClick={onReset} style={{marginRight: 12}}>
+                        重置
+                      </Button>
+                      <Button type="primary" htmlType="submit" onClick={handleOk}>
+                        确定
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                </div>
+              </div> : null
+              }
           </div>
+          
         </Draggable> : null
       }
 
-      <Modal
-        open={open}
+      {/* <Modal
+        open={trackFormVisible}
         width={800}
         title="车辆行驶轨迹"
         maskClosable={false}
@@ -319,7 +390,7 @@ export default function App(props) {
             </Form.Item>
           </Form>
         </div>
-      </Modal>
+      </Modal> */}
       
     </div>
   );
