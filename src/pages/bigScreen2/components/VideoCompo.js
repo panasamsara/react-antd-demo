@@ -84,19 +84,20 @@ export default function App(props) {
 
   const handleOk = () => {
     setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setOpen(false);
-    // }, 1000);
     form.validateFields().then(values=>{
-     
       getTrack(values)
-      setLoading(false);
-      setOpen(false);
+      
     }).catch(e=>{
       setLoading(false);
     })
   };
+  /*
+  * 获取轨迹接口，参数：
+  *  vin      String （例：'LDP29H929NG000069'  ）
+  *  start    Number （时间戳 精确到秒，例：1684215885  ）
+  *  end      Number （时间戳 精确到秒，例：1684216995  ）
+  *  step     String （例：'300s'、 '10m'  ）
+  */
   const getTrack = async (params)=>{
     const {code,data} = await get('/api/getTrack', {
       vins: vin,
@@ -104,6 +105,8 @@ export default function App(props) {
       end: dayjs(params.times[1]).unix() ,
       step: params.step+ 's'
     })
+    setLoading(false);
+    setOpen(false);
     if(code==0){
       bus.emit('getTrack', data[vin])
     }
@@ -130,6 +133,10 @@ export default function App(props) {
       value: [dayjs().add(-7, 'd'), dayjs()],
     },
   ];
+  const disabledDate = (current) => {
+    // Can not select days after today
+    return current > dayjs().endOf('day');
+  };
 
   const layout = {
     labelCol: {
@@ -271,7 +278,15 @@ export default function App(props) {
                 },
               ]}
             >
-              <RangePicker presets={rangePresets} onChange={onRangeChange} />
+              <RangePicker presets={rangePresets} 
+                disabledDate={disabledDate}
+                onChange={onRangeChange} 
+                showTime={{
+                  hideDisabledOptions: true,
+                  defaultValue: [dayjs('00:00:00', 'HH:mm:ss'), dayjs('11:59:59', 'HH:mm:ss')],
+                }}
+                format="YYYY-MM-DD HH:mm:ss"
+              />
             </Form.Item>
             
             <Form.Item

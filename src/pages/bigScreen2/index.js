@@ -41,7 +41,7 @@ export default function App() {
     bus.on(`tableClick2`, tableclickCallback)
     bus.on(`getTrack`, getTrackCallback)
     return () => {
-      bus.off(`tableClick`, tableclickCallback)
+      bus.off(`tableClick2`, tableclickCallback)
       bus.off(`getTrack`, getTrackCallback)
     }
   }, [])
@@ -169,19 +169,23 @@ export default function App() {
       container_ref.current.msRequestFullscreen();
     }
   },[container_ref]);
-
+  const [allVehicles, setAllVehicles] = useState({}); // 接口数据备份
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
-  const [cars, setCars] = useState([]);
-  // 获取所有车辆
+  const [cars, setCars] = useState([]); // 展示点
+  // 获取所有车辆，用于地图上展示车辆的点
   async function getCars() {
     const {code,data} = await get('/api/getAllVehicles', {})
     if(code==0){
+      setAllVehicles(data)
       setCars(Object.values(data))
     }
   }
+  useEffect(() => {
+    getCars()
+  }, [])
   
-  // 根据vin获取Channel
+  // 根据vin获取Channel 用于展示视频,默认展示第一个channel的视频
   async function getChannels(vin) {
     const {code,data} = await get('/api/getChannels', {
       vin: vin
@@ -190,10 +194,6 @@ export default function App() {
       bus.emit('showDetailModal',{channelInfo: data, vin: vin})
     }
   }
-
-  useEffect(() => {
-    getCars()
-  }, [])
 
   return (
     <div 
