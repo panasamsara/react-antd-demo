@@ -25,9 +25,9 @@ root.render(
   // </Router>
   <ConfigProvider locale={locale}>
     <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+      <Router>
+        <App />
+      </Router>
     </React.StrictMode>
   </ConfigProvider>
 );

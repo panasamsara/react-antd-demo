@@ -1,7 +1,7 @@
 
 import "@/styles/mapStyle.less";
-import React, { useState, useRef, useEffect } from 'react'
-import { message } from 'antd';
+import React, { useState, useRef, useEffect, useCallback } from 'react'
+import { message, Button } from 'antd';
 import { CloseOutlined, } from '@ant-design/icons';
 import {
   Amap,
@@ -9,6 +9,7 @@ import {
   usePlugins
 } from "@amap/amap-react";
 import { get, post } from '@/utils/requests';
+import CAR from "@/assets/imagesMap/car.png";
 import MARKER_SVG from "@/assets/marker.svg";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
@@ -23,10 +24,13 @@ let stringToHTML = function (str) {
 };
 
 export default function App() {
-  usePlugins(['AMap.ToolBar','AMap.MoveAnimation'])
-
-  const [chosenVin, setChosenVin] = useState('');
+  usePlugins("AMap.MoveAnimation");
+  const $marker = useRef(undefined);
+  const [position, setPosition] = useState([116.478935, 39.997761]);
+  const [angle, setAngle] = useState(0);
   const [pathLine, setPathLine] = useState([]);
+  const [passedPath, setPassedPath] = useState([]);
+  const [chosenVin, setChosenVin] = useState('');
   const [allVehicles, setAllVehicles] = useState({}); // 接口数据备份
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
@@ -46,16 +50,17 @@ export default function App() {
   // 全局事件监听
   useEffect(() => {
     const tableclickCallback = (e) => {
-      console.log('tableclick', e) 
       setChosenVin(e.RowData.vin)
       setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
     }
     const getTrackCallback = (e) => {
-      console.log('getTrack', e) 
       setMapCenter([e[0].longitude, e[0].latitude])
+      setPosition([e[0].longitude, e[0].latitude])
+      setPassedPath([e[0].longitude, e[0].latitude])
       let arr = e.map(item => [item.longitude, item.latitude])
+      console.log('getTrack', arr) 
       setPathLine(arr)
     }
     bus.on(`tableClick`, tableclickCallback)
@@ -99,6 +104,32 @@ export default function App() {
     setCars(Object.values(allVehicles))
   }
 
+  const startAnim = () => {
+    const marker = $marker.current;
+    if (!marker) return;
+    marker.moveAlong(pathLine, {
+      // 每一段的时长
+      duration: 1000,
+      // JSAPI2.0 是否延道路自动设置角度在 moveAlong 里设置
+      autoRotation: true
+    });
+  };
+  const pauseAnim = useCallback(() => {
+    const marker = $marker.current;
+    if (!marker) return;
+    marker.pauseMove();
+  });
+  const resumeAnim = useCallback(() => {
+    const marker = $marker.current;
+    if (!marker) return;
+    marker.resumeMove();
+  });
+  const stopAnim = useCallback(() => {
+    const marker = $marker.current;
+    if (!marker) return;
+    marker.stopMove();
+  });
+
   return (
     <div 
       ref={container_ref}
@@ -127,6 +158,9 @@ export default function App() {
             <Amap
               zoom={mapZoom}
               center={mapCenter}
+              onComplete={(map) => {
+                map.setFitView();
+              }}
             >
               {
                 cars.map(item=>{
@@ -167,9 +201,31 @@ export default function App() {
                   strokeWeight={8} //线宽
                 /> : null
               }
+              {passedPath.length > 0 && (
+                <Polyline
+                  path={passedPath}
+                  strokeColor="#AF5" //线颜色
+                  strokeWeight={8} //线宽
+                />
+              )}
+              {passedPath.length > 0 && (
+                <Marker
+                  ref={$marker}
+                  position={position}
+                  autoRotation
+                  angle={angle}
+                  anchor="center"
+                  onMoving={(marker, e) => {
+                    setPassedPath(e.passedPath);
+                    const p = marker.getPosition();
+                    setPosition([p.getLng(), p.getLat()]);
+                    setAngle(marker.getAngle());
+                  }}
+                >
+                  <img src={CAR} alt="car" />
+                </Marker>
+              )}
             </Amap>
-
-            
           </div>
 
           <ChoseCar screenRef={container_ref} cars={cars}/>
@@ -178,6 +234,39 @@ export default function App() {
           <VideoCompo screenRef={container_ref}/>
 
       </div>
+      {passedPath.length > 0 && (
+        <div className="car-move-control">
+          <h4>轨迹回放控制</h4>
+          <div className="input-item">
+            <input
+              type="button"
+              className="btn"
+              value="开始动画"
+              onClick={startAnim}
+            />
+            <input
+              type="button"
+              className="btn"
+              value="暂停动画"
+              onClick={pauseAnim}
+            />
+          </div>
+          <div className="input-item">
+            <input
+              type="button"
+              className="btn"
+              value="继续动画"
+              onClick={resumeAnim}
+            />
+            <input
+              type="button"
+              className="btn"
+              value="停止动画"
+              onClick={stopAnim}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

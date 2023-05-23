@@ -114,7 +114,7 @@ export default function App(props) {
       // step: params.step+ 's'
       vins: 'LDP29C929NG000057', //以下4个参数 为测试轨迹用
       start: 1684820041 ,
-      end: 1684821041 ,
+      end: 1684824041 ,
       step: '4s'
     })
     setLoading(false);
@@ -259,6 +259,7 @@ export default function App(props) {
         open={open}
         width={800}
         title="车辆行驶轨迹"
+        maskClosable={false}
         style= {{opacity: 1}}
         onCancel={handleCancel}
         getContainer={props.screenRef.current}
