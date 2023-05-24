@@ -12,11 +12,11 @@ function App() {
   const onKeyDown = (e:any) => {
     if(e.keyCode == 37 || e.keyCode == 39){
       switch (window.location.pathname) {
-        case '/bigScreen/page1':
+        case '/':
           navigate('/bigScreen/page2')
           break;
         case '/bigScreen/page2':
-          navigate('/bigScreen/page1')
+          navigate('/')
           break;
       //   case 37: // 向左事件 - 位置减减
       //     console.log(222);

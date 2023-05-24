@@ -20,7 +20,7 @@ export default function App(props:{page: string, title: string}) {
     if(page == 'bigScreen1'){
       navigate('/bigScreen/page2')
     }else{
-      navigate('/bigScreen/page1')
+      navigate('/')
     }
   }
   return (

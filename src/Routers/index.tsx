@@ -43,8 +43,17 @@ export const routers: RouteObject[] = [
       {
         index: true,
         path: '/',
-        element: lazyLoad(<Home />)
+        // element: lazyLoad(<Home />)
+        element: lazyLoad(<BigScreen />)
       }, 
+      {
+        path: '/bigScreen/page1',
+        element: lazyLoad(<BigScreen />)
+      },
+      {
+        path: '/bigScreen/page2',
+        element: lazyLoad(<BigScreen2 />)
+      },
       {
         index: true,
         path: '/test',
@@ -96,14 +105,7 @@ export const routers: RouteObject[] = [
         path: '/echartsDemo',
         element: lazyLoad(<EchartsDemo />)
       },
-      {
-        path: '/bigScreen/page1',
-        element: lazyLoad(<BigScreen />)
-      },
-      {
-        path: '/bigScreen/page2',
-        element: lazyLoad(<BigScreen2 />)
-      },
+     
     ]
   },
 //   {

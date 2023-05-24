@@ -72,20 +72,8 @@ export default function App() {
     }
   }, [])
 
-  // 全屏展示
+  
   const container_ref = useRef();
-
-  useEffect(()=>{
-    if (container_ref.current.requestFullscreen) {
-      container_ref.current.requestFullscreen();
-    } else if (container_ref.current.webkitRequestFullScreen) {
-      container_ref.current.webkitRequestFullScreen();
-    } else if (container_ref.current.mozRequestFullScreen) {
-      container_ref.current.mozRequestFullScreen();
-    } else if (container_ref.current.msRequestFullscreen) {
-      container_ref.current.msRequestFullscreen();
-    }
-  },[container_ref]);
   
   // 根据vin获取Channel 用于展示视频,默认展示第一个channel的视频
   async function getChannels(vin) {
