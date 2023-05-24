@@ -11,6 +11,8 @@ import {
 import { get, post } from '@/utils/requests';
 import CAR from "@/assets/imagesMap/car.png";
 import MARKER_SVG from "@/assets/marker.svg";
+import MARKER_RED_SVG from "@/assets/marker_red.svg";
+import MARKER_GRAY_SVG from "@/assets/marker_gray.svg";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
 import VideoCompo from "./components/VideoCompo";
@@ -159,13 +161,37 @@ export default function App() {
                 cars.map(item=>{
                   return <div key={item.vin}>
                     <Marker position={[item.longitude, item.latitude]} offset={[0, -40]} anchor="top-center">
-                      <img src={MARKER_SVG} alt="marker" onClick={(e)=> {
-                        e.stopPropagation()
-                        getChannels(item.vin)
-                        setChosenCar(item)
-                        setChosenVin(item.vin)
-                        bus.emit('changeDetailModal',{})
-                      }}/>
+                      {
+                        item.status == '0' ?
+                        <img src={MARKER_GRAY_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+                          e.stopPropagation()
+                          getChannels(item.vin)
+                          setChosenCar(item)
+                          setChosenVin(item.vin)
+                          bus.emit('changeDetailModal',{})
+                        }}/> : null
+                      }
+                      {
+                        item.status == '2' ?
+                        <img src={MARKER_RED_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+                          e.stopPropagation()
+                          getChannels(item.vin)
+                          setChosenCar(item)
+                          setChosenVin(item.vin)
+                          bus.emit('changeDetailModal',{})
+                        }}/> : null
+                      }
+                      {
+                        item.status == '3' ?
+                        <img src={MARKER_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+                          e.stopPropagation()
+                          getChannels(item.vin)
+                          setChosenCar(item)
+                          setChosenVin(item.vin)
+                          bus.emit('changeDetailModal',{})
+                        }}/> : null
+                      }
+                      
                       {/* {
                         chosenVin == item.vin ?
                         <div style={{position: 'absolute',}}>

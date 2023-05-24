@@ -11,14 +11,12 @@ export default function AppLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   // 全屏展示
-  const container_ref = useRef<any>();
-  useEffect(()=>{
-    console.log(111);
-    if (container_ref.current) {
-      console.log(222,container_ref.current);
-      container_ref.current.requestFullscreen();
-    } 
-  },[container_ref.current,location]);
+  const container_ref = useRef<any|null|undefined>();
+  // useEffect(()=>{
+  //   if (container_ref.current) {
+  //     container_ref.current.requestFullscreen();
+  //   } 
+  // },[container_ref.current]);
 
   const [defaultSelectedKeys, setDefaultSelectedKeys] = useState<string[]>([]);
   const [defaultOpenKeys, setDefaultOpenKeys] = useState<string[]>([]);
