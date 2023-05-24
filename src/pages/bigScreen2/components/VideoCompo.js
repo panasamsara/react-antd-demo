@@ -287,6 +287,7 @@ export default function App(props) {
                       ]}
                     >
                       <RangePicker presets={rangePresets} 
+                        getPopupContainer={(trigger) => trigger}
                         disabledDate={disabledDate}
                         onChange={onRangeChange} 
                         showTime={{
