@@ -97,6 +97,7 @@ export default function App() {
   const closeDetail = ()=>{
     setChosenVin('')
     setPathLine([])
+    setPassedPath([])
     setCars(Object.values(allVehicles))
   }
 
@@ -258,6 +259,9 @@ export default function App() {
       </div>
       {passedPath.length > 0 && (
         <div className="car-move-control">
+          <CloseOutlined style={{position: 'absolute', right: 10, cursor: 'pointer'}}
+            onClick={closeDetail}
+          />
           <h4>轨迹回放控制</h4>
           <div className="input-item">
             <input
