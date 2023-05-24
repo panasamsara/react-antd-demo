@@ -261,7 +261,7 @@ export default function App(props) {
               
               { trackFormVisible ?
               <div style={{ width: 450, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
-                textAlign: 'left', fontSize: 16, borderRadius: 4
+                textAlign: 'left', fontSize: 16, borderRadius: 4, marginLeft: 6
               }}>
                 <div>
                   <div style={{margin: 20, color: '#fff'}}>
