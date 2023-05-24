@@ -60,6 +60,7 @@ export default function App() {
     }
     const getTrackCallback = (e) => {
       setMapCenter([e[0].longitude, e[0].latitude])
+      setMapZoom(12.5)
       setPosition([e[0].longitude, e[0].latitude])
       setPassedPath([e[0].longitude, e[0].latitude])
       let arr = e.map(item => [item.longitude, item.latitude])
