@@ -3,7 +3,8 @@
 import { useEffect, useCallback } from "react";
 import "./styles.css";
 import { useAmapComponent } from "@amap/amap-react";
-import * as ReactDOM from "react-dom";
+// import * as ReactDOM from "react-dom";
+import ReactDOM from 'react-dom/client';
 
 function MarkerCluster(props) {
   const renderMarker = useCallback((ctx) => {
@@ -55,6 +56,8 @@ export default MarkerCluster;
 
 function renderDOM(vdom) {
   const div = document.createElement("div");
-  ReactDOM.render(vdom, div);
+  // ReactDOM.render(vdom, div);
+  const root = ReactDOM.createRoot(div);
+  root.render(vdom);
   return div;
 }

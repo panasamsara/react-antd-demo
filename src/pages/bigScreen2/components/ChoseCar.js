@@ -20,11 +20,11 @@ const getTreeNode = (data) => {
         );
       }
       return (
-        
+        item.isChild ?
         <TreeNode
           key={item.key}
           title={
-            <>
+            <div>
               <span>{item.title }</span>
               <span>{`\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0`}</span> 
               <span>{ `${item.speed} km/h \u00A0\u00A0\u00A0` }</span>
@@ -32,9 +32,13 @@ const getTreeNode = (data) => {
                 ? <span style={{color: '#fc5531'}}>离线</span> 
                 : <span style={{color: '#12CF5E'}}>在线</span>  }
               </span>
-            </>
+            </div>
           }
         />
+        : <TreeNode
+        key={item.key}
+        title={item.title}
+      />
       );
     });
   }
@@ -49,9 +53,11 @@ export function arrayToTree(arr) {
     return {
       title: itme,
       key: itme,
+      isChild: false,
       children: arr.filter(i=>i.type == itme).map(item=>{
         item.key = item.vin;
         item.title = item.vin;
+        item.isChild = true;
         return item
       })
     }
