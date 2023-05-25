@@ -18,12 +18,19 @@ import ChoseCar from "./components/ChoseCar";
 import VideoCompo from "./components/VideoCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
+import { useReactiveRef } from "./mapHooks";
+import MarkerCluster from "./MarkerCluster";
 
 let stringToHTML = function (str) {
 	var dom = document.createElement('div');
 	dom.innerHTML = str;
 	return dom;
 };
+function interpolate(u, begin, end) {
+  if (u < 0) u = 0;
+  if (u > 1) u = 1;
+  return u * (end - begin) + begin;
+}
 
 export default function App() {
   usePlugins("AMap.MoveAnimation");
@@ -38,12 +45,66 @@ export default function App() {
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
   const [cars, setCars] = useState([]); // 展示点
+
+  // 点聚合相关
+  const $clusterData = useReactiveRef([]);
+  const renderMarker = useCallback((point, marker) => {
+    marker.setOffset([-8, -8]);
+    return point.itemData.status == '0' ?
+      <img src={MARKER_GRAY_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+        e.stopPropagation()
+        getChannels(point.itemData.vin)
+        setChosenCar(point.itemData)
+        setChosenVin(point.itemData.vin)
+        bus.emit('changeDetailModal',{})
+      }}/> 
+      : 
+      <img src={MARKER_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+        e.stopPropagation()
+        getChannels(point.itemData.vin)
+        setChosenCar(point.itemData)
+        setChosenVin(point.itemData.vin)
+        bus.emit('changeDetailModal',{})
+      }}/> ;
+  }, []);
+  const renderCluster = useCallback((cluster, marker) => {
+    const { count } = cluster;
+    const data = $clusterData.current;
+    const p = count / data.length;
+    const u = Math.pow(p, 1 / 18);
+    const v = Math.pow(p, 1 / 5);
+    const hue = Math.floor(interpolate(u, 180, 0));
+    const size = Math.floor(interpolate(v, 30, 60));
+    const style = {
+      width: `${size}px`,
+      height: `${size}px`,
+      borderRadius: `${size / 2}px`,
+      backgroundColor: `hsla(${hue}, 100%, 50%, 0.7)`,
+      borderColor: `hsla(${hue}, 100%, 40%, 1)`,
+      boxShadow: `0 0 10px hsla(${hue}, 100%, 50%, 1)`
+    };
+    marker.setOffset([-size / 2, -size / 2]);
+    return (
+      <div className="custom-cluster" style={style}>
+        {count}
+      </div>
+    );
+  }, []);
+
   // 获取所有车辆，用于地图上展示车辆的点
   async function getCars() {
     const {code,data} = await get('/api/getAllVehicles', {})
     if(code==0){
       setAllVehicles(data)
-      setCars(Object.values(data))
+      let car_arr = Object.values(data)
+      setCars(car_arr);
+      let geo_arr = car_arr.map(item=>{
+        return {
+          lnglat: [item.longitude, item.latitude],
+          itemData: item
+        }
+      })
+      $clusterData.current = geo_arr
     }
   }
   useEffect(() => {
@@ -100,7 +161,9 @@ export default function App() {
     setPassedPath([])
     setCars(Object.values(allVehicles))
   }
+  
 
+  // 轨迹动画控制方法
   const startAnim = () => {
     const marker = $marker.current;
     if (!marker) return;
@@ -159,7 +222,14 @@ export default function App() {
                 map.setFitView();
               }}
             >
-              {
+              <MarkerCluster
+                data={$clusterData.current}
+                gridSize={80}
+                averageCenter
+                renderMarker={renderMarker}
+                renderCluster={renderCluster}
+              />
+              {/* {
                 cars.map(item=>{
                   return <div key={item.vin}>
                     <Marker position={[item.longitude, item.latitude]} offset={[0, -40]} anchor="top-center">
@@ -194,7 +264,7 @@ export default function App() {
                         }}/> : null
                       }
                       
-                      {/* {
+                      {
                         chosenVin == item.vin ?
                         <div style={{position: 'absolute',}}>
                           <div style={{ width: 180, height: 60, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
@@ -210,12 +280,12 @@ export default function App() {
                           </div>
                         </div>
                          : null
-                      } */}
+                      }
                       
                   </Marker>
                   </div>
                 })
-              }
+              } */}
               { pathLine.length>0
                 ? <Polyline
                   path={pathLine}
