@@ -142,7 +142,7 @@ export default function App() {
   // 根据vin获取Channel 用于展示视频,默认展示第一个channel的视频
   async function getChannels(vin) {
     const {code,data, msg} = await get('/api/getChannels', {
-      vin: vin
+      vin: vin.trim()
     })
     if(code==0){
       bus.emit('showDetailModal',{

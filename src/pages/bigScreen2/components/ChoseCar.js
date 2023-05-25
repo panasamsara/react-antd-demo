@@ -6,7 +6,41 @@ import { BarsOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Modal, message, Tree } from 'antd';
 import { bus } from '@/utils';
 import TableData from "./tableData";
+const { TreeNode } = Tree;
 
+// 自定义树
+const getTreeNode = (data) => {
+  if (data && data.length > 0) {
+    return data.map((item) => {
+      if (item.children) {
+        return (
+          <TreeNode key={item.key} title={item.title}>
+            {getTreeNode(item.children)}
+          </TreeNode>
+        );
+      }
+      return (
+        
+        <TreeNode
+          key={item.key}
+          title={
+            <>
+              <span>{item.title }</span>
+              <span>{`\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0`}</span> 
+              <span>{ `${item.speed} km/h \u00A0\u00A0\u00A0` }</span>
+              <span>{ item.status == '0' 
+                ? <span style={{color: '#fc5531'}}>离线</span> 
+                : <span style={{color: '#12CF5E'}}>在线</span>  }
+              </span>
+            </>
+          }
+        />
+      );
+    });
+  }
+  return [];
+};
+// 数组分类，转成树形结构
 export function arrayToTree(arr) {
   let typa_arr = arr.map(item=> item.type)
   let type_set = new Set(typa_arr)
@@ -102,11 +136,13 @@ export default function App(props) {
                 onClick={()=>setOpen(false)}
               />
               <div className='map-tree-box'>
-                <Tree
-                  style={{background: 'transparent', color: '#fff'}}
-                  treeData={treeData}
-                  onSelect={treeSelect}
-                />
+                <Tree treeData={treeData} onSelect={treeSelect} >
+                  {
+                    getTreeNode(treeData)
+                  }
+                  {/* treeData={treeData}
+                  onSelect={treeSelect} */}
+                </Tree>
               </div>
             </div> : null
           }
