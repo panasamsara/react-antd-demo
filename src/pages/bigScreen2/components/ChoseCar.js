@@ -55,16 +55,16 @@ export function arrayToTree(arr) {
   let typa_arr = arr.map(item=> item.type)
   let type_set = new Set(typa_arr)
   let type_only_arr = Array.from(type_set)
-  let treeData = type_only_arr.map(itme=>{
+  let treeData = type_only_arr.map(item=>{
     return {
-      title: itme,
-      key: itme,
+      title: item,
+      key: item,
       isChild: false,
-      children: arr.filter(i=>i.type == itme).map(item=>{
-        item.key = item.vin;
-        item.title = item.vin;
-        item.isChild = true;
-        return item
+      children: arr.filter(i=>i.type == item).map(i=>{
+        i.key = i.vin;
+        i.title = i.vin;
+        i.isChild = true;
+        return i
       })
     }
   })
@@ -78,8 +78,8 @@ export default function App(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
-    setTreeData(arrayToTree(cars) )
-  },[])
+    setTreeData(arrayToTree(cars) );
+  },[cars])
   
   useEffect(() => {
     const tableclickCallback = (e) => {
@@ -147,7 +147,9 @@ export default function App(props) {
                 onClick={()=>setOpen(true)}
               />
               <div className='map-tree-box'>
-                <Tree treeData={treeData} onSelect={treeSelect} >
+                <Tree onSelect={treeSelect} 
+                  checkable={true}
+                >
                   {
                     getTreeNode(treeData)
                   }
