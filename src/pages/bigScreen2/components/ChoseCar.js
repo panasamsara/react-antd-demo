@@ -27,7 +27,7 @@ const getTreeNode = (data) => {
             <div style={{display: 'flex'}}>
               <span>{item.title }</span>
               <span>{`\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0`}</span> 
-              <span>{ `${item.speed} km/h \u00A0\u00A0\u00A0` }</span>
+              <span style={{width: 100}}>{ `${item.speed} km/h` }</span>
               <div>{ item.status == '0'
                 ? <span style={{color: '#fc5531'}}>离线</span> 
                 : <span style={{color: '#12CF5E'}}>在线</span> }
