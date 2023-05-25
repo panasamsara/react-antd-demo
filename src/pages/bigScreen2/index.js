@@ -97,7 +97,24 @@ export default function App() {
     if(code==0){
       setAllVehicles(data)
       let car_arr = Object.values(data)
+      car_arr.forEach(item=>{
+        get('/api/getChannels', {
+          vin: item.vin.trim()
+        }).then(res=>{
+          if(res.msg == 'request terminalNo null'){
+            item.hasVideo = false
+          }else{
+            let channels = Object.values(res.data.channels);
+            if(channels.includes('1')){
+              item.hasVideo = true
+            }else{
+              item.hasVideo = false
+            }
+          }
+        })
+      })
       setCars(car_arr);
+      //组织数据 给点聚合用
       let geo_arr = car_arr.map(item=>{
         return {
           lnglat: [item.longitude, item.latitude],

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
-import { BarsOutlined, CloseOutlined } from '@ant-design/icons';
+import { BarsOutlined, CloseOutlined, YoutubeOutlined, } from '@ant-design/icons';
 import { Button, Modal, message, Tree } from 'antd';
 import { bus } from '@/utils';
 import TableData from "./tableData";
@@ -24,21 +24,27 @@ const getTreeNode = (data) => {
         <TreeNode
           key={item.key}
           title={
-            <div>
+            <div style={{display: 'flex'}}>
               <span>{item.title }</span>
               <span>{`\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0`}</span> 
               <span>{ `${item.speed} km/h \u00A0\u00A0\u00A0` }</span>
-              <span>{ item.status == '0' 
+              <div>{ item.status == '0'
                 ? <span style={{color: '#fc5531'}}>离线</span> 
-                : <span style={{color: '#12CF5E'}}>在线</span>  }
-              </span>
+                : <span style={{color: '#12CF5E'}}>在线</span> }
+                {`\u00A0\u00A0\u00A0`}
+              </div>
+              <div>{ item.hasVideo
+                ? <YoutubeOutlined style={{color: '#12CF5E'}}/>
+                : <YoutubeOutlined style={{color: '#fc5531'}}/> }
+                {`\u00A0\u00A0\u00A0`}
+              </div>
             </div>
           }
         />
-        : <TreeNode
-        key={item.key}
-        title={item.title}
-      />
+        : <TreeNode 
+          key={item.key}
+          title={item.title}
+        />
       );
     });
   }
@@ -86,8 +92,7 @@ export default function App(props) {
   }, [])
 
   const showModal = () => {
-    console.log(121212);
-    setOpen(true);
+    setOpen(false);
   };
 
   const handleOk = () => {
@@ -138,16 +143,14 @@ export default function App(props) {
             <div style={{ position: 'relative',width: 450, height: 500, overflow: 'hidden', overflowY: 'scroll',
               background: 'rgba(0, 0, 0, 0.5)', textAlign: 'left', fontSize: 16, borderRadius: 4, marginLeft: 6
               }}>
-              <CloseOutlined style={{color: '#fff', position: 'absolute', right: 5, top: 5}}
-                onClick={()=>setOpen(false)}
+              <CloseOutlined style={{color: '#fff', position: 'absolute', right: 5, top: 5, zIndex: 999}}
+                onClick={()=>setOpen(true)}
               />
               <div className='map-tree-box'>
                 <Tree treeData={treeData} onSelect={treeSelect} >
                   {
                     getTreeNode(treeData)
                   }
-                  {/* treeData={treeData}
-                  onSelect={treeSelect} */}
                 </Tree>
               </div>
             </div> : null
