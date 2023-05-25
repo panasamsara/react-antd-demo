@@ -2,16 +2,38 @@
 
 import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
-import { BarsOutlined } from '@ant-design/icons';
-import { Button, Modal, message } from 'antd';
+import { BarsOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Modal, message, Tree } from 'antd';
 import { bus } from '@/utils';
 import TableData from "./tableData";
-import TreeData from "./TreeData";
+
+export function arrayToTree(arr) {
+  let typa_arr = arr.map(item=> item.type)
+  let type_set = new Set(typa_arr)
+  let type_only_arr = Array.from(type_set)
+  let treeData = type_only_arr.map(itme=>{
+    return {
+      title: itme,
+      key: itme,
+      children: arr.filter(i=>i.type == itme).map(item=>{
+        item.key = item.vin;
+        item.title = item.vin;
+        return item
+      })
+    }
+  })
+  return treeData
+}
 
 export default function App(props) {
   const {cars} = props;
+  const [treeData, setTreeData] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(()=>{
+    setTreeData(arrayToTree(cars) )
+  },[])
   
   useEffect(() => {
     const tableclickCallback = (e) => {
@@ -24,6 +46,7 @@ export default function App(props) {
   }, [])
 
   const showModal = () => {
+    console.log(121212);
     setOpen(true);
   };
 
@@ -38,6 +61,11 @@ export default function App(props) {
   const handleCancel = () => {
     setOpen(false);
   };
+  
+  // 树节点 点击事件
+  const treeSelect = (selectedKeys, e) => {
+    bus.emit('tableClick', {RowData: e.node})
+  };
 
   return (
     <div>
@@ -50,18 +78,45 @@ export default function App(props) {
             left: 100
         }}
       > 
-        <div style={{ width: 100, 
-          height: 141, 
-          fontSize: 40,
-          color: '#1677ff' }}
-          onClick={showModal}
-        >
-          <BarsOutlined />
+        <div style={{position: 'relative'}}>
+          {
+            open ?
+            <div style={{ 
+              width: 100, 
+              height: 60, 
+              fontSize: 52,
+              color: '#1677ff' }}
+              onClick={()=>showModal()}
+            >
+              <BarsOutlined />
+            </div> : null
+          }
+          
+          
+          {
+            !open ?
+            <div style={{ position: 'relative',width: 450, height: 500, overflow: 'hidden', overflowY: 'scroll',
+              background: 'rgba(0, 0, 0, 0.5)', textAlign: 'left', fontSize: 16, borderRadius: 4, marginLeft: 6
+              }}>
+              <CloseOutlined style={{color: '#fff', position: 'absolute', right: 5, top: 5}}
+                onClick={()=>setOpen(false)}
+              />
+              <div className='map-tree-box'>
+                <Tree
+                  style={{background: 'transparent', color: '#fff'}}
+                  treeData={treeData}
+                  onSelect={treeSelect}
+                />
+              </div>
+            </div> : null
+          }
+          
         </div>
+        
       </RenderCompo>
       
       {/* getContainer 绑定全屏dom元素，避免弹框无法显示  */}
-      <Modal
+      {/* <Modal
         open={open}
         width={800}
         title="Title"
@@ -79,9 +134,7 @@ export default function App(props) {
         ]}
       >
         <TableData cars={cars}/>
-
-        {/* <TreeData cars={cars}/> */}
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
