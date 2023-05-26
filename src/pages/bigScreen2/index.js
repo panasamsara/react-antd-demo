@@ -1,7 +1,7 @@
 
 import "@/styles/mapStyle.less";
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { message, Button } from 'antd';
+import { message, Select } from 'antd';
 import { CloseOutlined, } from '@ant-design/icons';
 import {
   Amap,
@@ -179,14 +179,14 @@ export default function App() {
     setCars(Object.values(allVehicles))
   }
   
-
+  const [moveDuration, setMoveDuration] = useState(1000);
   // 轨迹动画控制方法
-  const startAnim = () => {
+  const startAnim = (moveDuration) => {
     const marker = $marker.current;
     if (!marker) return;
     marker.moveAlong(pathLine, {
       // 每一段的时长
-      duration: 1000,
+      duration: moveDuration,
       // JSAPI2.0 是否延道路自动设置角度在 moveAlong 里设置
       autoRotation: true
     });
@@ -206,6 +206,11 @@ export default function App() {
     if (!marker) return;
     marker.stopMove();
   });
+
+  const handleChange = (e) => {
+    stopAnim()
+    setMoveDuration( parseInt(e.value) )
+  };
 
   return (
     <div 
@@ -350,18 +355,50 @@ export default function App() {
             onClick={closeDetail}
           />
           <h4>轨迹回放控制</h4>
+          <div>
+            <span>回放速度：</span>
+            <Select
+              labelInValue
+              defaultValue={{
+                value: '1000',
+                label: '1倍',
+              }}
+              style={{
+                width: 120,
+              }}
+              onChange={handleChange}
+              options={[
+                {
+                  value: '1000',
+                  label: '1倍',
+                },
+                {
+                  value: '100',
+                  label: '10倍',
+                },
+                {
+                  value: '50',
+                  label: '20倍',
+                },
+                {
+                  value: '20',
+                  label: '50倍',
+                },
+              ]}
+            />
+          </div>
           <div className="input-item">
             <input
               type="button"
               className="btn"
               value="开始动画"
-              onClick={startAnim}
+              onClick={()=>startAnim(moveDuration)}
             />
             <input
               type="button"
               className="btn"
               value="暂停动画"
-              onClick={pauseAnim}
+              onClick={()=>pauseAnim()}
             />
           </div>
           <div className="input-item">
@@ -369,13 +406,13 @@ export default function App() {
               type="button"
               className="btn"
               value="继续动画"
-              onClick={resumeAnim}
+              onClick={()=>resumeAnim()}
             />
             <input
               type="button"
               className="btn"
               value="停止动画"
-              onClick={stopAnim}
+              onClick={()=>stopAnim()}
             />
           </div>
         </div>
