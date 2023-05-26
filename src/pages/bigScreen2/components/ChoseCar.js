@@ -28,12 +28,12 @@ const getTreeNode = (data) => {
           title={
             <div style={{display: 'flex'}}>
               <span style={{width: 200}}>{item.title }</span>
-              <span style={{width: 100}}>{ `${item.speed} km/h` }</span>
-              <div style={{marginRight: 12}}>{ item.status != '0'
+              <span style={{width: 90}}>{ `${item.speed} km/h` }</span>
+              <div style={{width: 30, fontSize: 18}}>{ item.status != '0'
                 ? <ApiOutlined style={{color: '#12CF5E'}}/>
                 : null }
               </div>
-              <div>{ item.hasVideo
+              <div style={{width: 30, fontSize: 18}}>{ item.hasVideo
                 ? <YoutubeOutlined style={{color: '#12CF5E'}}/>
                 : null }
               </div>
@@ -149,25 +149,27 @@ export default function App(props) {
             !open ?
             <div>
               <div style={{ position: 'relative',width: 450, height: 80, marginBottom: 12, padding: 12, color: '#fff',
-                background: 'rgba(0, 0, 0, 0.5)', textAlign: 'left', fontSize: 16, borderRadius: 4, marginLeft: 6
+                background: 'rgba(2, 29, 69, 0.8)', textAlign: 'left', fontSize: 20, fontWeight: 700, borderRadius: 4, marginLeft: 6
                 }}>
-                <div>车辆总数：{cars.length}辆</div>
+                <div>车辆总计：{cars.length}辆</div>
                 <div style={{display: 'flex'}}>
-                  <div style={{marginRight: 24}}>在线车辆数：{cars.filter(item=> item.status!='0').length}辆</div>
-                  <div>离线车辆数：{cars.filter(item=> item.status=='0').length}辆</div>
+                  <div style={{marginRight: 24}}>在线车辆：{cars.filter(item=> item.status!='0').length}辆</div>
+                  <div>离线车辆：{cars.filter(item=> item.status=='0').length}辆</div>
                 </div>
               </div>
               <div style={{ position: 'relative',width: 450, height: 500, 
-                background: 'rgba(0, 0, 0, 0.5)', textAlign: 'left', fontSize: 16, borderRadius: 4, 
+                background: 'rgba(2, 29, 69, 0.8)', textAlign: 'left', fontSize: 16, borderRadius: 4, 
                 marginLeft: 6, paddingBottom: 12
                 }}>
                 <CloseOutlined style={{color: '#fff', position: 'absolute', right: 5, top: 5, zIndex: 999}}
                   onClick={()=>setOpen(true)}
                 />
                 <div className='map-tree-box'>
-                  <Tree onSelect={treeSelect} 
+                  <Tree 
+                    onSelect={treeSelect} 
                     checkable={true}
                     onCheck={onTreeCheck}
+                    defaultCheckedKeys={checkedKeys}
                     // treeData={treeData}
                   >
                     {
@@ -177,7 +179,7 @@ export default function App(props) {
                 </div>
               </div> 
               {checkedKeys.length>0
-              ? <div style={{color: '#fff', position: 'absolute', bottom: 5, right: 12}}>
+              ? <div style={{color: '#fff', position: 'absolute', bottom: 5, left: 80}}>
                 已选中：{checkedKeys.length}辆
               </div> :null
               }
