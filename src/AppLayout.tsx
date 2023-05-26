@@ -2,7 +2,7 @@ import { Layout, Menu, MenuProps, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, 
   AppstoreOutlined, SettingOutlined, StockOutlined } from '@ant-design/icons';
 import { Link, matchRoutes, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { routers } from './Routers';
 
 const { Header, Content, Sider } = Layout;
@@ -10,11 +10,19 @@ const { Header, Content, Sider } = Layout;
 export default function AppLayout() {
   const navigate = useNavigate();
   const location = useLocation();
+  // 全屏展示
+  const container_ref = useRef<any|null|undefined>();
+  // useEffect(()=>{
+  //   if (container_ref.current) {
+  //     container_ref.current.requestFullscreen();
+  //   } 
+  // },[container_ref.current]);
+
   const [defaultSelectedKeys, setDefaultSelectedKeys] = useState<string[]>([]);
   const [defaultOpenKeys, setDefaultOpenKeys] = useState<string[]>([]);
   const [isInit, setIsInit] = useState<Boolean>(false)
   
-  const [current, setCurrent] = useState('/');
+  const [current, setCurrent] = useState('/bigScreen/page1');
 
   useEffect(() => {
     const routes = matchRoutes(routers, location.pathname); // 返回匹配到的路由数组对象，每一个对象都是一个路由对象
@@ -39,9 +47,7 @@ export default function AppLayout() {
   
   const topMenus: MenuProps['items'] = [
     { label: '首页', key: '/', icon: <SettingOutlined />},
-    { label: '计数', key: '/test', icon: <NotificationOutlined />},
     { label: '地图', key: '/map/selfMarker', icon: <AppstoreOutlined />},
-    { label: 'echarts', key: '/echartsDemo', icon: <StockOutlined />},
     { label: '大屏', key: '/bigScreen/page1', icon: <LaptopOutlined />},
     { label: '大屏2', key: '/bigScreen/page2', icon: <LaptopOutlined />},
   ]
@@ -60,6 +66,7 @@ export default function AppLayout() {
       { label: '国别', key: '/map/mapCountry'},
       { label: '省份', key: '/map/mapProvince'},
       { label: '聚合', key: '/map/markerCluster'},
+      { label: '飞线', key: '/map/l7'},
     ]}
   ]
 
@@ -67,18 +74,19 @@ export default function AppLayout() {
     setCurrent(e.key);
     navigate(e.key)
   }
+  
+
   return (
     <>
       <Layout style={{height: '100%'}}>
-        <Header className="header">
+        {/* <Header className="header">
           <div className="logo" />
-          {/* 顶部菜单 */}
           <Menu theme="dark" mode="horizontal" 
             onClick={onClick} 
             selectedKeys={[current]}  
             items={topMenus} 
           />
-        </Header>
+        </Header> */}
         <Layout className='body-all'>
         {
           location.pathname.includes('/test') ||  location.pathname.includes('/user') ?
@@ -108,32 +116,21 @@ export default function AppLayout() {
           }
           {/* 面包屑 */}
           <Layout style={{ backgroundColor: '#fff', borderLeft: '1px solid #f5f5f5' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}
-              items={[
-                {
-                  title: 'Home',
-                },
-                // {
-                //   title: <a href="">Application Center</a>,
-                // },
-                // {
-                //   title: <a href="">Application List</a>,
-                // },
-                {
-                  title: 'An Application',
-                },
-              ]}
-            />
             <Content
               className="site-layout-background"
+             
+            >
+              <div ref={container_ref}
               style={{
                 padding: 0,
                 margin: 0,
                 minHeight: 280,
-                
-              }}
-            >
-              <Outlet />
+                width: 1920,
+                height: 1080
+              }}>
+                <Outlet />
+              </div>
+              
             </Content>
           </Layout>
         </Layout>

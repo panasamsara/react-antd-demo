@@ -7,6 +7,7 @@ import _ from 'lodash'
 // import router from 'umi/router'
 import { SERVER_URL as SERVER } from '@/config/config'
 import { cache, mem } from '@/utils/system'
+import cookie from 'react-cookies'
 
 message.config({
   maxCount: 1,
@@ -118,15 +119,16 @@ export function checkres0(res) {
 }
 
 function fetchjson(url, opt = {}) {
-  const userBean = sessionStorage.getItem('userBean')
+  // const userBean = sessionStorage.getItem('userBean')
 
-  if (userBean) {
-    if (!opt.headers) opt.headers = {}
-    // opt.headers.token = JSON.parse(userBean).token
-  }
+  // if (userBean) {
+  //   if (!opt.headers) opt.headers = {}
+  //   // opt.headers.token = JSON.parse(userBean).token
+  // }
   const fullUrl = url.indexOf('http://') != -1 || url.indexOf('https://') != -1
   // console.log('opt: ', opt)
-  return fetch(fullUrl ? url : `${SERVER}${url}`, {
+  let reg = /develop/
+  return fetch(fullUrl || reg.test(process.env.NODE_ENV)? url : `${SERVER}${url}`, {
     credentials: 'include',
     ...opt,
   })
@@ -186,13 +188,18 @@ export function get(url, payload) {
 }
 export function post(url, payload) {
   const tokenId = sessionStorage.getItem('tokenId')
-  let headers = { 'Content-Type': 'application/json' }
-  if (tokenId) {
+  
+  let headers = { 
+    'Content-Type': 'application/json',
+    Cookie: `JSESSIONID=${cookie.load('ssi_cookie')}`
+  }
+  // if (tokenId) {
     headers = {
       Access_token: tokenId,
+      shiro_token: cookie.load('ssi_cookie'),
       ...headers,
     }
-  }
+  // }
   return fetchjson(`${url}`, {
     method: 'POST',
     body: JSON.stringify(payload),

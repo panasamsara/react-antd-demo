@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react'
 import { CloseOutlined } from '@ant-design/icons';
-
+import { bus } from '@/utils';
 // eslint-disable-next-line react/require-optimization
 // import React from 'react'
 
 export default function LivePlayer(props) {
-  const { className, style, url = '', url2 = '' } = props
+  const { className, style, url = '', url2 = '', channelLabel } = props
   const [visible, setVisible] = useState(true)
   useEffect(() => {
     setVisible(true)
@@ -35,13 +35,13 @@ export default function LivePlayer(props) {
               position: 'absolute',
               zIndex: '100000',
               top: '-30px',
-              left: ' 180px',
+              left: ' 200px',
             }}
           >
             <CloseOutlined
               type="close"
               onClick={() => {
-                setVisible(false)
+                bus.emit('closeVideo',{channelLabel:channelLabel})
               }}
               style={{
                 cursor: 'pointer',

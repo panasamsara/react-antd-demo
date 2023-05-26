@@ -109,21 +109,19 @@ const colorList = [
 
 export default function App() {
     const [data, setData] = useState([
-      { name: 'MORV',total: 7},
-      { name: '乘用车开发中心',total: 14},
-      { name: '架构开发中心',total: 36},
-      { name: '科技创新部',total: 3},
-      { name: '前瞻研究中心',total: 3},
-      { name: '新能源及动力中心',total: 66},
-      { name: '质量验证中心',total: 25},
-      { name: '智能软件中心',total: 35},
+      { name: '外观',total: 7},
+      { name: '价格',total: 14},
+      { name: '操控',total: 36},
+      { name: '配置',total: 3},
+      { name: '舒适性',total: 3},
+      { name: '通过性',total: 66},
     ])
     return (
       <div>
         <RenderCompo
             style={{
-                width: 400,
-                height: 300,
+                width: 500,
+                height: 400,
                 position: 'absolute',
                 top: 400,
                 right: 20
@@ -138,16 +136,16 @@ export default function App() {
                     lineHeight: '46px',
                     marginBottom: 1,
                     textAlign:'center',
-                    background: `url(${getImgUrl('titleBg2')}) 45px center no-repeat`,
+                    background: `url(${getImgUrl('titleBg2')}) 95px center no-repeat`,
                 }}
                 >
-                中心人员分布
+                车辆对比
                 </h4>
             </div>
 
             <div style={{ display: 'flex', width: '100%' }}>
-              <div style={{ width: '120%' }}>
-              <Pie />
+              <div style={{ width: '120%', paddingTop: 30 }}>
+                <Pie />
               </div>
               <div
                 style={{
@@ -203,7 +201,7 @@ export default function App() {
                                     height: 16,
                                   }}
                                 >
-                                  {e.total}辆
+                                  {e.total}人打分
                                 </span>
                               </div>
                             </div>

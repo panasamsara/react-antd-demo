@@ -126,39 +126,39 @@ export default function App() {
       <div>
         <RenderCompo
             style={{
-                width: 400,
+                width: 700,
                 height: 300,
                 position: 'absolute',
                 top: 400,
+                left: 50
             }}
         >   
             <div style={{ position: 'relative', height: 'auto' }}>
                 <h4
                 style={{
-                    paddingLeft: 5,
+                    paddingLeft: -25,
                     color: 'rgb(0,236,252)',
                     height: 46,
                     lineHeight: '46px',
                     marginBottom: 1,
                     textAlign:'center',
-                    background: `url(${getImgUrl('titleBg2')}) 45px center no-repeat`,
+                    background: `url(${getImgUrl('titleBg2')}) 190px center no-repeat`,
                 }}
                 >
-                车型车辆分布
+                气温统计
                 </h4>
             </div>
 
             <div style={{ display: 'flex', width: '100%' }}>
               <div style={{ width: '120%' }}>
-              <Pie />
+                <Pie />
               </div>
-              <div
+              {/* <div
                 style={{
                   width: '60%',
                   height: 'calc(100% - 5px)',
                   paddingTop: 50, //调整右边table的 距离上面的距离
                   paddingRight:15
-                  // overflowY: 'auto',
                 }}
               >
                 <table
@@ -216,7 +216,7 @@ export default function App() {
                     })}
                   </tbody>
                 </table>
-              </div>
+              </div> */}
             </div>
         </RenderCompo>
       </div>

@@ -96,7 +96,6 @@ export default class VideLivePage extends PureComponent {
   // }
 
   render() {
-    const { showVideo, videoWidth } = this.state
     const { videoId } = this.props
     const { terminalNo } = this.props
 

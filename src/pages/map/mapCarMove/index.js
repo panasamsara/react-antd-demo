@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./mapCarMove.css";
 import { Amap, Marker, Polyline, usePlugins } from "@amap/amap-react";
+import CAR from "@/assets/imagesMap/car.png";
 
 const LINE_ARR = [
   [116.478935, 39.997761],
@@ -98,10 +99,7 @@ export default function App() {
               setAngle(marker.getAngle());
             }}
           >
-            <img
-              src="https://a.amap.com/jsapi_demos/static/demo-center-v2/car.png"
-              alt="car"
-            />
+            <img src={CAR} alt="car" />
           </Marker>
         </Amap>
 

@@ -53,10 +53,10 @@ const Pie = () => {
       {
         name: 'Access From',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['40%', '70%'], // 中空
         avoidLabelOverlap: false,
         itemStyle: {
-          borderRadius: 10,
+          // borderRadius: 10, // 圆角
           borderColor: '#fff',
           borderWidth: 2,
           // shadowColor: '#000',

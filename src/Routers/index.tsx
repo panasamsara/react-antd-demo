@@ -20,6 +20,8 @@ const MapGeoLocation = lazy(() => import('../pages/map/mapGeoLocation'));
 const MapCountry = lazy(() => import('../pages/map/mapCountryLayer'));
 const MapProvinceLayer = lazy(() => import('../pages/map/mapProvinceLayer'));
 const MarkerCluster = lazy(() => import('../pages/map/mapCluster'));
+const L7 = lazy(() => import('../pages/map/L7'));
+
 const EchartsDemo = lazy(() => import('../pages/echartsDemo'));
 const BigScreen = lazy(() => import('../pages/bigScreen'));
 const BigScreen2 = lazy(() => import('../pages/bigScreen2'));
@@ -41,8 +43,17 @@ export const routers: RouteObject[] = [
       {
         index: true,
         path: '/',
-        element: lazyLoad(<Home />)
+        // element: lazyLoad(<Home />)
+        element: lazyLoad(<BigScreen />)
       }, 
+      {
+        path: '/bigScreen/page1',
+        element: lazyLoad(<BigScreen />)
+      },
+      {
+        path: '/bigScreen/page2',
+        element: lazyLoad(<BigScreen2 />)
+      },
       {
         index: true,
         path: '/test',
@@ -86,17 +97,15 @@ export const routers: RouteObject[] = [
         element: lazyLoad(<MarkerCluster />)
       },
       {
+        path: '/map/L7',
+        element: lazyLoad(<L7 />)
+      },
+
+      {
         path: '/echartsDemo',
         element: lazyLoad(<EchartsDemo />)
       },
-      {
-        path: '/bigScreen/page1',
-        element: lazyLoad(<BigScreen />)
-      },
-      {
-        path: '/bigScreen/page2',
-        element: lazyLoad(<BigScreen2 />)
-      },
+     
     ]
   },
 //   {

@@ -10,9 +10,10 @@
 
 # production
 /build
-/flutter_view
 /react_web
-react_web.zip
+/flutter_view
+/react_web.zip
+/flutter_view.zip
 
 # misc
 .DS_Store

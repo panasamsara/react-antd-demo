@@ -1,4 +1,4 @@
-let SERVER_URL = 'http://10.92.101.63:8089' // 线上环境----打包用这个地址
+let SERVER_URL = 'http://10.91.101.35:30010' // 线上环境----打包用这个地址
 // http://172.16.11.76:8889/dfcv//setupBinding/dpVideoChannel
 // let VIDEOSERVER = 'http://220.249.118.243:10080/sys'
 // let REALVIDEOSERVER = '_v.tv.ssinube.com.cn:9502'

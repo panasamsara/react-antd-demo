@@ -1,15 +1,66 @@
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, StepForwardOutlined } from '@ant-design/icons';
 import { bus } from '@/utils';
 import Draggable from 'react-draggable';
+import { Checkbox } from 'antd';
+import '@/styles/mapStyle.less';
+import { useEffect, useState } from 'react';
 
-const Detail = () => {
+const Detail = (props) => {
+  const {vin, channelInfo} = props;
+  const [checkeChannels, setCheckeChannels] = useState([]); // 存放已勾选的数组
+  const [deafultChannels, setDeafultChannels] = useState([]); // 默认勾选项
+  const [channelOptions, setChannelOptions] = useState([]); // 展示频道选项 供勾选（已过滤 ==0不展示）
+  // 处理频道数据
+  let options = [];
+  options = channelInfo && channelInfo.channels
+    ? Object.keys(channelInfo.channels).map(item=>{
+      let obj = {
+        label: item,
+        value: item,
+        disabled: channelInfo.channels[item] =='0'
+      }
+      return obj
+    })
+    : [];
+  // 设置频道初始化数据 （只展示 ==1的频道），默认打开第一个视频
+  useEffect(()=>{
+    let arr = options.filter(item=> !item.disabled)
+    setChannelOptions(arr)
+    if(arr&&arr.length>0){
+      setCheckeChannels(['ch1']);
+      setDeafultChannels(['ch1']);
+      bus.emit('showVideo', {checkedValues:checkeChannels, terminalNo: channelInfo.terminalNo})
+    }
+  },[channelInfo.channels]);
+  
+  // 复选框勾选事件，打开视频弹框
+  const onChange = (checkedValues) => {
+    setCheckeChannels(checkedValues);
+    bus.emit('showVideo', {checkedValues:checkedValues, terminalNo: channelInfo.terminalNo})
+  };
+  // 监听视频的关闭按钮，将checkbox 取消勾选
+  useEffect(() => {
+    const closeVideoCallback = (e) => {
+      let arr = checkeChannels.splice(checkeChannels.indexOf(e.channelLabel), 1);
+      setCheckeChannels(arr)
+    }
+    bus.on(`closeVideo`, closeVideoCallback)
+    return () => {
+      bus.off(`closeVideo`, closeVideoCallback)
+    }
+  }, [checkeChannels])
+  // 关闭详情框
+  const closeDetailModal = () => {
+    setCheckeChannels([]);
+    bus.emit('closeDetailModal',{})
+  };
 
   return <>
     <Draggable>
       <div style={{ width: 400, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
         position: 'absolute', cursor: 'move',
-        left: '50%', transform: 'translateX(-50%)',
-        top: '50%', transform: 'translateY(-50%)',
+        left: '45%', transform: 'translateX(-50%)',
+        top: '40%', transform: 'translateY(-50%)',
         color: '#fff',
         display: 'flex', flexDirection: 'column',
         textAlign: 'left', fontSize: 16, borderRadius: 4
@@ -20,16 +71,34 @@ const Detail = () => {
           display: 'flex', justifyContent: 'space-between'
         }}>
           <div>车辆信号详情</div>
-          <div style={{ width: 24, height: 40, }} onClick={()=> bus.emit('closeModal',{})}><CloseOutlined /></div>
+          
+          <div style={{ display: 'flex', width: 48, height: 40, cursor: 'pointer' }} >
+            <div style={{ width: 48, height: 40, }} onClick={()=> bus.emit('showVideo',
+              {checkeChannels:checkeChannels, terminalNo: channelInfo.terminalNo})}>
+              <StepForwardOutlined />
+            </div>
+            <div style={{ width: 48, height: 40, }} onClick={()=>closeDetailModal()}>
+              <CloseOutlined />
+            </div>
+            
+          </div>
         </div>
         <div style={{ padding: 10, }}>
           <div style={{ margin: '5px 0' }}>
             <span>VIN码：</span>
-            <span>LGAG4DY30M9047195</span>
+            <span>{vin}</span>
           </div>
           <div style={{ margin: '5px 0' }}>
-            <span>当前位置：</span>
-            <span>湖北省十堰市丹江口市丁家营镇G70福银高速</span>
+          <span>频道：</span>
+          <div className='map-channel'>
+            <Checkbox.Group 
+              options={channelOptions} 
+              defaultValue={['ch1']} 
+              value={checkeChannels} 
+              onChange={onChange} 
+            />
+          </div>
+
           </div>
         </div>
           

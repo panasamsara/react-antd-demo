@@ -1,0 +1,142 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.position-text {
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  padding: 0.5em;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #000;
+}
+
+.charts{
+  width: 600px;
+  height: 300px;
+}
+
+.amap-info-window{
+  width: 160px;
+  background: #fff;
+  border-radius: 3px;
+  padding: 3px 7px;
+  box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
+  position: absolute;
+}
+.amap-info-sharp{
+  position: absolute;
+  top: 21px;
+  bottom: 0;
+  left: 50%;
+  margin-left: -8px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #fff;
+}
+
+:global{
+  .map-channel{
+    .ant-checkbox-group{
+      display: flex;
+      flex-wrap: wrap;
+      width: 280px;
+      height: 50px;
+      .ant-checkbox-group-item{
+        width: 56px;
+        margin-left: 12px;
+        color: #fff;
+      }
+      .ant-checkbox-disabled +span{
+        color: #fff;
+      }
+    }
+  }
+
+  .car-move-control{
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border-radius: 0.25rem;
+    width: 22rem;
+    border-width: 0;
+    border-radius: 0.4rem;
+    box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 0.75rem 1.25rem;
+    .input-item{
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      -ms-flex-align: center;
+      align-items: center;
+      width: 100%;
+      height: 3rem;
+      .btn{
+        width: 9rem;
+        margin-right: 10px;
+        
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border: 1px solid transparent;
+        transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        background-color: transparent;
+        background-image: none;
+        color: #25A5F7;
+        border-color: #25A5F7;
+        padding: 0.25rem 0.5rem;
+        line-height: 1.5;
+        border-radius: 1rem;
+        -webkit-appearance: button;
+        cursor: pointer;  
+      }
+    }
+  }
+
+  .map-tree-box{
+    margin-top: 16px;
+    padding-top: 24px;
+    height: 468px;
+    overflow: hidden;
+    overflow-y: scroll;
+    .ant-tree{
+      background: transparent;
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+  
+}
