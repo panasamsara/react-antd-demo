@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
 import { BarsOutlined, CloseOutlined, YoutubeOutlined, ApiOutlined } from '@ant-design/icons';
 import { Button, Modal, message, Tree } from 'antd';
+import CAMERA_GREEN from "@/assets/camera_green.png";
 import { bus } from '@/utils';
 import TableData from "./tableData";
 const { TreeNode } = Tree;
@@ -38,7 +39,7 @@ const getTreeNode = (data) => {
                 : null }
               </div>
               <div style={{width: 30, fontSize: 18}}>{ item.hasVideo
-                ? <YoutubeOutlined style={{color: '#12CF5E'}}/>
+                ? <img src={CAMERA_GREEN} style={{width: 20, height: 20}} alt="camera" />
                 : null }
               </div>
             </div>
