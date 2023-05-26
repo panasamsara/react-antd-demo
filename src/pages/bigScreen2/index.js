@@ -8,7 +8,8 @@ import {
   Marker, Polyline,
   usePlugins
 } from "@amap/amap-react";
-import { get, post } from '@/utils/requests';
+// import { get, post } from '@/utils/requests';
+import { get, post } from '@/utils/axiosRequest'; // 改用axios
 import CAR from "@/assets/imagesMap/car.png";
 import MARKER_SVG from "@/assets/marker.svg";
 import MARKER_RED_SVG from "@/assets/marker_red.svg";
