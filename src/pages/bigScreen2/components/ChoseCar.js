@@ -27,8 +27,12 @@ const getTreeNode = (data) => {
           latitude={item.latitude}
           title={
             <div style={{display: 'flex'}}>
-              <span style={{width: 200}}>{item.title }</span>
-              <span style={{width: 90}}>{ `${item.speed} km/h` }</span>
+              <span style={{width: 200, color: item.status == '0' ? '#888' : '#fff'}}>
+                {item.title }
+              </span>
+              <span style={{width: 90, color: item.status == '0' ? '#888' : '#fff'}}>
+                { `${item.speed} km/h` }
+              </span>
               <div style={{width: 30, fontSize: 18}}>{ item.status != '0'
                 ? <ApiOutlined style={{color: '#12CF5E'}}/>
                 : null }

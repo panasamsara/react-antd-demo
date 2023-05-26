@@ -162,11 +162,15 @@ export default function App() {
       vin: vin.trim()
     })
     if(code==0){
-      bus.emit('showDetailModal',{
-        channelInfo: data, 
-        vin: vin,
-        chosenCar: chosenCar
-      })
+      if(msg == "查询成功"){
+        bus.emit('showDetailModal',{
+          channelInfo: data, 
+          vin: vin,
+          chosenCar: chosenCar
+        })
+      }else{
+        message.error(`暂无车辆信息！`)
+      }
     }else{
       message.error(`服务错误：${msg}`)
     }
