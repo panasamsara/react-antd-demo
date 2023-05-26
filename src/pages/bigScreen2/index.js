@@ -132,7 +132,7 @@ export default function App() {
   useEffect(() => {
     const tableclickCallback = (e) => {
       setChosenVin(e.RowData.vin)
-      setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
+      // setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
     }

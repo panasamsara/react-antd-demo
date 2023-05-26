@@ -23,19 +23,19 @@ const getTreeNode = (data) => {
         item.isChild ?
         <TreeNode
           key={item.key}
+          longitude={item.longitude}
+          latitude={item.latitude}
           title={
             <div style={{display: 'flex'}}>
               <span style={{width: 200}}>{item.title }</span>
               <span style={{width: 100}}>{ `${item.speed} km/h` }</span>
-              <div>{ item.status != '0'
+              <div style={{marginRight: 12}}>{ item.status != '0'
                 ? <ApiOutlined style={{color: '#12CF5E'}}/>
                 : null }
-                {`\u00A0\u00A0\u00A0`}
               </div>
               <div>{ item.hasVideo
                 ? <YoutubeOutlined style={{color: '#12CF5E'}}/>
                 : null }
-                {`\u00A0\u00A0\u00A0`}
               </div>
             </div>
           }
@@ -62,6 +62,8 @@ export function arrayToTree(arr) {
       children: arr.filter(i=>i.type == item).map(i=>{
         i.key = i.vin;
         i.title = i.vin;
+        i.longitude = i.longitude
+        i.latitude = i.latitude
         i.isChild = true;
         return i
       })
@@ -109,6 +111,7 @@ export default function App(props) {
   // 树节点 点击事件
   const treeSelect = (selectedKeys, e) => {
     bus.emit('tableClick', {RowData: e.node})
+    bus.emit('changeDetailModal', {RowData: e.node})
   };
 
   return (
@@ -119,7 +122,7 @@ export default function App(props) {
             height: 300,
             position: 'absolute',
             top: 120,
-            left: 100
+            left: 20
         }}
       > 
         <div style={{position: 'relative'}}>
@@ -148,6 +151,7 @@ export default function App(props) {
               <div className='map-tree-box'>
                 <Tree onSelect={treeSelect} 
                   checkable={true}
+                  // treeData={treeData}
                 >
                   {
                     getTreeNode(treeData)
