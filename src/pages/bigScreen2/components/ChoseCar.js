@@ -113,12 +113,17 @@ export default function App(props) {
     bus.emit('tableClick', {RowData: e.node})
     bus.emit('changeDetailModal', {RowData: e.node})
   };
+  const [checkedKeys, setCheckedKeys] = useState([]);
+  const onTreeCheck = (checkedKeys, info) => {
+    console.log('onCheck', checkedKeys, info);
+    setCheckedKeys(checkedKeys)
+  };
 
   return (
     <div>
       <RenderCompo
         style={{
-            width: 100,
+            width: 450,
             height: 300,
             position: 'absolute',
             top: 120,
@@ -142,23 +147,42 @@ export default function App(props) {
           
           {
             !open ?
-            <div style={{ position: 'relative',width: 450, height: 500, overflow: 'hidden', overflowY: 'scroll',
-              background: 'rgba(0, 0, 0, 0.5)', textAlign: 'left', fontSize: 16, borderRadius: 4, marginLeft: 6
-              }}>
-              <CloseOutlined style={{color: '#fff', position: 'absolute', right: 5, top: 5, zIndex: 999}}
-                onClick={()=>setOpen(true)}
-              />
-              <div className='map-tree-box'>
-                <Tree onSelect={treeSelect} 
-                  checkable={true}
-                  // treeData={treeData}
-                >
-                  {
-                    getTreeNode(treeData)
-                  }
-                </Tree>
+            <div>
+              <div style={{ position: 'relative',width: 450, height: 80, marginBottom: 12, padding: 12, color: '#fff',
+                background: 'rgba(0, 0, 0, 0.5)', textAlign: 'left', fontSize: 16, borderRadius: 4, marginLeft: 6
+                }}>
+                <div>车辆总数：{cars.length}辆</div>
+                <div style={{display: 'flex'}}>
+                  <div style={{marginRight: 24}}>在线车辆数：{cars.filter(item=> item.status!='0').length}辆</div>
+                  <div>离线车辆数：{cars.filter(item=> item.status=='0').length}辆</div>
+                </div>
               </div>
-            </div> : null
+              <div style={{ position: 'relative',width: 450, height: 500, 
+                background: 'rgba(0, 0, 0, 0.5)', textAlign: 'left', fontSize: 16, borderRadius: 4, 
+                marginLeft: 6, paddingBottom: 12
+                }}>
+                <CloseOutlined style={{color: '#fff', position: 'absolute', right: 5, top: 5, zIndex: 999}}
+                  onClick={()=>setOpen(true)}
+                />
+                <div className='map-tree-box'>
+                  <Tree onSelect={treeSelect} 
+                    checkable={true}
+                    onCheck={onTreeCheck}
+                    // treeData={treeData}
+                  >
+                    {
+                      getTreeNode(treeData)
+                    }
+                  </Tree>
+                </div>
+              </div> 
+              {checkedKeys.length>0
+              ? <div style={{color: '#fff', position: 'absolute', bottom: 5, right: 12}}>
+                已选中：{checkedKeys.length}辆
+              </div> :null
+              }
+              
+            </div>: null
           }
           
         </div>
