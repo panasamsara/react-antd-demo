@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import RenderCompo from "@/components/RenderCompo";
-import { BarsOutlined, CloseOutlined, YoutubeOutlined, } from '@ant-design/icons';
+import { BarsOutlined, CloseOutlined, YoutubeOutlined, ApiOutlined } from '@ant-design/icons';
 import { Button, Modal, message, Tree } from 'antd';
 import { bus } from '@/utils';
 import TableData from "./tableData";
@@ -25,17 +25,16 @@ const getTreeNode = (data) => {
           key={item.key}
           title={
             <div style={{display: 'flex'}}>
-              <span>{item.title }</span>
-              <span>{`\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0`}</span> 
+              <span style={{width: 200}}>{item.title }</span>
               <span style={{width: 100}}>{ `${item.speed} km/h` }</span>
-              <div>{ item.status == '0'
-                ? <span style={{color: '#fc5531'}}>离线</span> 
-                : <span style={{color: '#12CF5E'}}>在线</span> }
+              <div>{ item.status != '0'
+                ? <ApiOutlined style={{color: '#12CF5E'}}/>
+                : null }
                 {`\u00A0\u00A0\u00A0`}
               </div>
               <div>{ item.hasVideo
                 ? <YoutubeOutlined style={{color: '#12CF5E'}}/>
-                : <YoutubeOutlined style={{color: '#fc5531'}}/> }
+                : null }
                 {`\u00A0\u00A0\u00A0`}
               </div>
             </div>
