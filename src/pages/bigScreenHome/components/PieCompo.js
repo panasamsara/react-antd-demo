@@ -113,7 +113,7 @@ export default function App() {
   ])
     return (
       <div>
-        <div style={{ display: 'flex', width: 500 }}>
+        <div style={{ display: 'flex', width: 490 }}>
           <div style={{ width: '120%' }}>
             <Pie />
           </div>

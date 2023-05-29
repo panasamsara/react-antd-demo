@@ -10,6 +10,8 @@ import LeftTopNumber from "./components/LeftTopNumber";
 import TableData from "./components/TableData";
 import TopCompo from "./components/TopCompo";
 import NumberOne from "./components/NumberOne";
+import MapCompo from "./components/MapCompo";
+import MapCountryLayer from "./components/mapCountryLayer";
 
 export default function App() {
     return (
@@ -53,7 +55,11 @@ export default function App() {
               </div>
             </div>
             <div style={{ width: 920, height: 1010}}>
-              <div style={{backgroundColor: 'green', width: 920, height: 690}}>22</div>
+              <div style={{ width: 920, height: 690}}>
+                <MapCompo title='车辆信息'>
+                  <MapCountryLayer/>
+                </MapCompo>
+              </div>
               <div style={{ width: 920, height: 320, display: 'flex', justifyContent: 'space-between'}}>
                 <div style={{width: 300, height: 306}}>
                   <TopCompo title='板块车辆分布'>
