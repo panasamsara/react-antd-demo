@@ -91,12 +91,12 @@ export default function App(props) {
     form.validateFields().then(values=>{
       let duration = dayjs(values.times[1]).unix() - dayjs(values.times[0]).unix();
       let number = duration/values.step;
-      if(number>=10000){
-        setLoading(false);
-        message.error(`筛选条件不合理，请缩小时间范围或增加时间间隔！`);
-      }else{
+      // if(number>=10000){
+      //   setLoading(false);
+      //   message.error(`筛选条件不合理，请缩小时间范围或增加时间间隔！`);
+      // }else{
         getTrack(values)
-      }
+      // }
     }).catch(e=>{
       setLoading(false);
     })
@@ -109,11 +109,14 @@ export default function App(props) {
   *  step     String （例：'300s'、 '10m'  ）
   */
   const getTrack = async (params)=>{
+    let step = Math.ceil(
+       (dayjs(params.times[1]).unix() - dayjs(params.times[0]).unix())/9000
+      )
     const {code,data} = await get('/api/getTrack', {
       vins: vin,
       start: dayjs(params.times[0]).unix() ,
       end: dayjs(params.times[1]).unix() ,
-      step: params.step+ 's'
+      step: step+ 's'
       // vins: 'LDP29C929NG000057', //以下4个参数 为测试轨迹用
       // start: 1684820041 ,
       // end: 1684824041 ,
@@ -156,7 +159,6 @@ export default function App(props) {
   const layout = {
     labelCol: {
       span: 6,
-      style: { color: '#fff' }
     },
     wrapperCol: {
       span: 16,
@@ -208,11 +210,11 @@ export default function App(props) {
       {
         modalShow ?
         <Draggable>
-          <div style={{width: 800, height: 400, position: 'absolute', cursor: 'move',
+          <div style={{width: 500, height: 600, position: 'absolute', cursor: 'move',
             left: '45%', transform: 'translateX(-50%)',
             top: '40%', transform: 'translateY(-50%)',
             color: '#fff', display: 'flex',}}>
-              <div style={{ width: 400, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
+              <div style={{ width: 500, height: 400, background: 'rgba(0, 0, 0, 0.5)', 
                 display: 'flex', flexDirection: 'column',
                 textAlign: 'left', fontSize: 16, borderRadius: 4
               }}
@@ -245,83 +247,69 @@ export default function App(props) {
                     <span>{chosenCar.speed}</span>
                   </div>
                   <div style={{ margin: '5px 0' }}>
-                  <span>频道：</span>
-                  <div className='map-channel'>
-                    <Checkbox.Group 
-                      options={channelOptions} 
-                      defaultValue={['ch1']} 
-                      value={checkedValues}
-                      onChange={onChange} 
-                    />
+                    <span>频道：</span>
+                    <div className='map-channel'>
+                      <Checkbox.Group 
+                        options={channelOptions} 
+                        defaultValue={['ch1']} 
+                        value={checkedValues}
+                        onChange={onChange} 
+                      />
+                    </div>
                   </div>
 
-                  </div>
+                  { trackFormVisible ?
+                      <div style={{marginTop: 20}}>
+                        {/* <div style={{margin: 20, color: '#fff'}}>
+                          <ExclamationCircleOutlined />
+                          每次最多获取10000条轨迹数据，请合理选择时间范围、时间间隔
+                        </div> */}
+                        <Form
+                          {...layout}
+                          form={form}
+                          name="control-hooks"
+                          onFinish={onFinish}
+                          style={{
+                            maxWidth: 600,
+                          }}
+                        >
+                          <Form.Item
+                            name="times"
+                            label={<label style={{ color: "#fff" }}>时间范围</label>}
+                            rules={[
+                              {
+                                required: true,
+                              },
+                            ]}
+                          >
+                            <RangePicker presets={rangePresets} 
+                              getPopupContainer={(trigger) => trigger}
+                              disabledDate={disabledDate}
+                              onChange={onRangeChange} 
+                              // showTime={{
+                              //   hideDisabledOptions: true,
+                              //   defaultValue: [dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')],
+                              // }}
+                              format="YYYY-MM-DD"
+                            />
+                          </Form.Item>
+
+                          <Form.Item {...tailLayout}>
+                            <Button htmlType="button" onClick={onReset} style={{marginRight: 12}}>
+                              重置
+                            </Button>
+                            <Button type="primary" htmlType="submit" onClick={handleOk}>
+                              确定
+                            </Button>
+                          </Form.Item>
+                        </Form>
+                      </div>
+                     : null
+                    }
                 </div>
               </div>
               
-              { trackFormVisible ?
-              <div style={{ width: 450, height: 300, background: 'rgba(0, 0, 0, 0.5)', 
-                textAlign: 'left', fontSize: 16, borderRadius: 4, marginLeft: 6
-              }}>
-                <div>
-                  <div style={{margin: 20, color: '#fff'}}>
-                    <ExclamationCircleOutlined />
-                    每次最多获取10000条轨迹数据，请合理选择时间范围、时间间隔
-                  </div>
-                  <Form
-                    {...layout}
-                    form={form}
-                    name="control-hooks"
-                    onFinish={onFinish}
-                    style={{
-                      maxWidth: 600,
-                    }}
-                  >
-                    <Form.Item
-                      name="times"
-                      label="时间范围"
-                      rules={[
-                        {
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <RangePicker presets={rangePresets} 
-                        getPopupContainer={(trigger) => trigger}
-                        disabledDate={disabledDate}
-                        onChange={onRangeChange} 
-                        showTime={{
-                          hideDisabledOptions: true,
-                          defaultValue: [dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')],
-                        }}
-                        format="YYYY-MM-DD HH:mm:ss"
-                      />
-                    </Form.Item>
-                    
-                    <Form.Item
-                      name="step"
-                      label="时间间隔"
-                      rules={[
-                        {
-                          required: true,
-                        },
-                      ]}
-                    >
-                      <InputNumber addonAfter="秒" />
-                    </Form.Item>
-
-                    <Form.Item {...tailLayout}>
-                      <Button htmlType="button" onClick={onReset} style={{marginRight: 12}}>
-                        重置
-                      </Button>
-                      <Button type="primary" htmlType="submit" onClick={handleOk}>
-                        确定
-                      </Button>
-                    </Form.Item>
-                  </Form>
-                </div>
-              </div> : null
-              }
+              
           </div>
           
         </Draggable> : null

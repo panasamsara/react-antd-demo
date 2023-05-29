@@ -1,27 +1,37 @@
 
 import "@/styles/mapStyle.less";
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import { message, Button } from 'antd';
+import { message, Select } from 'antd';
 import { CloseOutlined, } from '@ant-design/icons';
 import {
   Amap,
   Marker, Polyline,
   usePlugins
 } from "@amap/amap-react";
-import { get, post } from '@/utils/requests';
+// import { get, post } from '@/utils/requests';
+import { get, post } from '@/utils/axiosRequest'; // 改用axios
 import CAR from "@/assets/imagesMap/car.png";
 import MARKER_SVG from "@/assets/marker.svg";
+import MARKER_RED_SVG from "@/assets/marker_red.svg";
+import MARKER_GRAY_SVG from "@/assets/marker_gray.svg";
 import Title from "@/components/Title/Title";
 import ChoseCar from "./components/ChoseCar";
 import VideoCompo from "./components/VideoCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
+import { useReactiveRef } from "./mapHooks";
+import MarkerCluster from "./MarkerCluster";
 
 let stringToHTML = function (str) {
 	var dom = document.createElement('div');
 	dom.innerHTML = str;
 	return dom;
 };
+function interpolate(u, begin, end) {
+  if (u < 0) u = 0;
+  if (u > 1) u = 1;
+  return u * (end - begin) + begin;
+}
 
 export default function App() {
   usePlugins("AMap.MoveAnimation");
@@ -36,12 +46,84 @@ export default function App() {
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
   const [cars, setCars] = useState([]); // 展示点
+
+  // 点聚合相关
+  const $clusterData = useReactiveRef([]);
+  const renderMarker = useCallback((point, marker) => {
+    marker.setOffset([-8, -8]);
+    return point.itemData.status == '0' ?
+      <img src={MARKER_GRAY_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+        e.stopPropagation()
+        getChannels(point.itemData.vin)
+        setChosenCar(point.itemData)
+        setChosenVin(point.itemData.vin)
+        bus.emit('changeDetailModal',{})
+      }}/> 
+      : 
+      <img src={MARKER_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+        e.stopPropagation()
+        getChannels(point.itemData.vin)
+        setChosenCar(point.itemData)
+        setChosenVin(point.itemData.vin)
+        bus.emit('changeDetailModal',{})
+      }}/> ;
+  }, []);
+  const renderCluster = useCallback((cluster, marker) => {
+    const { count } = cluster;
+    const data = $clusterData.current;
+    const p = count / data.length;
+    const u = Math.pow(p, 1 / 18);
+    const v = Math.pow(p, 1 / 5);
+    const hue = Math.floor(interpolate(u, 180, 0));
+    const size = Math.floor(interpolate(v, 30, 60));
+    const style = {
+      width: `${size}px`,
+      height: `${size}px`,
+      borderRadius: `${size / 2}px`,
+      backgroundColor: `hsla(${hue}, 100%, 50%, 0.7)`,
+      borderColor: `hsla(${hue}, 100%, 40%, 1)`,
+      boxShadow: `0 0 10px hsla(${hue}, 100%, 50%, 1)`
+    };
+    marker.setOffset([-size / 2, -size / 2]);
+    return (
+      <div className="custom-cluster" style={style}>
+        {count}
+      </div>
+    );
+  }, []);
+
   // 获取所有车辆，用于地图上展示车辆的点
   async function getCars() {
     const {code,data} = await get('/api/getAllVehicles', {})
     if(code==0){
       setAllVehicles(data)
-      setCars(Object.values(data))
+      let car_arr = Object.values(data)
+      // 判断是否有视频 hasVideo 逻辑移到后台
+      // car_arr.forEach(item=>{
+      //   get('/api/getChannels', {
+      //     vin: item.vin.trim()
+      //   }).then(res=>{
+      //     if(res.msg == 'request terminalNo null'){
+      //       item.hasVideo = false
+      //     }else{
+      //       let channels = Object.values(res.data.channels);
+      //       if(channels.includes('1')){
+      //         item.hasVideo = true
+      //       }else{
+      //         item.hasVideo = false
+      //       }
+      //     }
+      //   })
+      // })
+      setCars(car_arr);
+      //组织数据 给点聚合用
+      let geo_arr = car_arr.map(item=>{
+        return {
+          lnglat: [item.longitude, item.latitude],
+          itemData: item
+        }
+      })
+      $clusterData.current = geo_arr
     }
   }
   useEffect(() => {
@@ -52,12 +134,13 @@ export default function App() {
   useEffect(() => {
     const tableclickCallback = (e) => {
       setChosenVin(e.RowData.vin)
-      setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
+      // setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
     }
     const getTrackCallback = (e) => {
       setMapCenter([e[0].longitude, e[0].latitude])
+      setMapZoom(12.5)
       setPosition([e[0].longitude, e[0].latitude])
       setPassedPath([e[0].longitude, e[0].latitude])
       let arr = e.map(item => [item.longitude, item.latitude])
@@ -78,14 +161,18 @@ export default function App() {
   // 根据vin获取Channel 用于展示视频,默认展示第一个channel的视频
   async function getChannels(vin) {
     const {code,data, msg} = await get('/api/getChannels', {
-      vin: vin
+      vin: vin.trim()
     })
     if(code==0){
-      bus.emit('showDetailModal',{
-        channelInfo: data, 
-        vin: vin,
-        chosenCar: chosenCar
-      })
+      if(msg == "查询成功"){
+        bus.emit('showDetailModal',{
+          channelInfo: data, 
+          vin: vin,
+          chosenCar: chosenCar
+        })
+      }else{
+        message.error(`暂无车辆信息！`)
+      }
     }else{
       message.error(`服务错误：${msg}`)
     }
@@ -94,15 +181,18 @@ export default function App() {
   const closeDetail = ()=>{
     setChosenVin('')
     setPathLine([])
+    setPassedPath([])
     setCars(Object.values(allVehicles))
   }
-
-  const startAnim = () => {
+  
+  const [moveDuration, setMoveDuration] = useState(1000);
+  // 轨迹动画控制方法
+  const startAnim = (moveDuration) => {
     const marker = $marker.current;
     if (!marker) return;
     marker.moveAlong(pathLine, {
       // 每一段的时长
-      duration: 1000,
+      duration: moveDuration,
       // JSAPI2.0 是否延道路自动设置角度在 moveAlong 里设置
       autoRotation: true
     });
@@ -122,6 +212,11 @@ export default function App() {
     if (!marker) return;
     marker.stopMove();
   });
+
+  const handleChange = (e) => {
+    stopAnim()
+    setMoveDuration( parseInt(e.value) )
+  };
 
   return (
     <div 
@@ -155,18 +250,49 @@ export default function App() {
                 map.setFitView();
               }}
             >
-              {
+              <MarkerCluster
+                data={$clusterData.current}
+                gridSize={80}
+                averageCenter
+                renderMarker={renderMarker}
+                renderCluster={renderCluster}
+              />
+              {/* {
                 cars.map(item=>{
                   return <div key={item.vin}>
                     <Marker position={[item.longitude, item.latitude]} offset={[0, -40]} anchor="top-center">
-                      <img src={MARKER_SVG} alt="marker" onClick={(e)=> {
-                        e.stopPropagation()
-                        getChannels(item.vin)
-                        setChosenCar(item)
-                        setChosenVin(item.vin)
-                        bus.emit('changeDetailModal',{})
-                      }}/>
-                      {/* {
+                      {
+                        item.status == '0' ?
+                        <img src={MARKER_GRAY_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+                          e.stopPropagation()
+                          getChannels(item.vin)
+                          setChosenCar(item)
+                          setChosenVin(item.vin)
+                          bus.emit('changeDetailModal',{})
+                        }}/> : null
+                      }
+                      {
+                        item.status == '2' ?
+                        <img src={MARKER_RED_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+                          e.stopPropagation()
+                          getChannels(item.vin)
+                          setChosenCar(item)
+                          setChosenVin(item.vin)
+                          bus.emit('changeDetailModal',{})
+                        }}/> : null
+                      }
+                      {
+                        item.status == '3' ?
+                        <img src={MARKER_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+                          e.stopPropagation()
+                          getChannels(item.vin)
+                          setChosenCar(item)
+                          setChosenVin(item.vin)
+                          bus.emit('changeDetailModal',{})
+                        }}/> : null
+                      }
+                      
+                      {
                         chosenVin == item.vin ?
                         <div style={{position: 'absolute',}}>
                           <div style={{ width: 180, height: 60, display: 'flex', flexDirection: 'column', textAlign: 'left', fontSize: 16, background: '#f3e3d3', padding: 10, borderRadius: 4, cursor: 'pointer' }}
@@ -182,12 +308,12 @@ export default function App() {
                           </div>
                         </div>
                          : null
-                      } */}
+                      }
                       
                   </Marker>
                   </div>
                 })
-              }
+              } */}
               { pathLine.length>0
                 ? <Polyline
                   path={pathLine}
@@ -231,19 +357,54 @@ export default function App() {
       </div>
       {passedPath.length > 0 && (
         <div className="car-move-control">
+          <CloseOutlined style={{position: 'absolute', right: 10, cursor: 'pointer'}}
+            onClick={closeDetail}
+          />
           <h4>轨迹回放控制</h4>
+          <div>
+            <span>回放速度：</span>
+            <Select
+              labelInValue
+              defaultValue={{
+                value: '1000',
+                label: '1倍',
+              }}
+              style={{
+                width: 120,
+              }}
+              onChange={handleChange}
+              options={[
+                {
+                  value: '1000',
+                  label: '1倍',
+                },
+                {
+                  value: '100',
+                  label: '10倍',
+                },
+                {
+                  value: '50',
+                  label: '20倍',
+                },
+                {
+                  value: '20',
+                  label: '50倍',
+                },
+              ]}
+            />
+          </div>
           <div className="input-item">
             <input
               type="button"
               className="btn"
               value="开始动画"
-              onClick={startAnim}
+              onClick={()=>startAnim(moveDuration)}
             />
             <input
               type="button"
               className="btn"
               value="暂停动画"
-              onClick={pauseAnim}
+              onClick={()=>pauseAnim()}
             />
           </div>
           <div className="input-item">
@@ -251,13 +412,13 @@ export default function App() {
               type="button"
               className="btn"
               value="继续动画"
-              onClick={resumeAnim}
+              onClick={()=>resumeAnim()}
             />
             <input
               type="button"
               className="btn"
               value="停止动画"
-              onClick={stopAnim}
+              onClick={()=>stopAnim()}
             />
           </div>
         </div>
