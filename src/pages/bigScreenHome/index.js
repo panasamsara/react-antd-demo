@@ -3,7 +3,11 @@ import "@/styles/mapStyle.less";
 import React, { useEffect, useRef } from 'react';
 import getImgUrl from "@/assets/images/getImgUrl";
 import Title from "@/components/Title/Title";
-import LeftOne from "./components/LeftOne";
+
+import BackCompo from "./components/BackCompo";
+import PieCompo from "./components/PieCompo";
+import TopNumber from "./components/TopNumber";
+import TableData from "./components/TableData";
 
 export default function App() {
     return (
@@ -30,14 +34,20 @@ export default function App() {
         
           <div className="map-container" style={{width: "100%", height: 1010, position: 'relative', display: 'flex'}}>
             <div style={{ width: 500, height: 1010}}>
-              <div style={{ width: 500, height: 320, }}>
-                <LeftOne title='板块车辆分布'/>
+              <div style={{ width: 500, height: 320, padding: 10 }}>
+                <BackCompo title='平台车辆统计'>
+                  <TopNumber/>
+                </BackCompo>
               </div>
-              <div style={{ width: 500, height: 320, }}>
-                <LeftOne title='板块车辆分布'/>
+              <div style={{ width: 500, height: 320, padding: 10 }}>
+                <BackCompo title='板块车辆分布'>
+                  <TableData/>
+                </BackCompo>
               </div>
-              <div style={{ width: 500, height: 320, }}>
-                <LeftOne title='板块车辆分布'/>
+              <div style={{ width: 500, height: 320, padding: 10 }}>
+                <BackCompo title='板块车辆分布'>
+                  <PieCompo/>
+                </BackCompo>
               </div>
             </div>
             <div style={{backgroundColor: 'yellow', width: 920, height: 1010}}>
@@ -45,14 +55,20 @@ export default function App() {
               <div style={{backgroundColor: 'green', width: 920, height: 690}}>22</div>
             </div>
             <div style={{ width: 500, height: 1010}}>
-              <div style={{ width: 500, height: 320, }}>
-                <LeftOne title='板块车辆分布'/>
+              <div style={{ width: 500, height: 320, padding: 10}}>
+                <BackCompo title='板块车辆分布'>
+                  <TopNumber/>
+                </BackCompo>
               </div>
-              <div style={{ width: 500, height: 320, }}>
-                <LeftOne title='板块车辆分布'/>
+              <div style={{ width: 500, height: 320, padding: 10 }}>
+                <BackCompo title='板块车辆分布'>
+                  <TableData/>
+                </BackCompo>
               </div>
-              <div style={{ width: 500, height: 320, }}>
-                <LeftOne title='板块车辆分布'/>
+              <div style={{ width: 500, height: 320, padding: 10 }}>
+                <BackCompo title='板块车辆分布'>
+                  <PieCompo/>
+                </BackCompo>
               </div>
             </div>
           </div>
