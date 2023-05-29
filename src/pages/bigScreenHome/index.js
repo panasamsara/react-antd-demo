@@ -6,8 +6,10 @@ import Title from "@/components/Title/Title";
 
 import BackCompo from "./components/BackCompo";
 import PieCompo from "./components/PieCompo";
-import TopNumber from "./components/TopNumber";
+import LeftTopNumber from "./components/LeftTopNumber";
 import TableData from "./components/TableData";
+import TopCompo from "./components/TopCompo";
+import NumberOne from "./components/NumberOne";
 
 export default function App() {
     return (
@@ -36,7 +38,7 @@ export default function App() {
             <div style={{ width: 500, height: 1010}}>
               <div style={{ width: 500, height: 320, padding: 10 }}>
                 <BackCompo title='平台车辆统计'>
-                  <TopNumber/>
+                  <LeftTopNumber/>
                 </BackCompo>
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
@@ -50,14 +52,31 @@ export default function App() {
                 </BackCompo>
               </div>
             </div>
-            <div style={{backgroundColor: 'yellow', width: 920, height: 1010}}>
-              <div style={{backgroundColor: 'pink', width: 920, height: 320}}>21</div>
+            <div style={{ width: 920, height: 1010}}>
               <div style={{backgroundColor: 'green', width: 920, height: 690}}>22</div>
+              <div style={{ width: 920, height: 320, display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{width: 300, height: 306}}>
+                  <TopCompo title='板块车辆分布'>
+                    <NumberOne/>
+                  </TopCompo>
+                </div>
+                <div style={{width: 300, height: 306}}>
+                  <TopCompo title='板块车辆分布'>
+                    <NumberOne/>
+                  </TopCompo>
+                </div>
+                <div style={{width: 300, height: 306}}>
+                  <TopCompo title='板块车辆分布'>
+                    <NumberOne/>
+                  </TopCompo>
+                </div>
+              </div>
+              
             </div>
             <div style={{ width: 500, height: 1010}}>
               <div style={{ width: 500, height: 320, padding: 10}}>
                 <BackCompo title='板块车辆分布'>
-                  <TopNumber/>
+                  <LeftTopNumber/>
                 </BackCompo>
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
