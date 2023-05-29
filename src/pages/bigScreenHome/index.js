@@ -12,6 +12,7 @@ import TopCompo from "./components/TopCompo";
 import NumberOne from "./components/NumberOne";
 import MapCompo from "./components/MapCompo";
 import MapCountryLayer from "./components/mapCountryLayer";
+import LineChart from "./components/LineChart";
 
 export default function App() {
     return (
@@ -50,7 +51,7 @@ export default function App() {
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
                 <BackCompo title='板块车辆分布'>
-                  <PieCompo/>
+                  <LineChart/>
                 </BackCompo>
               </div>
             </div>
