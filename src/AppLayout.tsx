@@ -13,9 +13,7 @@ export default function AppLayout() {
   // 全屏展示
   const container_ref = useRef<any>();
   useEffect(()=>{
-    console.log(111);
     if (container_ref.current) {
-      console.log(222,container_ref.current);
       container_ref.current.requestFullscreen();
     } 
   },[container_ref.current,location]);

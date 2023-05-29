@@ -14,6 +14,7 @@ import total3 from './total3.png'
 import titleBg from './titleBg.png'
 import bgg from './bgg.png'
 import titleBg2 from './titleBg2.png'
+import shapeBox from './shapeBox.png'
 
 export default function getImgUrl(imgName) {
   const obj = {
@@ -24,6 +25,7 @@ export default function getImgUrl(imgName) {
     total2,
     total3,
     bgg,
+    shapeBox
   }
   const bg = obj[imgName]
   return bg ? bg : obj.BG1
