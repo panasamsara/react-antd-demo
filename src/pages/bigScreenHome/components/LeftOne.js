@@ -120,9 +120,10 @@ export default function App(props) {
           style={{
               width: 500,
               height: 300,
+              padding: 10
           }}
         >   
-          <div style={{ width: 500, height: 330, 
+          <div style={{ width: 480, height: 330, 
               background: `url(${getImgUrl('shapeBox')}) center no-repeat`, backgroundSize: 'contain'}}>
             <div style={{ position: 'relative', height: 'auto', top: 28 }}>
                 <h4
