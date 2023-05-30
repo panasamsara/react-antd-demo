@@ -25,8 +25,7 @@ export default function RootPage() {
   const [opacity, setOpacity] = useState(0.8);
 
   return (
-    // <div style={{ width: 890, height: 655,}}>
-    <div style={{ width: 1920, height: 1010,}}>
+    <div style={{ width: 890, height: 700,}}>
       <Amap 
         zoom={4} 
         center={[110, 36]}
@@ -35,9 +34,9 @@ export default function RootPage() {
         isHotspot={false}
         defaultCursor="pointer"
         showIndoorMap={false} // 不显示室内地图
-        mapStyle='amap://styles/f74689d33353c8266c5a7d2f6a98f140'
+        // mapStyle='amap://styles/f74689d33353c8266c5a7d2f6a98f140'
       >
-        {/* <CountryLayer
+        <CountryLayer
           opacity={opacity}
           depth={2}
           soc={soc}
@@ -51,7 +50,7 @@ export default function RootPage() {
               return getColor(props.adcode_pro || props.NAME_CHN, 'country');
             },
           }}
-        /> */}
+        />
       </Amap>
     </div>
   )

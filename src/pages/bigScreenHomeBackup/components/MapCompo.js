@@ -8,7 +8,8 @@ function mapCompo({
 }) {
   return (
     <div className={styleClass.dragableContainer} style={{ ...style }}>
-      <div style={{ width: 920, height: 720, position: 'relative', top: 20,}}>
+      <div style={{ width: 920, height: 720, position: 'relative', top: 20,
+        background: `url(${getImgUrl('mapBack')}) center no-repeat`, backgroundSize: 'contain'}}>
         {/* <div style={{ position: 'relative', height: 'auto', top: 8 }}>
           <h4
           style={{
@@ -25,8 +26,7 @@ function mapCompo({
           </h4>
         </div> */}
 
-        {/* <div style={{position: 'relative', top: 10, left: 16, width: 1920, height: 1010,}}> */}
-        <div style={{position: 'relative', left: -500, width: 1920, height: 1010}}>
+        <div style={{position: 'relative', top: 10, left: 16, width: 890, height: 655,}}>
           {children}
         </div>
       </div>

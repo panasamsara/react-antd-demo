@@ -38,7 +38,7 @@ export default function App() {
         </div>
         
           <div className="map-container" style={{width: "100%", height: 1010, position: 'relative', display: 'flex'}}>
-            <div style={{ width: 500, height: 1010, zIndex: 2}}>
+            <div style={{ width: 500, height: 1010}}>
               <div style={{ width: 500, height: 320, padding: 10 }}>
                 <BackCompo title='平台车辆统计'>
                   <LeftTopNumber/>
@@ -55,13 +55,13 @@ export default function App() {
                 </BackCompo>
               </div>
             </div>
-            <div style={{ width: 920, height: 1010, position: 'relative'}}>
-              <div style={{ width: 1920, height: 1010, zIndex: 1 }}>
-                <MapCompo>
+            <div style={{ width: 920, height: 1010}}>
+              <div style={{ width: 920, height: 690}}>
+                <MapCompo title='车辆信息'>
                   <MapCountryLayer/>
                 </MapCompo>
               </div>
-              <div style={{ position: 'absolute', bottom: 0, width: 920, height: 320, display: 'flex', justifyContent: 'space-between'}}>
+              <div style={{ width: 920, height: 320, display: 'flex', justifyContent: 'space-between'}}>
                 <div style={{width: 300, height: 306}}>
                   <TopCompo title='板块车辆分布'>
                     <NumberOne/>
@@ -80,7 +80,7 @@ export default function App() {
               </div>
               
             </div>
-            <div style={{ width: 500, height: 1010, zIndex: 2}}>
+            <div style={{ width: 500, height: 1010}}>
               <div style={{ width: 500, height: 320, padding: 10}}>
                 <BackCompo title='板块车辆分布'>
                   <LeftTopNumber/>

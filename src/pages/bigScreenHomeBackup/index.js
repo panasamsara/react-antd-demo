@@ -56,7 +56,7 @@ export default function App() {
               </div>
             </div>
             <div style={{ width: 920, height: 1010, position: 'relative'}}>
-              <div style={{ width: 1920, height: 1010, zIndex: 1 }}>
+              <div style={{ width: 920, height: 1010, zIndex: 1 }}>
                 <MapCompo>
                   <MapCountryLayer/>
                 </MapCompo>
