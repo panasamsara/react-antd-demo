@@ -56,7 +56,7 @@ export default function App() {
   return (
     <div>
       <div style={{ display: 'flex', flexWrap: 'wrap', width: 478,height: 212,
-        position: 'relative', overflow: 'hidden',paddingLeft: 4, top: 30 }}>
+        position: 'relative', overflow: 'hidden', overflowY: 'scroll', paddingLeft: 4, top: 30 }}>
   
         <Table 
           columns={columns} 
