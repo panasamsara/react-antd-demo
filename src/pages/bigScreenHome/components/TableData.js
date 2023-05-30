@@ -1,4 +1,4 @@
-
+import "./tableData.css";
 
 import React, { useState } from 'react'
 import { Space, Table, Tag, Button } from 'antd';
@@ -44,18 +44,26 @@ const data = [
   },
 ];
 
+const getRowClassName = (record, index) => {
+  let className = ''
+  // oddRow 和 evenRow为我们css文件中的样式名称
+  className = index % 2 === 0 ? "oddRow" : "evenRow"
+  return className
+}
+
 export default function App() {
   
   return (
     <div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', width: 480,height: 212,
-        position: 'relative', top: 30, overflow: 'hidden',  }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', width: 478,height: 212,
+        position: 'relative', overflow: 'hidden',paddingLeft: 4, top: 30 }}>
   
         <Table 
           columns={columns} 
           dataSource={data} 
           pagination={false}
           scroll={{y: 700}}
+          rowClassName={getRowClassName} 
         />
         
       </div>
