@@ -21,20 +21,36 @@ import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
 import { useReactiveRef } from "./mapHooks";
 import MarkerCluster from "./MarkerCluster";
+import { connect } from "react-redux";
+import { vinChange } from "@/store/actions";
 
 let stringToHTML = function (str) {
 	var dom = document.createElement('div');
 	dom.innerHTML = str;
 	return dom;
 };
+// 点聚合相关方法
 function interpolate(u, begin, end) {
   if (u < 0) u = 0;
   if (u > 1) u = 1;
   return u * (end - begin) + begin;
 }
 
-export default function App() {
-  
+// redux相关
+const mapStateToProps = state => {
+  return { vin: state.mapReducer.vin };
+};
+const mapDispatchToProps = dispatch => ({
+  onVinChange: vin => {
+    dispatch(vinChange(vin));
+  },
+});
+
+// 页面组件
+function App(props) {
+  console.log(1111, props);
+  let $chosenVin = props.vin;
+
   usePlugins("AMap.MoveAnimation");
   const $marker = useRef(undefined);
   const [position, setPosition] = useState([116.478935, 39.997761]);
@@ -42,7 +58,7 @@ export default function App() {
   const [pathLine, setPathLine] = useState([]);
   const [passedPath, setPassedPath] = useState([]);
   const [chosenCar, setChosenCar] = useState({});
-  const $chosenVin = useRef('');
+  
   const [allVehicles, setAllVehicles] = useState({}); // 接口数据备份
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
@@ -52,21 +68,18 @@ export default function App() {
   const renderMarker = useCallback((point, marker) => {
     marker.setOffset([-8, -8]);
     return point.itemData.status == '0' ?
-      <img src={MARKER_GRAY_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
-        e.stopPropagation()
+      <img src={MARKER_GRAY_SVG} alt="marker" onClick={(e)=> {
         getChannels(point.itemData.vin)
         setChosenCar(point.itemData)
-        // setChosenVin(point.itemData.vin)
-        $chosenVin.current = point.itemData.vin
+        props.onVinChange(point.itemData.vin) // 修改redux中vin
         bus.emit('changeDetailModal',{})
       }}/> 
       : 
-      <img src={MARKER_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+      <img src={MARKER_SVG} alt="marker" onClick={(e)=> {
         e.stopPropagation()
         getChannels(point.itemData.vin)
         setChosenCar(point.itemData)
-        // setChosenVin(point.itemData.vin)
-        $chosenVin.current = point.itemData.vin
+        props.onVinChange(point.itemData.vin) // 修改redux中vin
         bus.emit('changeDetailModal',{})
       }}/> ;
   }, []);
@@ -123,9 +136,6 @@ export default function App() {
   // 全局事件监听
   useEffect(() => {
     const tableclickCallback = (e) => {
-      $chosenVin.current = e.RowData.key
-      // setChosenVin(e.RowData.key)
-      console.log(111, $chosenVin.current);
       setChosenCar(e.RowData)
       // setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
@@ -141,8 +151,7 @@ export default function App() {
       setPathLine(arr)
     }
     const closeCarDetailModalCallback = (e) => {
-      $chosenVin.current = ''
-      console.log(222, $chosenVin.current);
+
     }
 
     bus.on(`tableClick`, tableclickCallback)
@@ -179,9 +188,6 @@ export default function App() {
   }
   // 关闭详情弹框 展示所有车辆marker
   const closeDetail = ()=>{
-    $chosenVin.current = ''
-    console.log(222, $chosenVin.current);
-    // setChosenVin('')
     setPathLine([])
     setPassedPath([])
     setCars(Object.values(allVehicles))
@@ -253,7 +259,7 @@ export default function App() {
               }}
             >
               {
-                $chosenVin.current == ''
+                $chosenVin == ''
                 ? <MarkerCluster
                   data={$clusterData.current}
                   gridSize={80}
@@ -440,3 +446,5 @@ export default function App() {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

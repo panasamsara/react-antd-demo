@@ -11,10 +11,22 @@ import { CloseOutlined, StepForwardOutlined , NodeIndexOutlined,
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { get, post } from '@/utils/requests';
+import { connect } from "react-redux";
+import { vinChange } from "@/store/actions";
 
 const { RangePicker } = DatePicker;
 
-export default function App(props) {
+// redux相关
+const mapStateToProps = state => {
+  return { vin: state.mapReducer.vin };
+};
+const mapDispatchToProps = dispatch => ({
+  onVinChange: vin => {
+    dispatch(vinChange(vin));
+  },
+});
+
+function App(props) {
   const [modalShow, setModalShow] = useState(false);
   const [terminalNo, setTerminalNo] = useState(''); 
   const [vin, setVin] = useState(''); 
@@ -51,13 +63,18 @@ export default function App(props) {
       setChannelOptions(arr)
       // setCheckedValues(['ch1']) // 默认选中播放ch1的视频
     }
+    const changeDetailModalCallback=()=>{
+      setModalShow(false)
+      setCheckedValues([])
+    }
+
     bus.on(`closeVideo`, closeVideoCallback); // 监听关闭事件
     bus.on(`showDetailModal`, showModalCallback) //监听关闭详情弹框
-    bus.on(`changeDetailModal`, closeDetailModal) //切换详情
+    bus.on(`changeDetailModal`, changeDetailModalCallback) //切换详情
     return () => {
       bus.off(`closeVideo`, closeVideoCallback)
       bus.off(`showDetailModal`, showModalCallback)
-      bus.off(`changeDetailModal`, closeDetailModal)
+      bus.off(`changeDetailModal`, changeDetailModalCallback)
     }
   }, [checkedValues])
 
@@ -67,9 +84,8 @@ export default function App(props) {
   };
   // 关闭 车辆信号详情弹框（选择视频、轨迹）
   const closeDetailModal = () => {
+    props.onVinChange('') // 修改redux中vin
     setModalShow(false)
-    setCheckedValues([])
-    bus.emit('closeCarDetailModal', {})
   };
 
   // 打开所有视频
@@ -385,3 +401,4 @@ export default function App(props) {
     </div>
   );
 }
+export default connect(mapStateToProps, mapDispatchToProps)(App);
