@@ -34,6 +34,7 @@ function interpolate(u, begin, end) {
 }
 
 export default function App() {
+  
   usePlugins("AMap.MoveAnimation");
   const $marker = useRef(undefined);
   const [position, setPosition] = useState([116.478935, 39.997761]);
@@ -41,12 +42,11 @@ export default function App() {
   const [pathLine, setPathLine] = useState([]);
   const [passedPath, setPassedPath] = useState([]);
   const [chosenCar, setChosenCar] = useState({});
-  const [chosenVin, setChosenVin] = useState('');
+  const $chosenVin = useRef('');
   const [allVehicles, setAllVehicles] = useState({}); // 接口数据备份
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
   const [cars, setCars] = useState([]); // 展示点
-
   // 点聚合相关
   const $clusterData = useReactiveRef([]);
   const renderMarker = useCallback((point, marker) => {
@@ -56,7 +56,8 @@ export default function App() {
         e.stopPropagation()
         getChannels(point.itemData.vin)
         setChosenCar(point.itemData)
-        setChosenVin(point.itemData.vin)
+        // setChosenVin(point.itemData.vin)
+        $chosenVin.current = point.itemData.vin
         bus.emit('changeDetailModal',{})
       }}/> 
       : 
@@ -64,7 +65,8 @@ export default function App() {
         e.stopPropagation()
         getChannels(point.itemData.vin)
         setChosenCar(point.itemData)
-        setChosenVin(point.itemData.vin)
+        // setChosenVin(point.itemData.vin)
+        $chosenVin.current = point.itemData.vin
         bus.emit('changeDetailModal',{})
       }}/> ;
   }, []);
@@ -94,37 +96,25 @@ export default function App() {
 
   // 获取所有车辆，用于地图上展示车辆的点
   async function getCars() {
-    const {code,data} = await get('/api/getAllVehicles', {})
-    if(code==0){
-      setAllVehicles(data)
-      let car_arr = Object.values(data)
-      // 判断是否有视频 hasVideo 逻辑移到后台
-      // car_arr.forEach(item=>{
-      //   get('/api/getChannels', {
-      //     vin: item.vin.trim()
-      //   }).then(res=>{
-      //     if(res.msg == 'request terminalNo null'){
-      //       item.hasVideo = false
-      //     }else{
-      //       let channels = Object.values(res.data.channels);
-      //       if(channels.includes('1')){
-      //         item.hasVideo = true
-      //       }else{
-      //         item.hasVideo = false
-      //       }
-      //     }
-      //   })
-      // })
-      setCars(car_arr);
-      //组织数据 给点聚合用
-      let geo_arr = car_arr.map(item=>{
-        return {
-          lnglat: [item.longitude, item.latitude],
-          itemData: item
-        }
-      })
-      $clusterData.current = geo_arr
+    try{
+      const {code,data} = await get('/api/getAllVehicles', {})
+      if(code==0){
+        setAllVehicles(data)
+        let car_arr = Object.values(data)
+        setCars(car_arr);
+        //组织数据 给点聚合用
+        let geo_arr = car_arr.map(item=>{
+          return {
+            lnglat: [item.longitude, item.latitude],
+            itemData: item
+          }
+        })
+        $clusterData.current = geo_arr
+      }
+    }catch(e){
+      
     }
+    
   }
   useEffect(() => {
     getCars()
@@ -133,7 +123,10 @@ export default function App() {
   // 全局事件监听
   useEffect(() => {
     const tableclickCallback = (e) => {
-      setChosenVin(e.RowData.vin)
+      $chosenVin.current = e.RowData.key
+      // setChosenVin(e.RowData.key)
+      console.log(111, $chosenVin.current);
+      setChosenCar(e.RowData)
       // setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
@@ -147,11 +140,18 @@ export default function App() {
       console.log('getTrack', arr) 
       setPathLine(arr)
     }
+    const closeCarDetailModalCallback = (e) => {
+      $chosenVin.current = ''
+      console.log(222, $chosenVin.current);
+    }
+
     bus.on(`tableClick`, tableclickCallback)
     bus.on(`getTrack`, getTrackCallback)
+    bus.on(`closeCarDetailModal`, closeCarDetailModalCallback)
     return () => {
       bus.off(`tableClick`, tableclickCallback)
       bus.off(`getTrack`, getTrackCallback)
+      bus.off(`closeCarDetailModal`, closeCarDetailModalCallback)
     }
   }, [])
 
@@ -179,7 +179,9 @@ export default function App() {
   }
   // 关闭详情弹框 展示所有车辆marker
   const closeDetail = ()=>{
-    setChosenVin('')
+    $chosenVin.current = ''
+    console.log(222, $chosenVin.current);
+    // setChosenVin('')
     setPathLine([])
     setPassedPath([])
     setCars(Object.values(allVehicles))
@@ -250,13 +252,25 @@ export default function App() {
                 map.setFitView();
               }}
             >
-              <MarkerCluster
-                data={$clusterData.current}
-                gridSize={80}
-                averageCenter
-                renderMarker={renderMarker}
-                renderCluster={renderCluster}
-              />
+              {
+                $chosenVin.current == ''
+                ? <MarkerCluster
+                  data={$clusterData.current}
+                  gridSize={80}
+                  averageCenter
+                  renderMarker={renderMarker}
+                  renderCluster={renderCluster}
+                /> 
+                : 
+                <Marker position={[chosenCar.longitude, chosenCar.latitude]} offset={[0, -40]} anchor="top-center">
+                  {
+                    chosenCar.status == '0' 
+                    ? <img src={MARKER_GRAY_SVG} alt="marker" onClick={()=> {getChannels(chosenCar.key)}} /> 
+                    : <img src={MARKER_SVG} alt="marker" onClick={()=> {getChannels(chosenCar.key)}} /> 
+                  }
+                </Marker>
+              }
+              
               {/* {
                 cars.map(item=>{
                   return <div key={item.vin}>

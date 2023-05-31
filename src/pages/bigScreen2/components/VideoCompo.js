@@ -65,10 +65,11 @@ export default function App(props) {
   const onChange = (checkedValues) => {
     setCheckedValues(checkedValues);
   };
-  // 关闭详情弹框
+  // 关闭 车辆信号详情弹框（选择视频、轨迹）
   const closeDetailModal = () => {
     setModalShow(false)
     setCheckedValues([])
+    bus.emit('closeCarDetailModal', {})
   };
 
   // 打开所有视频
