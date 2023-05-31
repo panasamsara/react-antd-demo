@@ -28,6 +28,7 @@ const getTreeNode = (data) => {
           key={item.key}
           longitude={item.longitude}
           latitude={item.latitude}
+          speed={item.speed}
           title={
             <div style={{display: 'flex'}}>
               <span style={{width: 200, color: item.status == '0' ? '#888' : '#fff'}}>
@@ -71,6 +72,7 @@ export function arrayToTree(arr) {
         i.title = i.vin;
         i.longitude = i.longitude
         i.latitude = i.latitude
+        i.speed = i.speed
         i.isChild = true;
         return i
       })
