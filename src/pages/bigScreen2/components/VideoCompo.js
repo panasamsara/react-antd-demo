@@ -245,14 +245,19 @@ function App(props) {
                 }}>
                   <div>车辆信号详情</div>
                   
-                  <div style={{ display: 'flex', width: 100, height: 40, cursor: 'pointer' }} >
-                    <div style={{ width: 48, height: 40, }} onClick={()=> setTrackFormVisible(true)}>
+                  <div style={{ display: 'flex',justifyContent: 'end', width: 100, height: 40, cursor: 'pointer' }} >
+                    <div style={{ width: 28, height: 40, }} onClick={()=> setTrackFormVisible(true)}>
                       <NodeIndexOutlined/>
                     </div>
-                    <div style={{ width: 48, height: 40, }} onClick={()=> openAllVideo()}>
-                      <StepForwardOutlined />
-                    </div>
-                    <div style={{ width: 48, height: 40, }} onClick={()=>closeDetailModal()}>
+                    {
+                      channelOptions.length>0
+                      ? <div style={{ width: 28, height: 40, }} onClick={()=> openAllVideo()}>
+                        <StepForwardOutlined />
+                      </div>
+                      : null
+                    }
+                    
+                    <div style={{ width: 30, height: 40, }} onClick={()=>closeDetailModal()}>
                       <CloseOutlined />
                     </div>
                     
