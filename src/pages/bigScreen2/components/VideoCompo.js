@@ -265,7 +265,7 @@ function App(props) {
                   </div>
                   <div style={{ margin: '5px 0' }}>
                     <span>速度：</span>
-                    <span>{chosenCar.speed}</span>
+                    <span>{chosenCar.speed} km/h</span>
                   </div>
                   <div style={{ margin: '5px 0' }}>
                     <span>频道：</span>
