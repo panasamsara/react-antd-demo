@@ -11,10 +11,22 @@ import { CloseOutlined, StepForwardOutlined , NodeIndexOutlined,
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { get, post } from '@/utils/requests';
+import { connect } from "react-redux";
+import { vinChange } from "@/store/actions";
 
 const { RangePicker } = DatePicker;
 
-export default function App(props) {
+// redux相关
+const mapStateToProps = state => {
+  return { choseVin: state.mapReducer.choseVin };
+};
+const mapDispatchToProps = dispatch => ({
+  onVinChange: vin => {
+    dispatch(vinChange(vin));
+  },
+});
+
+function App(props) {
   const [modalShow, setModalShow] = useState(false);
   const [terminalNo, setTerminalNo] = useState(''); 
   const [vin, setVin] = useState(''); 
@@ -34,30 +46,39 @@ export default function App(props) {
     // 详情打开弹框
     const showModalCallback = (e) => {
       setModalShow(true)
-      setChosenCar(e.chosenCar)
-      setTerminalNo(e.channelInfo.terminalNo)
-      setInitChannels(e.channelInfo.channels)
       setVin(e.vin)
-      let options = [];
-      options = Object.keys(e.channelInfo.channels).map(item=>{
-        let obj = {
-          label: item,
-          value: item,
-          disabled: e.channelInfo.channels[item] =='0'
-        }
-        return obj
-      })
-      let arr = options.filter(item=> !item.disabled)
-      setChannelOptions(arr)
-      // setCheckedValues(['ch1']) // 默认选中播放ch1的视频
+      setChosenCar(e.chosenCar)
+      if(e.channelInfo.terminalNo){
+        setTerminalNo(e.channelInfo.terminalNo)
+        setInitChannels(e.channelInfo.channels)
+        
+        let options = [];
+        options = Object.keys(e.channelInfo.channels).map(item=>{
+          let obj = {
+            label: item,
+            value: item,
+            disabled: e.channelInfo.channels[item] =='0'
+          }
+          return obj
+        })
+        let arr = options.filter(item=> !item.disabled)
+        setChannelOptions(arr)
+        // setCheckedValues(['ch1']) // 默认选中播放ch1的视频
+      }
+      
     }
+    const changeDetailModalCallback=()=>{
+      setModalShow(false)
+      setCheckedValues([])
+    }
+
     bus.on(`closeVideo`, closeVideoCallback); // 监听关闭事件
     bus.on(`showDetailModal`, showModalCallback) //监听关闭详情弹框
-    bus.on(`changeDetailModal`, closeDetailModal) //切换详情
+    bus.on(`changeDetailModal`, changeDetailModalCallback) //切换详情
     return () => {
       bus.off(`closeVideo`, closeVideoCallback)
       bus.off(`showDetailModal`, showModalCallback)
-      bus.off(`changeDetailModal`, closeDetailModal)
+      bus.off(`changeDetailModal`, changeDetailModalCallback)
     }
   }, [checkedValues])
 
@@ -65,10 +86,10 @@ export default function App(props) {
   const onChange = (checkedValues) => {
     setCheckedValues(checkedValues);
   };
-  // 关闭详情弹框
+  // 关闭 车辆信号详情弹框（选择视频、轨迹）
   const closeDetailModal = () => {
+    props.onVinChange('') // 修改redux中vin
     setModalShow(false)
-    setCheckedValues([])
   };
 
   // 打开所有视频
@@ -224,14 +245,19 @@ export default function App(props) {
                 }}>
                   <div>车辆信号详情</div>
                   
-                  <div style={{ display: 'flex', width: 100, height: 40, cursor: 'pointer' }} >
-                    <div style={{ width: 48, height: 40, }} onClick={()=> setTrackFormVisible(true)}>
+                  <div style={{ display: 'flex',justifyContent: 'end', width: 100, height: 40, cursor: 'pointer' }} >
+                    <div style={{ width: 28, height: 40, }} onClick={()=> setTrackFormVisible(true)}>
                       <NodeIndexOutlined/>
                     </div>
-                    <div style={{ width: 48, height: 40, }} onClick={()=> openAllVideo()}>
-                      <StepForwardOutlined />
-                    </div>
-                    <div style={{ width: 48, height: 40, }} onClick={()=>closeDetailModal()}>
+                    {
+                      channelOptions.length>0
+                      ? <div style={{ width: 28, height: 40, }} onClick={()=> openAllVideo()}>
+                        <StepForwardOutlined />
+                      </div>
+                      : null
+                    }
+                    
+                    <div style={{ width: 30, height: 40, }} onClick={()=>closeDetailModal()}>
                       <CloseOutlined />
                     </div>
                     
@@ -244,7 +270,7 @@ export default function App(props) {
                   </div>
                   <div style={{ margin: '5px 0' }}>
                     <span>速度：</span>
-                    <span>{chosenCar.speed}</span>
+                    <span>{chosenCar.speed || 0} km/h</span>
                   </div>
                   <div style={{ margin: '5px 0' }}>
                     <span>频道：</span>
@@ -384,3 +410,4 @@ export default function App(props) {
     </div>
   );
 }
+export default connect(mapStateToProps, mapDispatchToProps)(App);

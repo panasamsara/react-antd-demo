@@ -1,0 +1,28 @@
+
+/* 奇数行 */
+.evenRow {
+  background: #091E3F;
+}
+/* 偶数行 */
+.oddRow {
+  background: #0F2C53;
+}
+
+
+.ant-table {
+  color: white !important;
+}
+/* 表头样式 */
+.ant-table-thead > tr > th {
+  background-color: #132955 !important;
+  color: white !important;
+}
+
+/* // 修改选中行样式 */
+.ant-table-tbody {
+  > tr:hover:not(.ant-table-expanded-row) > td,.ant-table-row-hover,.ant-table-row-hover>td{
+    background-color: rgb(18, 75, 75) !important;
+  }
+}
+
+

@@ -25,6 +25,8 @@ const L7 = lazy(() => import('../pages/map/L7'));
 const EchartsDemo = lazy(() => import('../pages/echartsDemo'));
 const BigScreen = lazy(() => import('../pages/bigScreen'));
 const BigScreen2 = lazy(() => import('../pages/bigScreen2'));
+const BigScreenHome = lazy(() => import('../pages/bigScreenHome'));
+const BigScreenHomeBackup = lazy(() => import('../pages/bigScreenHomeBackup'));
 
 
 // 实现懒加载的用Suspense包裹 定义函数
@@ -44,7 +46,7 @@ export const routers: RouteObject[] = [
         index: true,
         path: '/',
         // element: lazyLoad(<Home />)
-        element: lazyLoad(<BigScreen />)
+        element: lazyLoad(<BigScreenHome />)
       }, 
       {
         path: '/bigScreen/page1',
@@ -53,6 +55,10 @@ export const routers: RouteObject[] = [
       {
         path: '/bigScreen/page2',
         element: lazyLoad(<BigScreen2 />)
+      },
+      {
+        path: '/bigScreen/backup',
+        element: lazyLoad(<BigScreenHomeBackup />)
       },
       {
         index: true,

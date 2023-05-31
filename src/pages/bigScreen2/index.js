@@ -21,19 +21,35 @@ import getImgUrl from "@/assets/images/getImgUrl";
 import { bus } from '@/utils';
 import { useReactiveRef } from "./mapHooks";
 import MarkerCluster from "./MarkerCluster";
+import { connect } from "react-redux";
+import { vinChange } from "@/store/actions";
 
 let stringToHTML = function (str) {
 	var dom = document.createElement('div');
 	dom.innerHTML = str;
 	return dom;
 };
+// 点聚合相关方法
 function interpolate(u, begin, end) {
   if (u < 0) u = 0;
   if (u > 1) u = 1;
   return u * (end - begin) + begin;
 }
 
-export default function App() {
+// redux相关
+const mapStateToProps = state => {
+  return { choseVin: state.mapReducer.choseVin };
+};
+const mapDispatchToProps = dispatch => ({
+  onVinChange: vin => {
+    dispatch(vinChange(vin));
+  },
+});
+
+// 页面组件
+function App(props) {
+  let $chosenVin = props.choseVin;
+
   usePlugins("AMap.MoveAnimation");
   const $marker = useRef(undefined);
   const [position, setPosition] = useState([116.478935, 39.997761]);
@@ -41,30 +57,28 @@ export default function App() {
   const [pathLine, setPathLine] = useState([]);
   const [passedPath, setPassedPath] = useState([]);
   const [chosenCar, setChosenCar] = useState({});
-  const [chosenVin, setChosenVin] = useState('');
+  
   const [allVehicles, setAllVehicles] = useState({}); // 接口数据备份
   const [mapZoom, setMapZoom] = useState(5);
   const [mapCenter, setMapCenter] = useState();
   const [cars, setCars] = useState([]); // 展示点
-
   // 点聚合相关
   const $clusterData = useReactiveRef([]);
   const renderMarker = useCallback((point, marker) => {
     marker.setOffset([-8, -8]);
     return point.itemData.status == '0' ?
-      <img src={MARKER_GRAY_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
-        e.stopPropagation()
+      <img src={MARKER_GRAY_SVG} alt="marker" onClick={(e)=> {
         getChannels(point.itemData.vin)
         setChosenCar(point.itemData)
-        setChosenVin(point.itemData.vin)
+        props.onVinChange(point.itemData.vin) // 修改redux中vin
         bus.emit('changeDetailModal',{})
       }}/> 
       : 
-      <img src={MARKER_SVG} style={{color: 'red'}} alt="marker" onClick={(e)=> {
+      <img src={MARKER_SVG} alt="marker" onClick={(e)=> {
         e.stopPropagation()
         getChannels(point.itemData.vin)
         setChosenCar(point.itemData)
-        setChosenVin(point.itemData.vin)
+        props.onVinChange(point.itemData.vin) // 修改redux中vin
         bus.emit('changeDetailModal',{})
       }}/> ;
   }, []);
@@ -94,37 +108,25 @@ export default function App() {
 
   // 获取所有车辆，用于地图上展示车辆的点
   async function getCars() {
-    const {code,data} = await get('/api/getAllVehicles', {})
-    if(code==0){
-      setAllVehicles(data)
-      let car_arr = Object.values(data)
-      // 判断是否有视频 hasVideo 逻辑移到后台
-      // car_arr.forEach(item=>{
-      //   get('/api/getChannels', {
-      //     vin: item.vin.trim()
-      //   }).then(res=>{
-      //     if(res.msg == 'request terminalNo null'){
-      //       item.hasVideo = false
-      //     }else{
-      //       let channels = Object.values(res.data.channels);
-      //       if(channels.includes('1')){
-      //         item.hasVideo = true
-      //       }else{
-      //         item.hasVideo = false
-      //       }
-      //     }
-      //   })
-      // })
-      setCars(car_arr);
-      //组织数据 给点聚合用
-      let geo_arr = car_arr.map(item=>{
-        return {
-          lnglat: [item.longitude, item.latitude],
-          itemData: item
-        }
-      })
-      $clusterData.current = geo_arr
+    try{
+      const {code,data} = await get('/api/getAllVehicles', {})
+      if(code==0){
+        setAllVehicles(data)
+        let car_arr = Object.values(data)
+        setCars(car_arr);
+        //组织数据 给点聚合用
+        let geo_arr = car_arr.map(item=>{
+          return {
+            lnglat: [item.longitude, item.latitude],
+            itemData: item
+          }
+        })
+        $clusterData.current = geo_arr
+      }
+    }catch(e){
+      
     }
+    
   }
   useEffect(() => {
     getCars()
@@ -133,7 +135,7 @@ export default function App() {
   // 全局事件监听
   useEffect(() => {
     const tableclickCallback = (e) => {
-      setChosenVin(e.RowData.vin)
+      setChosenCar(e.RowData)
       // setCars([e.RowData]) // 选中车辆后 只展示一个车辆的点
       setMapCenter([e.RowData.longitude, e.RowData.latitude])
       setMapZoom(17)
@@ -147,11 +149,17 @@ export default function App() {
       console.log('getTrack', arr) 
       setPathLine(arr)
     }
+    const closeCarDetailModalCallback = (e) => {
+
+    }
+
     bus.on(`tableClick`, tableclickCallback)
     bus.on(`getTrack`, getTrackCallback)
+    bus.on(`closeCarDetailModal`, closeCarDetailModalCallback)
     return () => {
       bus.off(`tableClick`, tableclickCallback)
       bus.off(`getTrack`, getTrackCallback)
+      bus.off(`closeCarDetailModal`, closeCarDetailModalCallback)
     }
   }, [])
 
@@ -164,22 +172,21 @@ export default function App() {
       vin: vin.trim()
     })
     if(code==0){
-      if(msg == "查询成功"){
+      // if(msg == "查询成功"){
         bus.emit('showDetailModal',{
           channelInfo: data, 
           vin: vin,
           chosenCar: chosenCar
         })
-      }else{
-        message.error(`暂无车辆信息！`)
-      }
+      // }else{
+      //   message.error(`暂无车辆信息！`)
+      // }
     }else{
       message.error(`服务错误：${msg}`)
     }
   }
   // 关闭详情弹框 展示所有车辆marker
   const closeDetail = ()=>{
-    setChosenVin('')
     setPathLine([])
     setPassedPath([])
     setCars(Object.values(allVehicles))
@@ -250,13 +257,25 @@ export default function App() {
                 map.setFitView();
               }}
             >
-              <MarkerCluster
-                data={$clusterData.current}
-                gridSize={80}
-                averageCenter
-                renderMarker={renderMarker}
-                renderCluster={renderCluster}
-              />
+              {
+                $chosenVin == ''
+                ? <MarkerCluster
+                  data={$clusterData.current}
+                  gridSize={80}
+                  averageCenter
+                  renderMarker={renderMarker}
+                  renderCluster={renderCluster}
+                /> 
+                : 
+                <Marker position={[chosenCar.longitude, chosenCar.latitude]} offset={[0, -40]} anchor="top-center">
+                  {
+                    chosenCar.status == '0' 
+                    ? <img src={MARKER_GRAY_SVG} alt="marker" onClick={()=> {getChannels(chosenCar.key)}} /> 
+                    : <img src={MARKER_SVG} alt="marker" onClick={()=> {getChannels(chosenCar.key)}} /> 
+                  }
+                </Marker>
+              }
+              
               {/* {
                 cars.map(item=>{
                   return <div key={item.vin}>
@@ -426,3 +445,5 @@ export default function App() {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

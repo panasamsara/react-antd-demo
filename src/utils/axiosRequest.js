@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom/client';
 // 创建axios实例对象
 let Axios = axios.create({
   baseURL:"",
-  timeout: 10000
+  timeout: 15000
 })
 // 設置post請求頭
 Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -70,6 +70,7 @@ Axios.interceptors.response.use(response=>{
   let res = response.data
   return res
 },error=>{
+  message.error(error.message);
   if (error.config.headers.isLoading !== false) {
     hideLoading()
   }

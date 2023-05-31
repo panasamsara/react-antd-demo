@@ -7,6 +7,8 @@ import { Button, Modal, message, Tree } from 'antd';
 import CAMERA_GREEN from "@/assets/camera_green.png";
 import { bus } from '@/utils';
 import TableData from "./tableData";
+import { connect } from "react-redux";
+import { vinChange } from "@/store/actions";
 const { TreeNode } = Tree;
 
 // 自定义树
@@ -26,6 +28,7 @@ const getTreeNode = (data) => {
           key={item.key}
           longitude={item.longitude}
           latitude={item.latitude}
+          speed={item.speed}
           title={
             <div style={{display: 'flex'}}>
               <span style={{width: 200, color: item.status == '0' ? '#888' : '#fff'}}>
@@ -69,6 +72,7 @@ export function arrayToTree(arr) {
         i.title = i.vin;
         i.longitude = i.longitude
         i.latitude = i.latitude
+        i.speed = i.speed
         i.isChild = true;
         return i
       })
@@ -77,7 +81,18 @@ export function arrayToTree(arr) {
   return treeData
 }
 
-export default function App(props) {
+// redux相关
+const mapStateToProps = state => {
+  return { choseVin: state.mapReducer.choseVin };
+};
+const mapDispatchToProps = dispatch => ({
+  onVinChange: vin => {
+    dispatch(vinChange(vin));
+  },
+});
+
+function App(props) {
+
   const {cars} = props;
   const [treeData, setTreeData] = useState([]);
   const [open, setOpen] = useState(false);
@@ -115,6 +130,7 @@ export default function App(props) {
   
   // 树节点 点击事件
   const treeSelect = (selectedKeys, e) => {
+    props.onVinChange(e.node.key) // 修改redux中vin
     bus.emit('tableClick', {RowData: e.node})
     bus.emit('changeDetailModal', {RowData: e.node})
   };
@@ -219,3 +235,5 @@ export default function App(props) {
     </div>
   );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
