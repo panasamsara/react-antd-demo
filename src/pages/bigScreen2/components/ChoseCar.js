@@ -81,7 +81,7 @@ export function arrayToTree(arr) {
 
 // redux相关
 const mapStateToProps = state => {
-  return { vin: state.mapReducer.vin };
+  return { choseVin: state.mapReducer.choseVin };
 };
 const mapDispatchToProps = dispatch => ({
   onVinChange: vin => {

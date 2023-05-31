@@ -38,7 +38,7 @@ function interpolate(u, begin, end) {
 
 // redux相关
 const mapStateToProps = state => {
-  return { vin: state.mapReducer.vin };
+  return { choseVin: state.mapReducer.choseVin };
 };
 const mapDispatchToProps = dispatch => ({
   onVinChange: vin => {
@@ -48,8 +48,7 @@ const mapDispatchToProps = dispatch => ({
 
 // 页面组件
 function App(props) {
-  console.log(1111, props);
-  let $chosenVin = props.vin;
+  let $chosenVin = props.choseVin;
 
   usePlugins("AMap.MoveAnimation");
   const $marker = useRef(undefined);

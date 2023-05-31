@@ -1,8 +1,8 @@
-const mapReducer = (state = {vin: ''}, action) => {
+const mapReducer = (state = {choseVin: ''}, action) => {
   switch (action.type) {
     case 'VIN_CHANGE':
       return {
-        vin: action.vin
+        choseVin: action.vin
       }
     default:
       return state
