@@ -46,22 +46,26 @@ function App(props) {
     // 详情打开弹框
     const showModalCallback = (e) => {
       setModalShow(true)
-      setChosenCar(e.chosenCar)
-      setTerminalNo(e.channelInfo.terminalNo)
-      setInitChannels(e.channelInfo.channels)
       setVin(e.vin)
-      let options = [];
-      options = Object.keys(e.channelInfo.channels).map(item=>{
-        let obj = {
-          label: item,
-          value: item,
-          disabled: e.channelInfo.channels[item] =='0'
-        }
-        return obj
-      })
-      let arr = options.filter(item=> !item.disabled)
-      setChannelOptions(arr)
-      // setCheckedValues(['ch1']) // 默认选中播放ch1的视频
+      setChosenCar(e.chosenCar)
+      if(e.channelInfo.terminalNo){
+        setTerminalNo(e.channelInfo.terminalNo)
+        setInitChannels(e.channelInfo.channels)
+        
+        let options = [];
+        options = Object.keys(e.channelInfo.channels).map(item=>{
+          let obj = {
+            label: item,
+            value: item,
+            disabled: e.channelInfo.channels[item] =='0'
+          }
+          return obj
+        })
+        let arr = options.filter(item=> !item.disabled)
+        setChannelOptions(arr)
+        // setCheckedValues(['ch1']) // 默认选中播放ch1的视频
+      }
+      
     }
     const changeDetailModalCallback=()=>{
       setModalShow(false)
