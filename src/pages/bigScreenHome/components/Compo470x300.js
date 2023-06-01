@@ -8,8 +8,8 @@ function backCompo({
 }) {
   return (
     <div className={styleClass.dragableContainer} style={{ ...style }}>
-      <div style={{ width: 470, height: 230, 
-        background: `url(${getImgUrl('Box_470_230')}) center no-repeat`, backgroundSize: 'contain'}}>
+      <div style={{ width: 470, height: 300, 
+        background: `url(${getImgUrl('Box_470_300')}) center no-repeat`, backgroundSize: 'contain'}}>
         
         <h4
         style={{

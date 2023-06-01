@@ -20,7 +20,7 @@ const Category = () => {
   };
   return (
     <div>
-      <ReactECharts option={option} style={{ height: 280 }} />
+      <ReactECharts option={option} style={{ height: 260, marginTop: -40 }} />
     </div>
   )
 }

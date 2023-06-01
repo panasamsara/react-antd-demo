@@ -99,7 +99,7 @@ const Pie = () => {
   }
   return (
     <div>
-      <ReactECharts option={option} style={{ height: 280 }} />
+      <ReactECharts option={option} style={{ height: 180 }} />
     </div>
   )
 }
