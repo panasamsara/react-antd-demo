@@ -30,6 +30,7 @@ import changcheng from './campany_icon/changcheng.jpeg'
 import farrari from './campany_icon/farrari.jpeg'
 import lanbojini from './campany_icon/lanbojini.jpeg'
 import tesla from './campany_icon/tesla.jpeg'
+import lantu from './campany_icon/lantu.png'
 
 export default function getImgUrl(imgName) {
   const obj = {
@@ -64,6 +65,7 @@ export default function getImgUrl(imgName) {
     farrari,
     lanbojini,
     tesla,
+    lantu,
   }
   const bg = obj[imgName]
   return bg ? bg : obj.BG1
