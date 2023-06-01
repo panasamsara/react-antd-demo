@@ -9,6 +9,7 @@ import Compo470x200 from "./components/Compo470x200";
 import Compo470x230 from "./components/Compo470x230";
 import Compo470x300 from "./components/Compo470x300";
 import Compo470x410 from "./components/Compo470x410";
+import Compo450x200 from "./components/Compo450x200";
 import LeftTopNumber from "./components/LeftTopNumber";
 
 import TableData from "./components/TableData";
@@ -17,6 +18,7 @@ import NumberOne from "./components/NumberOne";
 import MapCompo from "./components/MapCompo";
 import MapCountryLayer from "./components/mapCountryLayer";
 import TaskList from "./components/TaskList";
+import ProductsList from "./components/ProductsList";
 import PeopleNumber from "./components/PeopleNumber";
 import Company from "./components/Company";
 import PieCompo from "./echarts/PieCompo";
@@ -80,8 +82,21 @@ export default function App() {
             <div >
               <DigitalTopCompo/>
             </div>
-            <div style={{ zIndex: 2,position: 'absolute', bottom: 0, width: 920, height: 320, display: 'flex', justifyContent: 'space-between'}}>
-              <div style={{width: 300, height: 306}}>
+            <div style={{ zIndex: 2,position: 'absolute', bottom: 56, width: 920, height: 400, 
+              display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
+              <Compo450x200 title='课题'>
+                <ProductsList/>
+              </Compo450x200>
+              <Compo450x200 title='标准及URD'>
+                <ProductsList/>
+              </Compo450x200>
+              <Compo450x200 title='管件技术'>
+                <ProductsList/>
+              </Compo450x200>
+              <Compo450x200 title='成果'>
+                <ProductsList/>
+              </Compo450x200>
+              {/* <div style={{width: 300, height: 306}}>
                 <TopCompo title='板块车辆分布'>
                   <NumberOne/>
                 </TopCompo>
@@ -95,7 +110,7 @@ export default function App() {
                 <TopCompo title='板块车辆分布'>
                   <NumberOne/>
                 </TopCompo>
-              </div>
+              </div> */}
             </div>
             
           </div>

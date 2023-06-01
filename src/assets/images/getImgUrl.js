@@ -23,6 +23,7 @@ import Box_470_200 from './Box_470_200.png'
 import Box_470_230 from './Box_470_230.png'
 import Box_470_300 from './Box_470_300.png'
 import Box_470_410 from './Box_470_410.png'
+import Box_450_200 from './Box_450_200.png'
 import numberBG_23_90 from './numberBG_23_90.png'
 
 import DongFeng from './campany_icon/df.jpeg'
@@ -48,6 +49,7 @@ export default function getImgUrl(imgName) {
     Box_470_300,
     Box_470_410,
     numberBG_23_90,
+    Box_450_200,
 
     DongFeng,
     JiLi,
