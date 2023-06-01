@@ -15,6 +15,7 @@ import NumberOne from "./components/NumberOne";
 import MapCompo from "./components/MapCompo";
 import MapCountryLayer from "./components/mapCountryLayer";
 import TaskList from "./components/TaskList";
+import PeopleNumber from "./components/PeopleNumber";
 import PieCompo from "./echarts/PieCompo";
 import LineChart from "./echarts/LineChart";
 import Category from "./echarts/Category";
@@ -63,7 +64,7 @@ export default function App() {
             </div>
             <div style={{ width: 500, height: 200, padding: 10 }}>
               <Compo470x200 title='科室'>
-                <TaskList/>
+                <PeopleNumber/>
               </Compo470x200>
             </div>
           </div>
