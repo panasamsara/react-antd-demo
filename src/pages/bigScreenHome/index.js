@@ -5,14 +5,16 @@ import getImgUrl from "@/assets/images/getImgUrl";
 import Title from "@/components/Title/Title";
 
 import BackCompo from "./components/BackCompo";
-import PieCompo from "./components/PieCompo";
 import LeftTopNumber from "./components/LeftTopNumber";
 import TableData from "./components/TableData";
 import TopCompo from "./components/TopCompo";
 import NumberOne from "./components/NumberOne";
 import MapCompo from "./components/MapCompo";
 import MapCountryLayer from "./components/mapCountryLayer";
-import LineChart from "./components/LineChart";
+import PieCompo from "./echarts/PieCompo";
+import LineChart from "./echarts/LineChart";
+import Category from "./echarts/Category";
+import Radar from "./echarts/Radar";
 
 export default function App() {
     return (
@@ -45,12 +47,12 @@ export default function App() {
                 </BackCompo>
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
-                <BackCompo title='板块车辆分布'>
-                  <TableData/>
+                <BackCompo title='板块车辆分布（柱状图）'>
+                  <Category/>
                 </BackCompo>
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
-                <BackCompo title='板块车辆分布'>
+                <BackCompo title='板块车辆分布（折线图）'>
                   <LineChart/>
                 </BackCompo>
               </div>
@@ -88,11 +90,11 @@ export default function App() {
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
                 <BackCompo title='板块车辆分布'>
-                  <TableData/>
+                  <LeftTopNumber/>
                 </BackCompo>
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
-                <BackCompo title='板块车辆分布'>
+                <BackCompo title='板块车辆分布（饼图）'>
                   <PieCompo/>
                 </BackCompo>
               </div>

@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactECharts from 'echarts-for-react'
 
-// 在此组件中绘制一个简单饼图
-const Pie = () => {
+// 柱状图
+const Category = () => {
   let option = {
     xAxis: {
       type: 'category',
@@ -13,15 +13,15 @@ const Pie = () => {
     },
     series: [
       {
-        data: [150, 230, 224, 218, 135, 147, 260],
-        type: 'line'
+        data: [120, 200, 150, 80, 70, 110, 130],
+        type: 'bar'
       }
     ]
-  }
+  };
   return (
     <div>
       <ReactECharts option={option} style={{ height: 280 }} />
     </div>
   )
 }
-export default Pie
+export default Category
