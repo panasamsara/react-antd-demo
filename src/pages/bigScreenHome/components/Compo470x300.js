@@ -15,7 +15,7 @@ function backCompo({
         style={{
             paddingLeft: 40,
             color: '#fff',
-            height: 24,
+            height: 42,
             lineHeight: '46px',
             marginBottom: 1,
             textAlign: 'left',
