@@ -10,6 +10,7 @@ import Compo470x230 from "./components/Compo470x230";
 import Compo470x300 from "./components/Compo470x300";
 import Compo470x410 from "./components/Compo470x410";
 import LeftTopNumber from "./components/LeftTopNumber";
+
 import TableData from "./components/TableData";
 import TopCompo from "./components/TopCompo";
 import NumberOne from "./components/NumberOne";
@@ -19,6 +20,8 @@ import TaskList from "./components/TaskList";
 import PeopleNumber from "./components/PeopleNumber";
 import Company from "./components/Company";
 import PieCompo from "./echarts/PieCompo";
+
+import DigitalTopCompo from "./TopCompo";
 
 export default function App() {
   
@@ -69,12 +72,15 @@ export default function App() {
           </div>
 
           <div style={{ width: 920, height: 1010, position: 'relative'}}>
-            <div style={{ width: 1920, height: 1010, zIndex: 1 }}>
+            <div style={{  zIndex: 1, position: 'absolute' }}>
               <MapCompo>
                 <MapCountryLayer/>
               </MapCompo>
             </div>
-            <div style={{ position: 'absolute', bottom: 0, width: 920, height: 320, display: 'flex', justifyContent: 'space-between'}}>
+            <div >
+              <DigitalTopCompo/>
+            </div>
+            <div style={{ zIndex: 2,position: 'absolute', bottom: 0, width: 920, height: 320, display: 'flex', justifyContent: 'space-between'}}>
               <div style={{width: 300, height: 306}}>
                 <TopCompo title='板块车辆分布'>
                   <NumberOne/>
