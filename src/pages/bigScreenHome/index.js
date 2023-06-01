@@ -62,7 +62,7 @@ export default function App() {
               </Compo470x300>
             </div>
             <div style={{ width: 500, height: 200, padding: 10, marginBottom: 10 }}>
-              <Compo470x200 title='年度试验任务1'>
+              <Compo470x200 title='人员'>
                 <PieCompo/>
               </Compo470x200>
             </div>
