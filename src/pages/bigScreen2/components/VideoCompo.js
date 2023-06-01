@@ -90,6 +90,7 @@ function App(props) {
   const closeDetailModal = () => {
     props.onVinChange('') // 修改redux中vin
     setModalShow(false)
+    setCheckedValues([])
   };
 
   // 打开所有视频
