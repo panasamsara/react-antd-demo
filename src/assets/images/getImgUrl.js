@@ -22,7 +22,12 @@ import mapBack from './map_back.png'
 import Box_470_200 from './Box_470_200.png'
 import Box_470_230 from './Box_470_230.png'
 import Box_470_300 from './Box_470_300.png'
+import Box_470_410 from './Box_470_410.png'
 import numberBG_23_90 from './numberBG_23_90.png'
+
+import DongFeng from './campany_icon/df.jpeg'
+import JiLi from './campany_icon/jili.jpeg'
+import Changan from './campany_icon/changan.jpeg'
 
 export default function getImgUrl(imgName) {
   const obj = {
@@ -41,7 +46,12 @@ export default function getImgUrl(imgName) {
     Box_470_200,
     Box_470_230,
     Box_470_300,
-    numberBG_23_90
+    Box_470_410,
+    numberBG_23_90,
+
+    DongFeng,
+    JiLi,
+    Changan
   }
   const bg = obj[imgName]
   return bg ? bg : obj.BG1

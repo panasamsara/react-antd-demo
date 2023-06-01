@@ -8,6 +8,7 @@ import BackCompo from "./components/BackCompo";
 import Compo470x200 from "./components/Compo470x200";
 import Compo470x230 from "./components/Compo470x230";
 import Compo470x300 from "./components/Compo470x300";
+import Compo470x410 from "./components/Compo470x410";
 import LeftTopNumber from "./components/LeftTopNumber";
 import TableData from "./components/TableData";
 import TopCompo from "./components/TopCompo";
@@ -16,10 +17,8 @@ import MapCompo from "./components/MapCompo";
 import MapCountryLayer from "./components/mapCountryLayer";
 import TaskList from "./components/TaskList";
 import PeopleNumber from "./components/PeopleNumber";
+import Company from "./components/Company";
 import PieCompo from "./echarts/PieCompo";
-import LineChart from "./echarts/LineChart";
-import Category from "./echarts/Category";
-import Radar from "./echarts/Radar";
 
 export default function App() {
   
@@ -106,15 +105,10 @@ export default function App() {
                 <TaskList/>
               </Compo470x300>
             </div>
-            <div style={{ width: 500, height: 200, padding: 10, marginBottom: 10 }}>
-              <Compo470x200 title='年度试验任务1'>
-                <PieCompo/>
-              </Compo470x200>
-            </div>
-            <div style={{ width: 500, height: 200, padding: 10 }}>
-              <Compo470x200 title='年度试验任务2'>
-                <PieCompo/>
-              </Compo470x200>
+            <div style={{ width: 500, height: 410, padding: 10, marginBottom: 10 }}>
+              <Compo470x410 title='公司化运营'>
+                <Company/>
+              </Compo470x410>
             </div>
           </div>
         </div>
