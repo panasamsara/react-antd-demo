@@ -12,7 +12,7 @@ const Pie = () => {
     //   left: 'center',
     // },
     title: {
-      text: '95',//主标题文本
+      // text: '95',//主标题文本
       left: 'center',
       top: '45%',
       textStyle: {
@@ -53,7 +53,7 @@ const Pie = () => {
       {
         name: 'Access From',
         type: 'pie',
-        radius: ['40%', '70%'], // 中空
+        // radius: ['40%', '70%'], // 中空
         avoidLabelOverlap: false,
         itemStyle: {
           // borderRadius: 10, // 圆角
