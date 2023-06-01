@@ -19,6 +19,8 @@ import titleBox from './titleBox.png'
 import topBox from './topBox.png'
 import mapBox from './mapBox.png'
 import mapBack from './map_back.png'
+import Box_470_230 from './Box_470_230.png'
+import numberBG_23_90 from './numberBG_23_90.png'
 
 export default function getImgUrl(imgName) {
   const obj = {
@@ -33,7 +35,9 @@ export default function getImgUrl(imgName) {
     titleBox,
     topBox,
     mapBox,
-    mapBack
+    mapBack,
+    Box_470_230,
+    numberBG_23_90
   }
   const bg = obj[imgName]
   return bg ? bg : obj.BG1

@@ -5,6 +5,7 @@ import getImgUrl from "@/assets/images/getImgUrl";
 import Title from "@/components/Title/Title";
 
 import BackCompo from "./components/BackCompo";
+import Compo470x230 from "./components/Compo470x230";
 import LeftTopNumber from "./components/LeftTopNumber";
 import TableData from "./components/TableData";
 import TopCompo from "./components/TopCompo";
@@ -42,9 +43,9 @@ export default function App() {
           <div className="map-container" style={{width: "100%", height: 1010, position: 'relative', display: 'flex'}}>
             <div style={{ width: 500, height: 1010, zIndex: 2}}>
               <div style={{ width: 500, height: 320, padding: 10 }}>
-                <BackCompo title='平台车辆统计'>
+                <Compo470x230 title='年度试验任务'>
                   <LeftTopNumber/>
-                </BackCompo>
+                </Compo470x230>
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
                 <BackCompo title='板块车辆分布（柱状图）'>
@@ -84,9 +85,9 @@ export default function App() {
             </div>
             <div style={{ width: 500, height: 1010, zIndex: 2}}>
               <div style={{ width: 500, height: 320, padding: 10}}>
-                <BackCompo title='板块车辆分布'>
+                <Compo470x230 title='年度试验任务'>
                   <LeftTopNumber/>
-                </BackCompo>
+                </Compo470x230>
               </div>
               <div style={{ width: 500, height: 320, padding: 10 }}>
                 <BackCompo title='板块车辆分布'>

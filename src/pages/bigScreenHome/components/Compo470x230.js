@@ -10,12 +10,12 @@ function backCompo({
     <div className={styleClass.dragableContainer} style={{ ...style }}>
       <div style={{ width: 470, height: 230, 
         background: `url(${getImgUrl('Box_470_230')}) center no-repeat`, backgroundSize: 'contain'}}>
-        <div style={{ position: 'relative', height: 'auto', top: 28 }}>
+        <div style={{ position: 'relative', height: 'auto',}}>
           <h4
           style={{
               paddingLeft: 40,
               color: '#fff',
-              height: 46,
+              height: 24,
               lineHeight: '46px',
               marginBottom: 1,
               textAlign: 'left',
