@@ -1,11 +1,3 @@
-/*
- * @Author: joshua
- * @Date: 2023-04-27 10:42:38
- * @LastEditTime: 2023-04-27 13:39:41
- * @LastEditors: joshua
- * @Description:
- * @FilePath: 
- */
 
 import BG1 from './bg.jpg'
 import total1 from './total1.png'
@@ -29,6 +21,15 @@ import numberBG_23_90 from './numberBG_23_90.png'
 import DongFeng from './campany_icon/df.jpeg'
 import JiLi from './campany_icon/jili.jpeg'
 import Changan from './campany_icon/changan.jpeg'
+import qirui from './campany_icon/qirui.png'
+import audi from './campany_icon/audi.jpeg'
+import benz from './campany_icon/benz.jpeg'
+import bmw from './campany_icon/bmw.jpeg'
+import byd from './campany_icon/byd.png'
+import changcheng from './campany_icon/changcheng.jpeg'
+import farrari from './campany_icon/farrari.jpeg'
+import lanbojini from './campany_icon/lanbojini.jpeg'
+import tesla from './campany_icon/tesla.jpeg'
 
 export default function getImgUrl(imgName) {
   const obj = {
@@ -53,7 +54,16 @@ export default function getImgUrl(imgName) {
 
     DongFeng,
     JiLi,
-    Changan
+    Changan,
+    qirui,
+    changcheng,
+    audi,
+    benz,
+    bmw,
+    byd,
+    farrari,
+    lanbojini,
+    tesla,
   }
   const bg = obj[imgName]
   return bg ? bg : obj.BG1

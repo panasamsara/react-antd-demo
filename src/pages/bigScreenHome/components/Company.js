@@ -18,24 +18,18 @@ export default function App() {
       </div>
 
       <div style={{display: 'flex', flexWrap: 'wrap',width: 450, height: 300, padding: '30px 10px'}}>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('DongFeng')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('JiLi')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('DongFeng')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('JiLi')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('DongFeng')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('JiLi')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('JiLi')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('DongFeng')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('JiLi')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('DongFeng')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('JiLi')}) center no-repeat`, backgroundSize: 'contain'}}></div>
-        <div style={{ width: 40, height: 40, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'contain'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('DongFeng')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('JiLi')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('Changan')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('qirui')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('changcheng')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('audi')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('benz')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('bmw')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('byd')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('farrari')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('lanbojini')}) center no-repeat`, backgroundSize: 'cover'}}></div>
+        <div style={{ width: 60, height: 60, marginRight: 30, background: `url(${getImgUrl('tesla')}) center no-repeat`, backgroundSize: 'cover'}}></div>
       </div>
     </div>
   );
