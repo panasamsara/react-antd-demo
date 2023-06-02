@@ -20,6 +20,7 @@ import NumberOne from "./components/NumberOne";
 import MapCompo from "./components/MapCompo";
 import MapCountryLayer from "./components/mapCountryLayer";
 import TaskList from "./components/TaskList";
+import TaskListRight from "./components/TaskListRight";
 import ProductsList from "./components/ProductsList";
 import PeopleNumber from "./components/PeopleNumber";
 import Company from "./components/Company";
@@ -125,7 +126,7 @@ export default function App() {
             </div>
             <div style={{ width: 500, height: 390, padding: 10, marginBottom: 10 }}>
               <Compo470x390 title='试制任务实时进展'>
-                <TaskList/>
+                <TaskListRight/>
               </Compo470x390>
             </div>
             <div style={{ width: 500, height: 410, padding: 10, marginBottom: 10 }}>
