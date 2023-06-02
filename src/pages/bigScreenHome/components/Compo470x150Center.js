@@ -7,15 +7,15 @@ function backCompo({
   children,
 }) {
   return (
-    <div style={{ ...style }}>
-      <div style={{ width: 470, height: 390, 
-        background: `url(${getImgUrl('Box_470_390')}) center no-repeat`, backgroundSize: 'contain'}}>
+    <div className={styleClass.dragableContainer} style={{ ...style }}>
+      <div style={{ width: 450, height: 150, 
+        background: `url(${getImgUrl('Box_470_150')}) center no-repeat`, backgroundSize: 'contain'}}>
         
         <h4
         style={{
             paddingLeft: 40,
             color: '#fff',
-            height: 42,
+            height: 24,
             lineHeight: '46px',
             marginBottom: 1,
             textAlign: 'left',

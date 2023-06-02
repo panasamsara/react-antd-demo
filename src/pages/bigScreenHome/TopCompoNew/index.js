@@ -12,9 +12,9 @@ export default function App() {
         <RenderCompo
           style={{
               width: 900,
-              height: 300,
+              height: 100,
               position: 'absolute',
-              top: 20,
+              top: 10,
               left: -10,
               zIndex: 2
           }}

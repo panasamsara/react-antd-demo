@@ -6,6 +6,7 @@ import Title from "@/components/Title/Title";
 
 import BackCompo from "./components/BackCompo";
 import Compo470x150 from "./components/Compo470x150";
+import Compo470x150Center from "./components/Compo470x150Center";
 import Compo470x200 from "./components/Compo470x200";
 import Compo470x230 from "./components/Compo470x230";
 import Compo470x300 from "./components/Compo470x300";
@@ -47,7 +48,7 @@ export default function App() {
                 height: '100%',
               }}
             >
-              <Title page={'bigScreen1'} title={'东风技术中心热区试验数字化看板'}/>
+              <Title page={'bigScreen1'} title={'东风技术中心 质量验证'}/>
             </div>
       </div>
       
@@ -69,7 +70,7 @@ export default function App() {
               </Compo470x200>
             </div>
             <div style={{ width: 500, height: 200, padding: 10 }}>
-              <Compo470x200 title='科室'>
+              <Compo470x200 title='科室人员'>
                 <PeopleNumber/>
               </Compo470x200>
             </div>
@@ -81,18 +82,28 @@ export default function App() {
                 <MapCountryLayer/>
               </MapCompo>
             </div>
-            <div >
-              <TopCompoNew/>
+            
+            <TopCompoNew/>
+
+            <div style={{ zIndex: 2,width: 920, height: 150, position: 'relative', top: 80, 
+              display: 'flex', justifyContent: 'space-between'}}>
+              <Compo470x150Center title='年度试验任务'>
+                
+              </Compo470x150Center>
+              <Compo470x150Center title='年度试验任务'>
+                
+              </Compo470x150Center>
             </div>
-            <div style={{ zIndex: 2,position: 'absolute', bottom: 56, width: 920, height: 400, 
+
+            <div style={{ zIndex: 2,position: 'absolute', bottom: 40, width: 920, height: 400, 
               display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>
               <Compo450x200 title='课题'>
                 <ProductsList/>
               </Compo450x200>
               <Compo450x200 title='标准及URD'>
-                <ProductsList/>
+                <PieCompo/>
               </Compo450x200>
-              <Compo450x200 title='管件技术'>
+              <Compo450x200 title='关键技术'>
                 <ProductsList/>
               </Compo450x200>
               <Compo450x200 title='成果'>

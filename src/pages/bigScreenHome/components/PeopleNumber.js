@@ -19,6 +19,16 @@ export default function App() {
       </div>
 
       <div style={{display: 'flex', width: 100, height: 30}}>
+        <div>管理室</div>
+        <div>10人</div>
+      </div>
+
+      <div style={{display: 'flex', width: 100, height: 30}}>
+        <div>管理室</div>
+        <div>10人</div>
+      </div>
+
+      <div style={{display: 'flex', width: 100, height: 30}}>
         <div>开发室</div>
         <div>10人</div>
       </div>
