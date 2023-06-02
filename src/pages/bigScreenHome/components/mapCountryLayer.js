@@ -73,7 +73,7 @@ export default function RootPage() {
         <Marker position={[123.90, 51.70]} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />
             <div style={{ width: 50, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64', color: '#fff', borderRadius: 4 }}>
-              漠河0</div>
+              漠河5</div>
         </Marker>
         {/* <Polygon
           path={path3}
@@ -81,18 +81,18 @@ export default function RootPage() {
         /> */}
         <Marker position={[124.90, 43.57]} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />
-            <div style={{ width: 70, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
-              长春0</div>
+            <div style={{ width: 50, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
+              长春10</div>
         </Marker>
         <Marker position={[112.12853 , 32.01480]} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />
-            <div style={{ width: 70, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
-              襄阳0</div>
+            <div style={{ width: 60, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
+              襄阳50</div>
         </Marker>
         <Marker position={[89.19730 , 42.95698 ]} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />
-            <div style={{ width: 70, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
-              新疆0</div>
+            <div style={{ width: 60, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
+              新疆60</div>
         </Marker>
         {/* <CountryLayer
           opacity={opacity}

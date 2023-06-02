@@ -20,7 +20,7 @@ export default function App() {
         
       </div>
       
-      <div style={{ color: '#fff', padding: 12, height: 200,
+      <div style={{ color: '#fff', padding: 12, height: 150,
         display: 'flex', flexDirection: 'column', flexWrap: 'wrap',
         }}>
         <div style={{ height: 30,}}>
@@ -44,10 +44,6 @@ export default function App() {
         </div>
 
         <div style={{ height: 30}}>
-          东风公司一等奖
-        </div>
-
-        <div style={{ height: 30}}>
         东风公司二等奖
         </div>
 
@@ -57,10 +53,6 @@ export default function App() {
 
         <div style={{ height: 30}}>
         技术中心二等奖
-        </div>
-
-        <div style={{ height: 30}}>
-        技术中心三等奖
         </div>
       </div>
     </div>
