@@ -14,8 +14,6 @@ import Compo470x410 from "./components/Compo470x410";
 import Compo450x200 from "./components/Compo450x200";
 import LeftTopNumber from "./components/LeftTopNumber";
 
-import TableData from "./components/TableData";
-import TopCompo from "./components/TopCompo";
 import NumberOne from "./components/NumberOne";
 import MapCompo from "./components/MapCompo";
 import MapCountryLayer from "./components/mapCountryLayer";
@@ -27,6 +25,7 @@ import Company from "./components/Company";
 import PieCompo from "./echarts/PieCompo";
 
 import DigitalTopCompo from "./TopCompo";
+import TopCompoNew from "./TopCompoNew";
 
 export default function App() {
   
@@ -83,7 +82,7 @@ export default function App() {
               </MapCompo>
             </div>
             <div >
-              <DigitalTopCompo/>
+              <TopCompoNew/>
             </div>
             <div style={{ zIndex: 2,position: 'absolute', bottom: 56, width: 920, height: 400, 
               display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>

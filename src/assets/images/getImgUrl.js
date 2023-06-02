@@ -18,6 +18,7 @@ import Box_470_300 from './Box_470_300.png'
 import Box_470_390 from './Box_470_390.png'
 import Box_470_410 from './Box_470_410.png'
 import Box_450_200 from './Box_450_200.png'
+import Box_450_100 from './Box_450_100.png'
 import Box_230_60 from './Box_230_60.png'
 import Box_230_55 from './Box_230_55.png'
 import numberBG_23_90 from './numberBG_23_90.png'
@@ -58,6 +59,7 @@ export default function getImgUrl(imgName) {
     Box_470_410,
     numberBG_23_90,
     Box_450_200,
+    Box_450_100,
     Box_230_60,
     Box_230_55,
 
