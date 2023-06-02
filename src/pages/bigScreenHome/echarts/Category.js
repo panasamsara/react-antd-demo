@@ -6,15 +6,31 @@ const Category = () => {
   let option = {
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: [ '2022', '2023', '2024', '2025',],
+      axisLabel : {
+        textStyle: {
+          color: '#fff'
+        }
+      }
+
     },
     yAxis: {
-      type: 'value'
+      type: 'value',
+      axisLabel : {
+        formatter: '{value}',
+        textStyle: {
+          color: '#fff'
+        }
+      }
     },
     series: [
       {
-        data: [120, 200, 150, 80, 70, 110, 130],
-        type: 'bar'
+        data: [410, 435, 455, 470,],
+        type: 'bar',
+        label: {
+          show: true,
+          position: 'inside'
+        },
       }
     ]
   };

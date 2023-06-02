@@ -11,9 +11,9 @@ export default function App() {
       display: 'flex', flexDirection: 'column', flexWrap: 'wrap',
       }}>
       <div style={{display: 'flex', justifyContent: 'space-between', width: 360, height: 30}}>
-        <Button>纳米</Button>
-        <Button>风神</Button>
-        <Button>猛士</Button>
+        <Button type='primary'>纳米</Button>
+        <Button type='primary'>风神</Button>
+        <Button type='primary'>猛士</Button>
         <Button>智采系统</Button>
       </div>
 

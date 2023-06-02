@@ -70,7 +70,7 @@ const Pie = () => {
           color: '#fff',
           fontSize: 12,
           formatter: function (params) {
-            return params.value
+            return params.name
           }
         },
         emphasis: {
@@ -89,9 +89,10 @@ const Pie = () => {
           },
         ],
         data: [
-          { name: '风神', value: 76 },
-          { name: 'M事业部', value: 14 },
-          { name: '东创紫联', value: 5 },
+          { name: '研究生', value: 200 },
+          { name: '博士', value: 10 },
+          { name: '本科', value: 100 },
+          { name: '技能', value: 100 },
         ],
        
       },

@@ -21,7 +21,9 @@ import MapCountryLayer from "./components/mapCountryLayer";
 import TaskList from "./components/TaskList";
 import TaskListRight from "./components/TaskListRight";
 import ProductsList from "./components/ProductsList";
+import TechList from "./components/TechList";
 import PeopleNumber from "./components/PeopleNumber";
+import Chengguo from "./components/Chengguo";
 import Company from "./components/Company";
 import PieCompo from "./echarts/PieCompo";
 
@@ -104,10 +106,10 @@ export default function App() {
                 <PieCompo/>
               </Compo450x200>
               <Compo450x200 title='关键技术'>
-                <ProductsList/>
+                <TechList/>
               </Compo450x200>
               <Compo450x200 title='成果'>
-                <ProductsList/>
+                <Chengguo/>
               </Compo450x200>
               {/* <div style={{width: 300, height: 306}}>
                 <TopCompo title='板块车辆分布'>
