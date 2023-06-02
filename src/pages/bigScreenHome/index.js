@@ -5,9 +5,11 @@ import getImgUrl from "@/assets/images/getImgUrl";
 import Title from "@/components/Title/Title";
 
 import BackCompo from "./components/BackCompo";
+import Compo470x150 from "./components/Compo470x150";
 import Compo470x200 from "./components/Compo470x200";
 import Compo470x230 from "./components/Compo470x230";
 import Compo470x300 from "./components/Compo470x300";
+import Compo470x390 from "./components/Compo470x390";
 import Compo470x410 from "./components/Compo470x410";
 import Compo450x200 from "./components/Compo450x200";
 import LeftTopNumber from "./components/LeftTopNumber";
@@ -51,15 +53,15 @@ export default function App() {
       
         <div className="map-container" style={{width: "100%", height: 1010, position: 'relative', display: 'flex'}}>
           <div style={{ width: 500, height: 1010, zIndex: 2}}>
-            <div style={{ width: 500, height: 230, padding: 10, marginBottom: 10 }}>
-              <Compo470x230 title='年度试验任务'>
+            <div style={{ width: 500, height: 150, padding: 10, marginBottom: 10 }}>
+              <Compo470x150 title='年度试验任务'>
                 <LeftTopNumber/>
-              </Compo470x230>
+              </Compo470x150>
             </div>
-            <div style={{ width: 500, height: 300, padding: 10, marginBottom: 10 }}>
-              <Compo470x300 title='年度试验任务'>
+            <div style={{ width: 500, height: 390, padding: 10, marginBottom: 10 }}>
+              <Compo470x390 title='试验任务实时进展'>
                 <TaskList/>
-              </Compo470x300>
+              </Compo470x390>
             </div>
             <div style={{ width: 500, height: 200, padding: 10, marginBottom: 10 }}>
               <Compo470x200 title='人员'>
@@ -116,15 +118,15 @@ export default function App() {
           </div>
 
           <div style={{ width: 500, height: 1010, zIndex: 2}}>
-            <div style={{ width: 500, height: 230, padding: 10, marginBottom: 10 }}>
-              <Compo470x230 title='年度试验任务'>
+            <div style={{ width: 500, height: 150, padding: 10, marginBottom: 10 }}>
+              <Compo470x150 title='年度试制任务'>
                 <LeftTopNumber/>
-              </Compo470x230>
+              </Compo470x150>
             </div>
-            <div style={{ width: 500, height: 300, padding: 10, marginBottom: 10 }}>
-              <Compo470x300 title='试验任务试验进展'>
+            <div style={{ width: 500, height: 390, padding: 10, marginBottom: 10 }}>
+              <Compo470x390 title='试制任务实时进展'>
                 <TaskList/>
-              </Compo470x300>
+              </Compo470x390>
             </div>
             <div style={{ width: 500, height: 410, padding: 10, marginBottom: 10 }}>
               <Compo470x410 title='公司化运营'>

@@ -11,11 +11,15 @@ import titleBox from './titleBox.png'
 import topBox from './topBox.png'
 import mapBox from './mapBox.png'
 import mapBack from './map_back.png'
+import Box_470_150 from './Box_470_150.png'
 import Box_470_200 from './Box_470_200.png'
 import Box_470_230 from './Box_470_230.png'
 import Box_470_300 from './Box_470_300.png'
+import Box_470_390 from './Box_470_390.png'
 import Box_470_410 from './Box_470_410.png'
 import Box_450_200 from './Box_450_200.png'
+import Box_230_60 from './Box_230_60.png'
+import Box_230_55 from './Box_230_55.png'
 import numberBG_23_90 from './numberBG_23_90.png'
 
 import DongFeng from './campany_icon/df.jpeg'
@@ -46,12 +50,16 @@ export default function getImgUrl(imgName) {
     topBox,
     mapBox,
     mapBack,
+    Box_470_150,
     Box_470_200,
     Box_470_230,
     Box_470_300,
+    Box_470_390,
     Box_470_410,
     numberBG_23_90,
     Box_450_200,
+    Box_230_60,
+    Box_230_55,
 
     DongFeng,
     JiLi,
