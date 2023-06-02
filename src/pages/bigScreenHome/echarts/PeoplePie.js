@@ -51,7 +51,7 @@ const Pie = () => {
     ],
     series: [
       {
-        name: '标准',
+        name: '人员',
         type: 'pie',
         // radius: ['40%', '70%'], // 中空
         avoidLabelOverlap: false,
@@ -59,6 +59,10 @@ const Pie = () => {
           // borderRadius: 10, // 圆角
           borderColor: '#fff',
           borderWidth: 2,
+          // shadowColor: '#000',
+          // shadowBlur: 3,
+          // shadowOffsetX:10,
+          // shadowOffsetY:10,
         },
         label: {
           show: true,
@@ -67,7 +71,9 @@ const Pie = () => {
           fontSize: 12,
           formatter: function (params) {
             return params.name + params.value
-          }
+          },
+          rotate: 0,
+          distanceToLabelLine: 0.5
         },
         emphasis: {
           label: {
@@ -75,11 +81,6 @@ const Pie = () => {
             fontSize: 20,
             fontWeight: 'bold',
           },
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
         },
         labelLine: {
           show: false,
@@ -90,10 +91,10 @@ const Pie = () => {
           },
         ],
         data: [
-          { name: '国标', value: 2 },
-          { name: '行标', value: 10 },
-          { name: '团标', value: 8 },
-          { name: '企标', value: 200 },
+          { name: '研究生', value: 200 },
+          { name: '博士', value: 10 },
+          { name: '本科', value: 100 },
+          { name: '技能', value: 100 },
         ],
        
       },
@@ -101,7 +102,7 @@ const Pie = () => {
   }
   return (
     <div>
-      <ReactECharts option={option} style={{ height: 140 , position: 'relative', top: 20}} />
+      <ReactECharts option={option} style={{ height: 140 , position: 'relative', top: 20 }} />
     </div>
   )
 }

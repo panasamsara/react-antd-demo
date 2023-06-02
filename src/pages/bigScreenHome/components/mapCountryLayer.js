@@ -48,10 +48,10 @@ export default function RootPage() {
     // <div style={{ width: 890, height: 655,}}>
     <div style={{ width: 1920, height: 1010,}}>
       <Amap 
-        zoom={4} 
-        center={[110, 36]}
+        zoom={3.5} 
+        center={[110, 28]}
         showLabel={false}
-        zooms={[4, 10]}
+        // zooms={[4, 10]}
         isHotspot={false}
         defaultCursor="pointer"
         showIndoorMap={false} // 不显示室内地图
@@ -60,30 +60,40 @@ export default function RootPage() {
         {/* <Polygon
           path={path1}
           fillColor= "rgb(202,108,230)"
-        />
-        <Marker position={[128.84, 49.53]} offset={[0, -40]} anchor="top-center">
+        /> */}
+        <Marker position={[114.29, 30.58]} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />
-            <div style={{ width: 120, height: 25, display: 'flex', alignItems: 'center', fontSize: 16, background: '#fff', padding: 10, borderRadius: 4 }}>
-                孙吴，车辆51</div>
+            <div style={{ width: 60, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
+              武汉100</div>
         </Marker>
-        <Polygon
+        {/* <Polygon
           path={path2}
           fillColor= "rgb(6,232,215)"
-        />
+        /> */}
         <Marker position={[123.90, 51.70]} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />
-            <div style={{ width: 120, height: 25, display: 'flex', alignItems: 'center', fontSize: 16, background: '#fff', padding: 10, borderRadius: 4 }}>
-              漠河，车辆63</div>
+            <div style={{ width: 50, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64', color: '#fff', borderRadius: 4 }}>
+              漠河0</div>
         </Marker>
-        <Polygon
+        {/* <Polygon
           path={path3}
           fillColor= "rgb(255,206,55)"
-        />
+        /> */}
         <Marker position={[124.90, 43.57]} offset={[0, -40]} anchor="top-center">
             <img src={MARKER_SVG} alt="marker" />
-            <div style={{ width: 120, height: 25, display: 'flex', alignItems: 'center', fontSize: 16, background: '#fff', padding: 10, borderRadius: 4 }}>
-              长春，车辆5</div>
-        </Marker> */}
+            <div style={{ width: 70, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
+              长春0</div>
+        </Marker>
+        <Marker position={[112.12853 , 32.01480]} offset={[0, -40]} anchor="top-center">
+            <img src={MARKER_SVG} alt="marker" />
+            <div style={{ width: 70, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
+              襄阳0</div>
+        </Marker>
+        <Marker position={[89.19730 , 42.95698 ]} offset={[0, -40]} anchor="top-center">
+            <img src={MARKER_SVG} alt="marker" />
+            <div style={{ width: 70, height: 18, display: 'flex', alignItems: 'center', fontSize: 12, background: '#103A64',  color: '#fff', borderRadius: 4 }}>
+              新疆0</div>
+        </Marker>
         {/* <CountryLayer
           opacity={opacity}
           depth={2}

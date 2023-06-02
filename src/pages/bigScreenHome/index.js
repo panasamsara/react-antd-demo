@@ -14,6 +14,7 @@ import Compo470x390 from "./components/Compo470x390";
 import Compo470x410 from "./components/Compo470x410";
 import Compo450x200 from "./components/Compo450x200";
 import LeftTopNumber from "./components/LeftTopNumber";
+import LeftTopNumberCenter from "./components/LeftTopNumberCenter";
 
 import NumberOne from "./components/NumberOne";
 import MapCompo from "./components/MapCompo";
@@ -26,6 +27,7 @@ import PeopleNumber from "./components/PeopleNumber";
 import Chengguo from "./components/Chengguo";
 import Company from "./components/Company";
 import PieCompo from "./echarts/PieCompo";
+import PieCompoLeft from "./echarts/PieCompoLeft";
 
 import DigitalTopCompo from "./TopCompo";
 import TopCompoNew from "./TopCompoNew";
@@ -68,7 +70,7 @@ export default function App() {
             </div>
             <div style={{ width: 500, height: 200, padding: 10, marginBottom: 10 }}>
               <Compo470x200 title='人员'>
-                <PieCompo/>
+                <PieCompoLeft/>
               </Compo470x200>
             </div>
             <div style={{ width: 500, height: 200, padding: 10 }}>
@@ -89,13 +91,16 @@ export default function App() {
 
             <div style={{ zIndex: 2,width: 920, height: 150, position: 'relative', top: 80, 
               display: 'flex', justifyContent: 'space-between'}}>
-              <Compo470x150Center title='年度试验任务'>
-                
+              <Compo470x150Center title='年度质量任务'>
+                <LeftTopNumberCenter/>
               </Compo470x150Center>
-              <Compo470x150Center title='年度试验任务'>
+              <Compo470x150Center title='年度质量任务实时进展'>
                 
               </Compo470x150Center>
             </div>
+            {/* <div style={{ zIndex: 2,width: 920,  position: 'relative', top: 100, 
+              color: '#fff', textAlign: 'center', fontSize: 24, fontFamily: 'Microsoft YaHei',
+              }}>试验车辆实时监控</div> */}
 
             <div style={{ zIndex: 2,position: 'absolute', bottom: 40, width: 920, height: 400, 
               display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap'}}>

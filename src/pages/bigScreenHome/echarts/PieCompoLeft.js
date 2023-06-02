@@ -1,8 +1,8 @@
 
 
 import React, { useState } from 'react'
-import Pie from "./Pie";
-import CategoryY from "./CategoryY";
+import PeoplePie from "./PeoplePie";
+import Category from "./Category";
 
 const colorList = [
     '#0090ff',
@@ -107,16 +107,12 @@ const colorList = [
 ]
 
 export default function App() {
-  const [data, setData] = useState([
-      { name: '风神', total: 76 },
-      { name: 'M事业部', total: 14 },
-      { name: '东创紫联', total: 5 },
-  ])
+  
     return (
       <div>
         <div style={{ display: 'flex', width: 500 }}>
           <div style={{ width: 200 }}>
-            <Pie />
+            <PeoplePie />
           </div>
           <div
             style={{
@@ -125,7 +121,7 @@ export default function App() {
               // overflowY: 'auto',
             }}
           >
-            <CategoryY/>
+            <Category/>
             {/* <table
               style={{
                 width: 'calc(100% - 26px)',
