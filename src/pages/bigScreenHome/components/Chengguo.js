@@ -10,11 +10,11 @@ export default function App() {
         display: "flex", justifyContent: 'space-between'}}>
         <div style={{display: "flex", justifyContent: 'space-between'}}>
           <div style={{marginRight: 20}}>行业奖励 </div>
-          <div> 888 项</div>
+          <div> <span style={{fontFamily: 'DS-DIGIB', fontSize: 24}}>888 </span> 项</div>
         </div>
         <div style={{display: "flex", justifyContent: 'space-between', position: 'relative', left: -20}}>
           <div style={{marginRight: 20}}>公司奖励 </div>
-          <div>8888 项</div>
+          <div><span style={{fontFamily: 'DS-DIGIB', fontSize: 24}}>8888 </span> 项</div>
         </div>
         
         

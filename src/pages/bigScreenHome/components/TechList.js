@@ -9,9 +9,9 @@ export default function App() {
       <div style={{color: '#fff', marginBottom: 5, fontSize: 20,
         display: "flex", justifyContent: 'space-between'}}>
         <div>年度 </div>
-        <div> 888 项</div>
+        <div><span style={{fontFamily: 'DS-DIGIB', fontSize: 24}}>888 </span> 项</div>
         <div>总计 </div>
-        <div>8888 项</div>
+        <div><span style={{fontFamily: 'DS-DIGIB', fontSize: 24}}>8888 </span> 项</div>
       </div>
       <table
         style={{
