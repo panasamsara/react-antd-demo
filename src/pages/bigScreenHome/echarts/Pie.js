@@ -4,15 +4,15 @@ import ReactECharts from 'echarts-for-react'
 // 在此组件中绘制一个简单饼图
 const Pie = () => {
   let option = {
-    // tooltip: {
-    //   trigger: 'item',
-    // },
+    tooltip: {
+      trigger: 'item',
+    },
     // legend: {
     //   top: '5%',
     //   left: 'center',
     // },
     title: {
-      text: '95',//主标题文本
+      // text: '95',//主标题文本
       left: 'center',
       top: '45%',
       textStyle: {
@@ -51,26 +51,22 @@ const Pie = () => {
     ],
     series: [
       {
-        name: 'Access From',
+        name: '标准',
         type: 'pie',
-        radius: ['40%', '70%'], // 中空
+        // radius: ['40%', '70%'], // 中空
         avoidLabelOverlap: false,
         itemStyle: {
           // borderRadius: 10, // 圆角
           borderColor: '#fff',
           borderWidth: 2,
-          // shadowColor: '#000',
-          // shadowBlur: 3,
-          // shadowOffsetX:10,
-          // shadowOffsetY:10,
         },
         label: {
           show: true,
-          position: 'inside',
+          position: 'outer',
           color: '#fff',
           fontSize: 12,
           formatter: function (params) {
-            return params.value
+            return params.name + params.value
           }
         },
         emphasis: {
@@ -79,6 +75,11 @@ const Pie = () => {
             fontSize: 20,
             fontWeight: 'bold',
           },
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
         },
         labelLine: {
           show: false,
@@ -89,9 +90,10 @@ const Pie = () => {
           },
         ],
         data: [
-          { name: '风神', value: 76 },
-          { name: 'M事业部', value: 14 },
-          { name: '东创紫联', value: 5 },
+          { name: '国标', value: 2 },
+          { name: '行标', value: 10 },
+          { name: '团标', value: 8 },
+          { name: '企标', value: 200 },
         ],
        
       },
@@ -99,7 +101,7 @@ const Pie = () => {
   }
   return (
     <div>
-      <ReactECharts option={option} style={{ height: 280 }} />
+      <ReactECharts option={option} style={{ height: 140 , position: 'relative', top: 20}} />
     </div>
   )
 }

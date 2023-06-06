@@ -7,7 +7,7 @@ export default function App() {
   
   return (
     <div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', width: 480,height: 210,
+      <div style={{ display: 'flex', flexWrap: 'wrap', width: 470,height: 210,
         position: 'relative', top: 30, }}>
   
         <div style={{ position: 'relative',width: 300, height: 100,

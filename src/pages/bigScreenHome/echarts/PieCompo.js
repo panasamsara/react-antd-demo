@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import Pie from "./Pie";
+import CategoryY from "./CategoryY";
 
 const colorList = [
     '#0090ff',
@@ -113,20 +114,19 @@ export default function App() {
   ])
     return (
       <div>
-        <div style={{ display: 'flex', width: 490 }}>
-          <div style={{ width: '120%' }}>
+        <div style={{ display: 'flex', width: 500 }}>
+          <div style={{ width: 200 }}>
             <Pie />
           </div>
           <div
             style={{
-              width: '60%',
-              height: 'calc(100% - 5px)',
-              paddingTop: 170, //调整右边table的 距离上面的距离
-              paddingRight:15
+              width: 270,
+              height: 200,
               // overflowY: 'auto',
             }}
           >
-            <table
+            <CategoryY/>
+            {/* <table
               style={{
                 width: 'calc(100% - 26px)',
                 marginLeft: 26,
@@ -180,7 +180,7 @@ export default function App() {
                   )
                 })}
               </tbody>
-            </table>
+            </table> */}
           </div>
         </div>
       </div>

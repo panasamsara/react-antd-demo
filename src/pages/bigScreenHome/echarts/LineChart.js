@@ -2,7 +2,7 @@ import React from 'react'
 import ReactECharts from 'echarts-for-react'
 
 // 在此组件中绘制一个简单饼图
-const Pie = () => {
+const LineChart = () => {
   let option = {
     xAxis: {
       type: 'category',
@@ -24,4 +24,4 @@ const Pie = () => {
     </div>
   )
 }
-export default Pie
+export default LineChart

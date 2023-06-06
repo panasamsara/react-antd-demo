@@ -1,5 +1,5 @@
 
-import "../styles.css";
+
 import React, { useState } from 'react'
 import RenderCompo from "@/components/RenderCompo";
 import getImgUrl from "@/assets/images/getImgUrl";
@@ -15,7 +15,7 @@ export default function App() {
               height: 300,
               position: 'absolute',
               top: 20,
-              left: 420,
+              left: -10,
               zIndex: 2
           }}
         > 
